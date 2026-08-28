@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deforestation Watch Nepal</title>
+
+  <!-- CDN: Leaflet CSS 1.9.4 -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+  <!-- CDN: Font Awesome 6.5.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Google Fonts: Inter 300,400,500,600,700,800 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <nav id="navbar" aria-label="Main navigation">
+      <!-- Logo -->
+      <div class="nav-logo">
+        <a href="#hero" aria-label="Deforestation Watch Nepal — go to top">
+          <i class="fa-solid fa-tree" aria-hidden="true"></i>
+          <span>Deforestation Watch Nepal</span>
+        </a>
+      </div>
+
+      <!-- Desktop nav links -->
+      <ul id="nav-links" role="list" aria-label="Site sections">
+        <li><a href="#hero"          class="nav-link">Home</a></li>
+        <li><a href="#statistics"    class="nav-link">Statistics</a></li>
+        <li><a href="#map"           class="nav-link">Map</a></li>
+        <li><a href="#analytics"     class="nav-link">Analytics</a></li>
+        <li><a href="#prediction"    class="nav-link">Prediction</a></li>
+        <li><a href="#insights"      class="nav-link">Insights</a></li>
+        <li><a href="#team"          class="nav-link">Team</a></li>
+        <li><a href="#contact"       class="nav-link">Contact</a></li>
+      </ul>
+
+      <!-- Hamburger (mobile) -->
+      <button id="hamburger-btn"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="nav-links">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- Hero Section -->
+    <section id="hero" aria-labelledby="hero-heading">
+      <!-- Layer 0: satellite background image + dark overlay -->
+      <div class="hero-bg" aria-hidden="true">
+        <img src="assets/images/hero-bg.jpg"
+             alt=""
+             aria-hidden="true"
+             loading="lazy"
+             class="hero-bg-img">
+        <div class="hero-bg-overlay"></div>
+      </div>
+
+      <!-- Layer 1: particle canvas (above bg, below text) -->
+      <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+      <!-- Layer 2: hero content -->
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+          <span>Nepal Environmental Monitoring</span>
+        </div>
+        <h1 id="hero-heading" class="hero-title">Deforestation Watch Nepal</h1>
+        <p class="hero-subtitle">
+          Real-time GIS intelligence platform monitoring Nepal's forest cover dynamics,
+          deforestation risk, data from 2015 to 2026.
+        </p>
+
+        <!-- Hero stat placeholder cards (Forest Cover, Forest Loss, Forest Gain).
+             ui.init() replaces these with live data from statistics.json. -->
+        <div id="hero-stats" aria-label="Key forest statistics">
+          <div class="hero-stat-card" data-hero-stat="forestCoverHa" aria-label="Total Forest Cover">
+            <i class="fa-solid fa-tree" aria-hidden="true"></i>
+            <span class="hero-stat-value">—</span>
+            <span class="hero-stat-label">Forest Cover</span>
+          </div>
+          <div class="hero-stat-card" data-hero-stat="forestLossHa" aria-label="Annual Forest Loss">
+            <i class="fa-solid fa-circle-minus" aria-hidden="true"></i>
+            <span class="hero-stat-value">—</span>
+            <span class="hero-stat-label">Forest Loss</span>
+          </div>
+          <div class="hero-stat-card" data-hero-stat="forestGainHa" aria-label="Annual Forest Gain">
+            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+            <span class="hero-stat-value">—</span>
+            <span class="hero-stat-label">Forest Gain</span>
+          </div>
+        </div>
+
+        <!-- Scroll indicator: bounces via CSS; smooth-scrolls to #statistics -->
+        <button class="scroll-indicator"
+                aria-label="Scroll to statistics"
+                onclick="document.getElementById('statistics').scrollIntoView({behavior:'smooth'})">
+          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Statistics Cards Section -->
+    <section id="statistics" aria-labelledby="stats-heading">
+      <h2 id="stats-heading">Forest Statistics</h2>
+      <p>Nationwide forest metrics for Nepal, updated annually from satellite imagery analysis.</p>
+      <div id="stats-cards-grid" aria-label="Forest statistics cards"></div>
+    </section>
+
+    <!-- GIS Map Section -->
+    <section id="map" aria-labelledby="map-heading">
+      <h2 id="map-heading">Interactive Forest Map</h2>
+      <div id="map-container"
+           aria-label="Interactive Leaflet map of Nepal forest cover"
+           style="min-height: 600px;"></div>
+    </section>
+
+    <!-- Analytics Dashboard Section -->
+    <section id="analytics" aria-labelledby="analytics-heading">
+
+      <!-- ── Dashboard Header ── -->
+      <div class="adash-header">
+        <div class="adash-header__text">
+          <h2 id="analytics-heading">Forest Change Analytics</h2>
+          <p class="adash-header__subtitle">
+            Explore forest cover, loss, gain, and regional changes across Nepal
+            through historical data and interactive visualizations.
+          </p>
+        </div>
+      </div>
+
+      <!-- ── Filter Bar ── -->
+      <div id="adash-filters" role="search" aria-label="Dashboard filters">
+        <div class="adash-filter-group">
+          <label for="adash-year-start" class="adash-filter-label">From</label>
+          <select id="adash-year-start" class="adash-select" aria-label="Start year"></select>
+        </div>
+        <div class="adash-filter-group">
+          <label for="adash-year-end" class="adash-filter-label">To</label>
+          <select id="adash-year-end" class="adash-select" aria-label="End year"></select>
+        </div>
+        <div class="adash-filter-group">
+          <label for="adash-province" class="adash-filter-label">Province</label>
+          <select id="adash-province" class="adash-select" aria-label="Filter by province">
+            <option value="all">All Provinces</option>
+            <option value="Koshi">Koshi</option>
+            <option value="Madhesh">Madhesh</option>
+            <option value="Bagmati">Bagmati</option>
+            <option value="Gandaki">Gandaki</option>
+            <option value="Lumbini">Lumbini</option>
+            <option value="Karnali">Karnali</option>
+            <option value="Sudurpashchim">Sudurpashchim</option>
+          </select>
+        </div>
+        <div class="adash-filter-group">
+          <label for="adash-district" class="adash-filter-label">District</label>
+          <select id="adash-district" class="adash-select" aria-label="Filter by district">
+            <option value="all">All Districts</option>
+          </select>
+        </div>
+        <button id="adash-reset" class="adash-reset-btn" type="button"
+                aria-label="Reset all filters to defaults">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+          Reset
+        </button>
+      </div>
+
+      <!-- ── KPI Cards ── -->
+      <div id="adash-kpi-grid" aria-label="Key forest statistics" role="list">
+
+        <div class="adash-kpi-card" role="listitem" aria-label="Total Forest Cover">
+          <div class="adash-kpi-card__icon adash-kpi-card__icon--cover">
+            <i class="fa-solid fa-tree" aria-hidden="true"></i>
+          </div>
+          <div class="adash-kpi-card__body">
+            <span class="adash-kpi-card__label">Total Forest Cover</span>
+            <span class="adash-kpi-card__value" id="kpi-cover">—</span>
+            <span class="adash-kpi-card__unit">ha</span>
+          </div>
+          <div class="adash-kpi-card__delta" id="kpi-cover-delta" aria-live="polite"></div>
+        </div>
+
+        <div class="adash-kpi-card" role="listitem" aria-label="Forest Loss">
+          <div class="adash-kpi-card__icon adash-kpi-card__icon--loss">
+            <i class="fa-solid fa-arrow-trend-down" aria-hidden="true"></i>
+          </div>
+          <div class="adash-kpi-card__body">
+            <span class="adash-kpi-card__label">Forest Loss</span>
+            <span class="adash-kpi-card__value" id="kpi-loss">—</span>
+            <span class="adash-kpi-card__unit">ha</span>
+          </div>
+          <div class="adash-kpi-card__delta" id="kpi-loss-delta" aria-live="polite"></div>
+        </div>
+
+        <div class="adash-kpi-card" role="listitem" aria-label="Forest Gain">
+          <div class="adash-kpi-card__icon adash-kpi-card__icon--gain">
+            <i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i>
+          </div>
+          <div class="adash-kpi-card__body">
+            <span class="adash-kpi-card__label">Forest Gain</span>
+            <span class="adash-kpi-card__value" id="kpi-gain">—</span>
+            <span class="adash-kpi-card__unit">ha</span>
+          </div>
+          <div class="adash-kpi-card__delta" id="kpi-gain-delta" aria-live="polite"></div>
+        </div>
+
+        <div class="adash-kpi-card" role="listitem" aria-label="Net Forest Change">
+          <div class="adash-kpi-card__icon adash-kpi-card__icon--net">
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+          </div>
+          <div class="adash-kpi-card__body">
+            <span class="adash-kpi-card__label">Net Forest Change</span>
+            <span class="adash-kpi-card__value" id="kpi-net">—</span>
+            <span class="adash-kpi-card__unit">ha</span>
+          </div>
+          <div class="adash-kpi-card__delta" id="kpi-net-delta" aria-live="polite"></div>
+        </div>
+
+      </div>
+
+      <!-- ── Row 1: Forest Change Over Time (full width) ── -->
+      <div class="adash-chart-card adash-chart-card--full" id="adash-trend-card">
+        <div class="adash-chart-card__header">
+          <div>
+            <h3 class="adash-chart-title">Forest Change Over Time</h3>
+            <p class="adash-chart-subtitle">Annual forest cover, loss, and gain (hectares)</p>
+          </div>
+          <div class="adash-chart-legend" id="adash-trend-legend" aria-label="Chart legend — click to toggle datasets"></div>
+        </div>
+        <div class="adash-chart-canvas-wrap">
+          <canvas id="chart-trend"
+                  aria-label="Forest Change Over Time — line chart"
+                  role="img"></canvas>
+        </div>
+        <table class="sr-only" aria-label="Forest Change Over Time data">
+          <thead><tr><th scope="col">Year</th><th scope="col">Forest Cover (ha)</th><th scope="col">Forest Loss (ha)</th><th scope="col">Forest Gain (ha)</th></tr></thead>
+          <tbody id="adash-trend-sr-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- ── Row 2: Annual Loss + Gain vs Loss ── -->
+      <div class="adash-row-2">
+
+        <!-- Annual Forest Loss -->
+        <div class="adash-chart-card" id="adash-loss-card">
+          <div class="adash-chart-card__header">
+            <div>
+              <h3 class="adash-chart-title">Annual Forest Loss</h3>
+              <p class="adash-chart-subtitle">Hectares lost per year</p>
+            </div>
+          </div>
+          <div class="adash-chart-canvas-wrap">
+            <canvas id="chart-loss"
+                    aria-label="Annual Forest Loss bar chart"
+                    role="img"></canvas>
+          </div>
+          <!-- Peak loss insight strip -->
+          <div class="adash-insight-strip" id="adash-peak-loss-strip" aria-live="polite">
+            <div class="adash-insight-strip__item">
+              <span class="adash-insight-strip__label">Peak Loss Year</span>
+              <span class="adash-insight-strip__value" id="adash-peak-year">—</span>
+            </div>
+            <div class="adash-insight-strip__item">
+              <span class="adash-insight-strip__label">Forest Loss</span>
+              <span class="adash-insight-strip__value" id="adash-peak-val">—</span>
+            </div>
+          </div>
+          <table class="sr-only" aria-label="Annual Forest Loss data">
+            <thead><tr><th scope="col">Year</th><th scope="col">Forest Loss (ha)</th></tr></thead>
+            <tbody id="adash-loss-sr-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Forest Gain vs Loss -->
+        <div class="adash-chart-card" id="adash-gainloss-card">
+          <div class="adash-chart-card__header">
+            <div>
+              <h3 class="adash-chart-title">Forest Gain vs Forest Loss</h3>
+              <p class="adash-chart-subtitle">Annual comparison (hectares)</p>
+            </div>
+          </div>
+          <div class="adash-chart-canvas-wrap">
+            <canvas id="chart-gain"
+                    aria-label="Forest Gain vs Forest Loss grouped bar chart"
+                    role="img"></canvas>
+          </div>
+          <div class="adash-insight-strip" id="adash-net-strip" aria-live="polite">
+            <div class="adash-insight-strip__item">
+              <span class="adash-insight-strip__label">Net Forest Change</span>
+              <span class="adash-insight-strip__value" id="adash-net-strip-val">—</span>
+            </div>
+          </div>
+          <table class="sr-only" aria-label="Forest Gain vs Loss data">
+            <thead><tr><th scope="col">Year</th><th scope="col">Forest Gain (ha)</th><th scope="col">Forest Loss (ha)</th></tr></thead>
+            <tbody id="adash-gainloss-sr-tbody"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- ── Row 3: Province Comparison + Top 10 Districts ── -->
+      <div class="adash-row-2">
+
+        <!-- Province Comparison -->
+        <div class="adash-chart-card" id="adash-province-card">
+          <div class="adash-chart-card__header">
+            <div>
+              <h3 class="adash-chart-title">Forest Change by Province</h3>
+              <p class="adash-chart-subtitle">Nepal's seven provinces</p>
+            </div>
+            <div class="adash-metric-switch" role="group" aria-label="Select metric for province chart">
+              <button class="adash-metric-btn adash-metric-btn--active" data-metric="forestLossHa" aria-pressed="true">Loss</button>
+              <button class="adash-metric-btn" data-metric="forestCoverHa" aria-pressed="false">Cover</button>
+              <button class="adash-metric-btn" data-metric="forestGainHa" aria-pressed="false">Gain</button>
+              <button class="adash-metric-btn" data-metric="netChange" aria-pressed="false">Net</button>
+            </div>
+          </div>
+          <div class="adash-chart-canvas-wrap">
+            <canvas id="chart-province"
+                    aria-label="Forest change by province horizontal bar chart"
+                    role="img"></canvas>
+          </div>
+          <table class="sr-only" aria-label="Province forest data">
+            <thead><tr><th scope="col">Province</th><th scope="col">Forest Cover (ha)</th><th scope="col">Forest Loss (ha)</th><th scope="col">Forest Gain (ha)</th></tr></thead>
+            <tbody id="adash-province-sr-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Top 10 Districts -->
+        <div class="adash-chart-card" id="adash-district-card">
+          <div class="adash-chart-card__header">
+            <div>
+              <h3 class="adash-chart-title">Top 10 Districts by Forest Loss</h3>
+              <p class="adash-chart-subtitle" id="adash-district-subtitle">Ranked by forest loss (ha)</p>
+            </div>
+            <div class="adash-metric-switch" role="group" aria-label="Select ranking metric for districts">
+              <button class="adash-district-btn adash-metric-btn--active" data-dmetric="forestLossHa" aria-pressed="true">Loss</button>
+              <button class="adash-district-btn" data-dmetric="forestGainHa" aria-pressed="false">Gain</button>
+              <button class="adash-district-btn" data-dmetric="netChange" aria-pressed="false">Net</button>
+            </div>
+          </div>
+          <div class="adash-ranking-list" id="adash-ranking-list" aria-label="Top 10 districts ranked list" role="list"></div>
+          <table class="sr-only" aria-label="Top 10 Districts data">
+            <thead><tr><th scope="col">Rank</th><th scope="col">District</th><th scope="col">Value (ha)</th></tr></thead>
+            <tbody id="adash-district-sr-tbody"></tbody>
+          </table>
+        </div>
+
+      </div>
+
+      <!-- ── Row 4: Forest Composition + Key Findings ── -->
+      <div class="adash-row-2">
+
+        <!-- Forest Composition -->
+        <div class="adash-chart-card" id="adash-composition-card">
+          <div class="adash-chart-card__header">
+            <div>
+              <h3 class="adash-chart-title">Forest Composition</h3>
+              <p class="adash-chart-subtitle">By forest type (% of total)</p>
+            </div>
+          </div>
+          <div class="adash-donut-wrap">
+            <div class="adash-donut-canvas-area">
+              <canvas id="chart-composition"
+                      aria-label="Forest type composition donut chart"
+                      role="img"></canvas>
+              <div class="adash-donut-center" aria-hidden="true">
+                <span class="adash-donut-center__label">Total Forest</span>
+                <span class="adash-donut-center__value" id="adash-donut-total">—</span>
+              </div>
+            </div>
+            <div class="adash-composition-legend" id="adash-composition-legend"></div>
+          </div>
+          <table class="sr-only" aria-label="Forest Composition data">
+            <thead><tr><th scope="col">Forest Type</th><th scope="col">Percentage (%)</th></tr></thead>
+            <tbody id="adash-composition-sr-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Key Findings -->
+        <div class="adash-chart-card" id="adash-findings-card">
+          <div class="adash-chart-card__header">
+            <div>
+              <h3 class="adash-chart-title">Key Findings</h3>
+              <p class="adash-chart-subtitle">Automatically derived from selected data</p>
+            </div>
+          </div>
+          <div class="adash-findings-grid" id="adash-findings-grid" aria-live="polite" aria-label="Key findings"></div>
+        </div>
+
+      </div>
+
+      <!-- ── Detailed Data Table ── -->
+      <div class="adash-chart-card adash-chart-card--full" id="adash-table-card">
+        <div class="adash-chart-card__header">
+          <div>
+            <h3 class="adash-chart-title">Detailed Data</h3>
+            <p class="adash-chart-subtitle">Yearly forest statistics — click column headers to sort</p>
+          </div>
+          <button class="adash-toggle-btn" id="adash-table-toggle"
+                  aria-expanded="true" aria-controls="adash-table-wrap">
+            <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div id="adash-table-wrap" class="adash-table-wrap">
+          <div class="adash-table-scroll">
+            <table id="adash-data-table" class="adash-data-table" aria-label="Detailed yearly forest data">
+              <thead>
+                <tr>
+                  <th scope="col" class="adash-th adash-th--sortable" data-col="year" aria-sort="none">
+                    Year <span class="adash-sort-icon" aria-hidden="true"></span>
+                  </th>
+                  <th scope="col" class="adash-th adash-th--sortable" data-col="forestCoverHa" aria-sort="none">
+                    Forest Cover <span class="adash-sort-icon" aria-hidden="true"></span>
+                  </th>
+                  <th scope="col" class="adash-th adash-th--sortable" data-col="forestLossHa" aria-sort="none">
+                    Forest Loss <span class="adash-sort-icon" aria-hidden="true"></span>
+                  </th>
+                  <th scope="col" class="adash-th adash-th--sortable" data-col="forestGainHa" aria-sort="none">
+                    Forest Gain <span class="adash-sort-icon" aria-hidden="true"></span>
+                  </th>
+                  <th scope="col" class="adash-th adash-th--sortable" data-col="netChange" aria-sort="none">
+                    Net Change <span class="adash-sort-icon" aria-hidden="true"></span>
+                  </th>
+                  <th scope="col" class="adash-th" data-col="changePct">
+                    Change %
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="adash-table-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Legacy canvas IDs kept for charts.js backward compat (hidden, zero-size) -->
+      <!-- charts.js still initialises these but they are replaced by new analytics.js -->
+      <canvas id="chart-district" aria-hidden="true" style="display:none" width="0" height="0"></canvas>
+
+    </section>
+
+    <!-- Prediction Dashboard Section -->
+    <section id="prediction" aria-labelledby="prediction-heading">
+      <h2 id="prediction-heading">Deforestation Risk Predictions</h2>
+
+      <!-- Model confidence badge -->
+      <div id="confidence-badge" aria-label="Model prediction confidence"></div>
+
+      <!-- Top prediction cards -->
+      <div id="prediction-cards-container" aria-label="Top at-risk district prediction cards"></div>
+
+      <!-- Top 10 high risk list -->
+      <div id="top-risk-list-wrapper" aria-labelledby="top-risk-heading">
+        <h3 id="top-risk-heading">Top 10 High Risk Districts</h3>
+        <ol id="top-risk-list" aria-label="Ranked list of highest risk districts"></ol>
+      </div>
+
+      <!-- Historical vs predicted chart -->
+      <article class="chart-wrapper" aria-labelledby="chart-historical-label">
+        <h3 id="chart-historical-label">Historical vs. Predicted Forest Cover</h3>
+        <canvas id="chart-historical-predicted"
+                aria-label="Historical vs Predicted Forest Cover"></canvas>
+      </article>
+
+      <!-- Future forest cover chart -->
+      <article class="chart-wrapper" aria-labelledby="chart-future-label">
+        <h3 id="chart-future-label">Projected Future Forest Cover (2026–2030)</h3>
+        <canvas id="chart-future-cover"
+                aria-label="Future Forest Cover Projection 2026-2030"></canvas>
+      </article>
+    </section>
+
+    <!-- Environmental Insights Section -->
+    <section id="insights" aria-labelledby="insights-heading">
+      <h2 id="insights-heading">Environmental Insights</h2>
+      <div id="insights-grid" aria-label="Auto-generated environmental insight cards"></div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" aria-labelledby="team-heading">
+      <h2 id="team-heading">Our Team</h2>
+      <div id="team-grid" aria-label="Team member profile cards">
+
+        <!-- Team Member 1 -->
+        <div class="team-card">
+          <img src="Photos/ashish.jpeg"
+               alt="Ashish Pandey"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3ESP%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Ashish Pandey</h3>
+            <p class="team-member-role">Mentor</p>
+            <p class="team-member-bio"></p>AI Research Intern at CAIR-Nepal</p>
+            <div class="team-member-links">
+              <a href="https://github.com/Ashish-Pandey62"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Ashish Pandey on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/ashish-pandey-715200266/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Ashish Pandey on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 2 -->
+        <div class="team-card">
+          <img src="Photos/binod.jpeg"
+               alt="Binod Pandey"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3EAS%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Binod Pandey</h3>
+            <p class="team-member-role">Co-Mentor</p>
+            <p class="team-member-bio">Student at Tribhuvan University, IOE, Pulchowk Campus</p>
+            <div class="team-member-links">
+              <a href="https://github.com/binod-pandey"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Binod Pandey on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/binod-pandey/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Binod Pandey on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 3 -->
+        <div class="team-card">
+          <img src="Photos/Abhiruchi.png"
+               alt="Abhiruchi"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3ERT%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Abhiruchi Gautam</h3>
+            <p class="team-member-role">Data analyst</p>
+            <p class="team-member-bio">A member of Project</p>
+            <div class="team-member-links">
+              <a href="https://github.com/AbhiruchiGautam"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Abhiruchi on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/abhiruchi-g-83a06939a/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Abhiruchi on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 4 -->
+        <div class="team-card">
+          <img src="Photos/ankit.jpeg"
+               alt="Ankit Gaire"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3EPA%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Ankit Gaire</h3>
+            <p class="team-member-role">Frontend Developer</p>
+            <p class="team-member-bio">A member of Project</p>
+            <div class="team-member-links">
+              <a href="https://github.com/Ankit-dev-7"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Ankit Gaire on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/ankit-gaire-66b58935b/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Ankit Gaire on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 5 -->
+        <div class="team-card">
+          <img src="Photos/bipul.png"
+               alt="Bipul Pandey"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3ESB%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Bipul Pandey</h3>
+            <p class="team-member-role">Remote Sensing Specialist</p>
+            <p class="team-member-bio">A member of Project</p>
+            <div class="team-member-links">
+              <a href="https://github.com/bipul7746"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Bipul Pandey on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/bipul-pandey-83070b36b/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Bipul Pandey on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 6 -->
+        <div class="team-card">
+          <img src="Photos/dipti.jpg"
+               alt="Dipti"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3ESK%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Dipti Ojha</h3>
+            <p class="team-member-role">Data Analyst</p>
+            <p class="team-member-bio">A member of Project</p>
+            <div class="team-member-links">
+              <a href="https://github.com/diptiojha793"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Dipti on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/dipti-ojha-8902aa362/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Dipti on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 7 -->
+        <div class="team-card">
+          <img src="Photos/suyog.jpg"
+               alt="Suyog Adhikari"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3ERJ%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Suyog Adhikari</h3>
+            <p class="team-member-role">Data Analyst</p>
+            <p class="team-member-bio">A member of Project</p>
+            <div class="team-member-links">
+              <a href="https://github.com/suyogadhikarii07"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Suyog Adhikari on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/suyogadhikari07/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Suyog Adhikari on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team Member 8 -->
+        <div class="team-card">
+          <img src="Photos/shishir.png"
+               alt="Shishir Pandey"
+               loading="lazy"
+               onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'120\' height=\'120\'%3E%3Crect width=\'120\' height=\'120\' rx=\'60\' fill=\'%23374151\'/%3E%3Ctext x=\'50%25\' y=\'55%25\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%239ca3af\' font-family=\'sans-serif\' font-size=\'42\'%3EMP%3C/text%3E%3C/svg%3E'">
+          <div class="team-card-info">
+            <h3 class="team-member-name">Shishir Pandey</h3>
+            <p class="team-member-role">Data Analyst</p>
+            <p class="team-member-bio">A member of Project</p>
+            <div class="team-member-links">
+              <a href="https://github.com/shishirpandey2007?tab=overview&from=2026-08-01&to=2026-08-14"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Shishir Pandey on GitHub (opens in new tab)">
+                <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/shishir-pandey--2007----/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="Shishir Pandey on LinkedIn (opens in new tab)">
+                <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact Us</h2>
+
+      <div class="contact-layout">
+        <!-- Contact info -->
+        <address class="contact-info">
+          <p>
+            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+            <a href="mailto:info@deforestationwatch.np">info@deforestationwatch.np</a>
+          </p>
+          <p>
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+            <a href="https://github.com/deforestation-watch-nepal"
+               target="_blank"
+               rel="noopener noreferrer">
+              GitHub Repository
+            </a>
+          </p>
+          <p>
+            <i class="fa-solid fa-building" aria-hidden="true"></i>
+            Deforestation Watch Nepal Research Initiative
+          </p>
+        </address>
+
+        <!-- Contact form -->
+        <form id="contact-form" novalidate aria-label="Contact form">
+          <!-- Web3Forms access key (hidden) -->
+          <input type="hidden" name="access_key" value="52929366-04f2-4730-92de-6ac9fd7df9e8">
+          <div class="form-field">                           
+            <label for="contact-name">Name <span aria-hidden="true">*</span></label>
+            <input type="text"
+                   id="contact-name"
+                   name="name"
+                   required
+                   aria-required="true"
+                   autocomplete="name"
+                   placeholder="Your full name">
+            <span class="field-error" id="contact-name-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="contact-email">Email <span aria-hidden="true">*</span></label>
+            <input type="email"
+                   id="contact-email"
+                   name="email"
+                   required
+                   aria-required="true"
+                   autocomplete="email"
+                   placeholder="your@email.com">
+            <span class="field-error" id="contact-email-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <div class="form-field">
+            <label for="contact-message">Message <span aria-hidden="true">*</span></label>
+            <textarea id="contact-message"
+                      name="message"
+                      required
+                      aria-required="true"
+                      rows="5"
+                      placeholder="Your message..."></textarea>
+            <span class="field-error" id="contact-message-error" role="alert" aria-live="polite"></span>
+          </div>
+
+          <button type="submit" id="contact-submit">
+            <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+            <span id="contact-submit-text">Send Message</span>
+          </button>
+
+          <div id="contact-success" role="status" aria-live="polite" hidden>
+            <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            Message sent successfully. We'll be in touch soon.
+          </div>
+
+          <div id="contact-error" role="alert" aria-live="polite" hidden>
+            <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+            Something went wrong. Please try again later.
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" aria-label="Site footer">
+
+    <!-- COSOG Nepal organisational affiliation -->
+    <div class="footer-branding" aria-label="Project affiliation">
+      <img
+        src="Photos/logo1.jpg"
+        alt="Coding for Social Good Nepal logo"
+        class="footer-branding-logo"
+        loading="lazy"
+        width="80"
+        height="80">
+      <p class="footer-branding-name">Coding for Social Good Nepal</p>
+      <p class="footer-branding-tagline">Technology&nbsp;•&nbsp;Community&nbsp;•&nbsp;Social Impact</p>
+    </div>
+
+    <div class="footer-content">
+      <div class="footer-brand">
+        <i class="fa-solid fa-tree" aria-hidden="true"></i>
+        <span>Deforestation Watch Nepal</span>
+        <p class="footer-copyright">&copy; <span id="footer-year"></span> Deforestation Watch Nepal. All rights reserved.</p>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <ul role="list">
+          <li>
+            <a href="https://github.com/deforestation-watch-nepal"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="GitHub repository (opens in new tab)">
+              <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="Documentation">
+              <i class="fa-solid fa-book" aria-hidden="true"></i> Documentation
+            </a>
+          </li>
+          <li>
+            <a href="#" aria-label="License information">
+              <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> License
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <button id="back-to-top"
+              aria-label="Back to top">
+        <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+        Back to Top
+      </button>
+    </div>
+  </footer>
+
+  <!-- CDN: Leaflet JS 1.9.4 -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- CDN: Chart.js 4.4.0 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Scroll indicator keyboard support (Enter / Space → smooth scroll to #statistics) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var btn = document.querySelector('.scroll-indicator');
+      if (btn) {
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            var target = document.getElementById('statistics');
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      }
+    });
+  </script>
+
+  <!-- App entry point (ES6 module) -->
+  <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

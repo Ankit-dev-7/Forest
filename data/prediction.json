@@ -1,0 +1,1008 @@
+{
+  "modelVersion": "1.0.0",
+  "generatedAt": "2025-01-15",
+  "confidencePct": 84.2,
+  "districts": [
+    {
+      "name": "Taplejung",
+      "riskScore": 12,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 147800 },
+        { "year": 2027, "forestCoverHa": 147400 },
+        { "year": 2028, "forestCoverHa": 147000 },
+        { "year": 2029, "forestCoverHa": 146600 },
+        { "year": 2030, "forestCoverHa": 146200 }
+      ]
+    },
+    {
+      "name": "Sankhuwasabha",
+      "riskScore": 10,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 162200 },
+        { "year": 2027, "forestCoverHa": 162000 },
+        { "year": 2028, "forestCoverHa": 161800 },
+        { "year": 2029, "forestCoverHa": 161600 },
+        { "year": 2030, "forestCoverHa": 161400 }
+      ]
+    },
+    {
+      "name": "Solukhumbu",
+      "riskScore": 8,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 136700 },
+        { "year": 2027, "forestCoverHa": 136600 },
+        { "year": 2028, "forestCoverHa": 136500 },
+        { "year": 2029, "forestCoverHa": 136400 },
+        { "year": 2030, "forestCoverHa": 136300 }
+      ]
+    },
+    {
+      "name": "Okhaldhunga",
+      "riskScore": 20,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 79000 },
+        { "year": 2027, "forestCoverHa": 78700 },
+        { "year": 2028, "forestCoverHa": 78400 },
+        { "year": 2029, "forestCoverHa": 78100 },
+        { "year": 2030, "forestCoverHa": 77800 }
+      ]
+    },
+    {
+      "name": "Khotang",
+      "riskScore": 25,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 103900 },
+        { "year": 2027, "forestCoverHa": 103500 },
+        { "year": 2028, "forestCoverHa": 103100 },
+        { "year": 2029, "forestCoverHa": 102700 },
+        { "year": 2030, "forestCoverHa": 102300 }
+      ]
+    },
+    {
+      "name": "Bhojpur",
+      "riskScore": 18,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 93400 },
+        { "year": 2027, "forestCoverHa": 93200 },
+        { "year": 2028, "forestCoverHa": 93000 },
+        { "year": 2029, "forestCoverHa": 92800 },
+        { "year": 2030, "forestCoverHa": 92600 }
+      ]
+    },
+    {
+      "name": "Dhankuta",
+      "riskScore": 14,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 88200 },
+        { "year": 2027, "forestCoverHa": 88000 },
+        { "year": 2028, "forestCoverHa": 87800 },
+        { "year": 2029, "forestCoverHa": 87600 },
+        { "year": 2030, "forestCoverHa": 87400 }
+      ]
+    },
+    {
+      "name": "Terhathum",
+      "riskScore": 16,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 74000 },
+        { "year": 2027, "forestCoverHa": 73800 },
+        { "year": 2028, "forestCoverHa": 73600 },
+        { "year": 2029, "forestCoverHa": 73400 },
+        { "year": 2030, "forestCoverHa": 73200 }
+      ]
+    },
+    {
+      "name": "Panchthar",
+      "riskScore": 22,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 102100 },
+        { "year": 2027, "forestCoverHa": 101800 },
+        { "year": 2028, "forestCoverHa": 101500 },
+        { "year": 2029, "forestCoverHa": 101200 },
+        { "year": 2030, "forestCoverHa": 100900 }
+      ]
+    },
+    {
+      "name": "Ilam",
+      "riskScore": 30,
+      "riskLevel": "Low",
+      "confidencePct": 78,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 119400 },
+        { "year": 2027, "forestCoverHa": 118900 },
+        { "year": 2028, "forestCoverHa": 118400 },
+        { "year": 2029, "forestCoverHa": 117900 },
+        { "year": 2030, "forestCoverHa": 117400 }
+      ]
+    },
+    {
+      "name": "Jhapa",
+      "riskScore": 83,
+      "riskLevel": "Critical",
+      "confidencePct": 89,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 47800 },
+        { "year": 2027, "forestCoverHa": 46000 },
+        { "year": 2028, "forestCoverHa": 44200 },
+        { "year": 2029, "forestCoverHa": 42500 },
+        { "year": 2030, "forestCoverHa": 40800 }
+      ]
+    },
+    {
+      "name": "Morang",
+      "riskScore": 81,
+      "riskLevel": "Critical",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 61400 },
+        { "year": 2027, "forestCoverHa": 59700 },
+        { "year": 2028, "forestCoverHa": 58000 },
+        { "year": 2029, "forestCoverHa": 56300 },
+        { "year": 2030, "forestCoverHa": 54600 }
+      ]
+    },
+    {
+      "name": "Sunsari",
+      "riskScore": 86,
+      "riskLevel": "Critical",
+      "confidencePct": 90,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 36900 },
+        { "year": 2027, "forestCoverHa": 35400 },
+        { "year": 2028, "forestCoverHa": 33900 },
+        { "year": 2029, "forestCoverHa": 32500 },
+        { "year": 2030, "forestCoverHa": 31100 }
+      ]
+    },
+    {
+      "name": "Saptari",
+      "riskScore": 85,
+      "riskLevel": "Critical",
+      "confidencePct": 90,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 31300 },
+        { "year": 2027, "forestCoverHa": 29900 },
+        { "year": 2028, "forestCoverHa": 28600 },
+        { "year": 2029, "forestCoverHa": 27300 },
+        { "year": 2030, "forestCoverHa": 26100 }
+      ]
+    },
+    {
+      "name": "Siraha",
+      "riskScore": 88,
+      "riskLevel": "Critical",
+      "confidencePct": 91,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 27500 },
+        { "year": 2027, "forestCoverHa": 26200 },
+        { "year": 2028, "forestCoverHa": 24900 },
+        { "year": 2029, "forestCoverHa": 23700 },
+        { "year": 2030, "forestCoverHa": 22500 }
+      ]
+    },
+    {
+      "name": "Dhanusha",
+      "riskScore": 69,
+      "riskLevel": "High",
+      "confidencePct": 87,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 35200 },
+        { "year": 2027, "forestCoverHa": 34000 },
+        { "year": 2028, "forestCoverHa": 32800 },
+        { "year": 2029, "forestCoverHa": 31700 },
+        { "year": 2030, "forestCoverHa": 30600 }
+      ]
+    },
+    {
+      "name": "Mahottari",
+      "riskScore": 72,
+      "riskLevel": "High",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 24000 },
+        { "year": 2027, "forestCoverHa": 23100 },
+        { "year": 2028, "forestCoverHa": 22300 },
+        { "year": 2029, "forestCoverHa": 21500 },
+        { "year": 2030, "forestCoverHa": 20700 }
+      ]
+    },
+    {
+      "name": "Sarlahi",
+      "riskScore": 38,
+      "riskLevel": "Low",
+      "confidencePct": 79,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 31300 },
+        { "year": 2027, "forestCoverHa": 31100 },
+        { "year": 2028, "forestCoverHa": 30900 },
+        { "year": 2029, "forestCoverHa": 30700 },
+        { "year": 2030, "forestCoverHa": 30500 }
+      ]
+    },
+    {
+      "name": "Sindhuli",
+      "riskScore": 82,
+      "riskLevel": "Critical",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 45000 },
+        { "year": 2027, "forestCoverHa": 43500 },
+        { "year": 2028, "forestCoverHa": 42100 },
+        { "year": 2029, "forestCoverHa": 40800 },
+        { "year": 2030, "forestCoverHa": 39600 }
+      ]
+    },
+    {
+      "name": "Ramechhap",
+      "riskScore": 28,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 96000 },
+        { "year": 2027, "forestCoverHa": 95700 },
+        { "year": 2028, "forestCoverHa": 95400 },
+        { "year": 2029, "forestCoverHa": 95100 },
+        { "year": 2030, "forestCoverHa": 94800 }
+      ]
+    },
+    {
+      "name": "Dolakha",
+      "riskScore": 32,
+      "riskLevel": "Low",
+      "confidencePct": 78,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 118600 },
+        { "year": 2027, "forestCoverHa": 118200 },
+        { "year": 2028, "forestCoverHa": 117800 },
+        { "year": 2029, "forestCoverHa": 117400 },
+        { "year": 2030, "forestCoverHa": 117000 }
+      ]
+    },
+    {
+      "name": "Sindhupalchok",
+      "riskScore": 52,
+      "riskLevel": "Medium",
+      "confidencePct": 83,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 134000 },
+        { "year": 2027, "forestCoverHa": 132900 },
+        { "year": 2028, "forestCoverHa": 131800 },
+        { "year": 2029, "forestCoverHa": 130700 },
+        { "year": 2030, "forestCoverHa": 129600 }
+      ]
+    },
+    {
+      "name": "Kavrepalanchok",
+      "riskScore": 65,
+      "riskLevel": "High",
+      "confidencePct": 87,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 85800 },
+        { "year": 2027, "forestCoverHa": 84200 },
+        { "year": 2028, "forestCoverHa": 82700 },
+        { "year": 2029, "forestCoverHa": 81200 },
+        { "year": 2030, "forestCoverHa": 79700 }
+      ]
+    },
+    {
+      "name": "Lalitpur",
+      "riskScore": 54,
+      "riskLevel": "Medium",
+      "confidencePct": 84,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 37900 },
+        { "year": 2027, "forestCoverHa": 37500 },
+        { "year": 2028, "forestCoverHa": 37100 },
+        { "year": 2029, "forestCoverHa": 36700 },
+        { "year": 2030, "forestCoverHa": 36300 }
+      ]
+    },
+    {
+      "name": "Bhaktapur",
+      "riskScore": 58,
+      "riskLevel": "Medium",
+      "confidencePct": 85,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 12400 },
+        { "year": 2027, "forestCoverHa": 12200 },
+        { "year": 2028, "forestCoverHa": 12000 },
+        { "year": 2029, "forestCoverHa": 11800 },
+        { "year": 2030, "forestCoverHa": 11600 }
+      ]
+    },
+    {
+      "name": "Kathmandu",
+      "riskScore": 67,
+      "riskLevel": "High",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 27900 },
+        { "year": 2027, "forestCoverHa": 27300 },
+        { "year": 2028, "forestCoverHa": 26700 },
+        { "year": 2029, "forestCoverHa": 26100 },
+        { "year": 2030, "forestCoverHa": 25500 }
+      ]
+    },
+    {
+      "name": "Nuwakot",
+      "riskScore": 35,
+      "riskLevel": "Low",
+      "confidencePct": 79,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 82400 },
+        { "year": 2027, "forestCoverHa": 82100 },
+        { "year": 2028, "forestCoverHa": 81800 },
+        { "year": 2029, "forestCoverHa": 81500 },
+        { "year": 2030, "forestCoverHa": 81200 }
+      ]
+    },
+    {
+      "name": "Rasuwa",
+      "riskScore": 10,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 98300 },
+        { "year": 2027, "forestCoverHa": 98200 },
+        { "year": 2028, "forestCoverHa": 98100 },
+        { "year": 2029, "forestCoverHa": 98000 },
+        { "year": 2030, "forestCoverHa": 97900 }
+      ]
+    },
+    {
+      "name": "Dhading",
+      "riskScore": 48,
+      "riskLevel": "Medium",
+      "confidencePct": 82,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 104400 },
+        { "year": 2027, "forestCoverHa": 103800 },
+        { "year": 2028, "forestCoverHa": 103200 },
+        { "year": 2029, "forestCoverHa": 102600 },
+        { "year": 2030, "forestCoverHa": 102000 }
+      ]
+    },
+    {
+      "name": "Makwanpur",
+      "riskScore": 64,
+      "riskLevel": "High",
+      "confidencePct": 87,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 147500 },
+        { "year": 2027, "forestCoverHa": 145800 },
+        { "year": 2028, "forestCoverHa": 144100 },
+        { "year": 2029, "forestCoverHa": 142400 },
+        { "year": 2030, "forestCoverHa": 140700 }
+      ]
+    },
+    {
+      "name": "Rautahat",
+      "riskScore": 84,
+      "riskLevel": "Critical",
+      "confidencePct": 89,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 27300 },
+        { "year": 2027, "forestCoverHa": 26200 },
+        { "year": 2028, "forestCoverHa": 25100 },
+        { "year": 2029, "forestCoverHa": 24100 },
+        { "year": 2030, "forestCoverHa": 23100 }
+      ]
+    },
+    {
+      "name": "Bara",
+      "riskScore": 80,
+      "riskLevel": "Critical",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 33700 },
+        { "year": 2027, "forestCoverHa": 32700 },
+        { "year": 2028, "forestCoverHa": 31700 },
+        { "year": 2029, "forestCoverHa": 30700 },
+        { "year": 2030, "forestCoverHa": 29800 }
+      ]
+    },
+    {
+      "name": "Parsa",
+      "riskScore": 68,
+      "riskLevel": "High",
+      "confidencePct": 87,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 41100 },
+        { "year": 2027, "forestCoverHa": 40000 },
+        { "year": 2028, "forestCoverHa": 38900 },
+        { "year": 2029, "forestCoverHa": 37900 },
+        { "year": 2030, "forestCoverHa": 36900 }
+      ]
+    },
+    {
+      "name": "Chitwan",
+      "riskScore": 46,
+      "riskLevel": "Medium",
+      "confidencePct": 82,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 124300 },
+        { "year": 2027, "forestCoverHa": 123700 },
+        { "year": 2028, "forestCoverHa": 123100 },
+        { "year": 2029, "forestCoverHa": 122500 },
+        { "year": 2030, "forestCoverHa": 121900 }
+      ]
+    },
+    {
+      "name": "Udayapur",
+      "riskScore": 36,
+      "riskLevel": "Low",
+      "confidencePct": 79,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 118300 },
+        { "year": 2027, "forestCoverHa": 118000 },
+        { "year": 2028, "forestCoverHa": 117600 },
+        { "year": 2029, "forestCoverHa": 117200 },
+        { "year": 2030, "forestCoverHa": 116800 }
+      ]
+    },
+    {
+      "name": "Gorkha",
+      "riskScore": 24,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 168200 },
+        { "year": 2027, "forestCoverHa": 167900 },
+        { "year": 2028, "forestCoverHa": 167600 },
+        { "year": 2029, "forestCoverHa": 167300 },
+        { "year": 2030, "forestCoverHa": 167000 }
+      ]
+    },
+    {
+      "name": "Lamjung",
+      "riskScore": 15,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 118500 },
+        { "year": 2027, "forestCoverHa": 118300 },
+        { "year": 2028, "forestCoverHa": 118100 },
+        { "year": 2029, "forestCoverHa": 117900 },
+        { "year": 2030, "forestCoverHa": 117700 }
+      ]
+    },
+    {
+      "name": "Tanahu",
+      "riskScore": 20,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 108200 },
+        { "year": 2027, "forestCoverHa": 108000 },
+        { "year": 2028, "forestCoverHa": 107700 },
+        { "year": 2029, "forestCoverHa": 107400 },
+        { "year": 2030, "forestCoverHa": 107100 }
+      ]
+    },
+    {
+      "name": "Syangja",
+      "riskScore": 26,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 82400 },
+        { "year": 2027, "forestCoverHa": 82100 },
+        { "year": 2028, "forestCoverHa": 81800 },
+        { "year": 2029, "forestCoverHa": 81500 },
+        { "year": 2030, "forestCoverHa": 81200 }
+      ]
+    },
+    {
+      "name": "Kaski",
+      "riskScore": 18,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 126300 },
+        { "year": 2027, "forestCoverHa": 126100 },
+        { "year": 2028, "forestCoverHa": 125900 },
+        { "year": 2029, "forestCoverHa": 125700 },
+        { "year": 2030, "forestCoverHa": 125500 }
+      ]
+    },
+    {
+      "name": "Manang",
+      "riskScore": 5,
+      "riskLevel": "Low",
+      "confidencePct": 74,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 38600 },
+        { "year": 2027, "forestCoverHa": 38600 },
+        { "year": 2028, "forestCoverHa": 38500 },
+        { "year": 2029, "forestCoverHa": 38500 },
+        { "year": 2030, "forestCoverHa": 38400 }
+      ]
+    },
+    {
+      "name": "Mustang",
+      "riskScore": 5,
+      "riskLevel": "Low",
+      "confidencePct": 74,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 18200 },
+        { "year": 2027, "forestCoverHa": 18100 },
+        { "year": 2028, "forestCoverHa": 18100 },
+        { "year": 2029, "forestCoverHa": 18000 },
+        { "year": 2030, "forestCoverHa": 18000 }
+      ]
+    },
+    {
+      "name": "Myagdi",
+      "riskScore": 12,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 142700 },
+        { "year": 2027, "forestCoverHa": 142500 },
+        { "year": 2028, "forestCoverHa": 142300 },
+        { "year": 2029, "forestCoverHa": 142100 },
+        { "year": 2030, "forestCoverHa": 141900 }
+      ]
+    },
+    {
+      "name": "Parbat",
+      "riskScore": 22,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 68200 },
+        { "year": 2027, "forestCoverHa": 68000 },
+        { "year": 2028, "forestCoverHa": 67800 },
+        { "year": 2029, "forestCoverHa": 67600 },
+        { "year": 2030, "forestCoverHa": 67400 }
+      ]
+    },
+    {
+      "name": "Baglung",
+      "riskScore": 16,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 118100 },
+        { "year": 2027, "forestCoverHa": 117900 },
+        { "year": 2028, "forestCoverHa": 117700 },
+        { "year": 2029, "forestCoverHa": 117500 },
+        { "year": 2030, "forestCoverHa": 117300 }
+      ]
+    },
+    {
+      "name": "Gulmi",
+      "riskScore": 50,
+      "riskLevel": "Medium",
+      "confidencePct": 82,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 76100 },
+        { "year": 2027, "forestCoverHa": 75600 },
+        { "year": 2028, "forestCoverHa": 75100 },
+        { "year": 2029, "forestCoverHa": 74600 },
+        { "year": 2030, "forestCoverHa": 74100 }
+      ]
+    },
+    {
+      "name": "Palpa",
+      "riskScore": 47,
+      "riskLevel": "Medium",
+      "confidencePct": 82,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 86100 },
+        { "year": 2027, "forestCoverHa": 85700 },
+        { "year": 2028, "forestCoverHa": 85300 },
+        { "year": 2029, "forestCoverHa": 84900 },
+        { "year": 2030, "forestCoverHa": 84500 }
+      ]
+    },
+    {
+      "name": "Nawalpur",
+      "riskScore": 34,
+      "riskLevel": "Low",
+      "confidencePct": 78,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 64000 },
+        { "year": 2027, "forestCoverHa": 63700 },
+        { "year": 2028, "forestCoverHa": 63400 },
+        { "year": 2029, "forestCoverHa": 63100 },
+        { "year": 2030, "forestCoverHa": 62800 }
+      ]
+    },
+    {
+      "name": "Nawalparasi",
+      "riskScore": 74,
+      "riskLevel": "High",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 61700 },
+        { "year": 2027, "forestCoverHa": 60400 },
+        { "year": 2028, "forestCoverHa": 59200 },
+        { "year": 2029, "forestCoverHa": 58000 },
+        { "year": 2030, "forestCoverHa": 56800 }
+      ]
+    },
+    {
+      "name": "Arghakhanchi",
+      "riskScore": 43,
+      "riskLevel": "Medium",
+      "confidencePct": 81,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 74000 },
+        { "year": 2027, "forestCoverHa": 73600 },
+        { "year": 2028, "forestCoverHa": 73200 },
+        { "year": 2029, "forestCoverHa": 72800 },
+        { "year": 2030, "forestCoverHa": 72400 }
+      ]
+    },
+    {
+      "name": "Kapilvastu",
+      "riskScore": 82,
+      "riskLevel": "Critical",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 46800 },
+        { "year": 2027, "forestCoverHa": 45200 },
+        { "year": 2028, "forestCoverHa": 43600 },
+        { "year": 2029, "forestCoverHa": 42100 },
+        { "year": 2030, "forestCoverHa": 40600 }
+      ]
+    },
+    {
+      "name": "Rupandehi",
+      "riskScore": 87,
+      "riskLevel": "Critical",
+      "confidencePct": 90,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 35400 },
+        { "year": 2027, "forestCoverHa": 33800 },
+        { "year": 2028, "forestCoverHa": 32300 },
+        { "year": 2029, "forestCoverHa": 30800 },
+        { "year": 2030, "forestCoverHa": 29400 }
+      ]
+    },
+    {
+      "name": "Pyuthan",
+      "riskScore": 28,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 88400 },
+        { "year": 2027, "forestCoverHa": 88100 },
+        { "year": 2028, "forestCoverHa": 87800 },
+        { "year": 2029, "forestCoverHa": 87500 },
+        { "year": 2030, "forestCoverHa": 87200 }
+      ]
+    },
+    {
+      "name": "Rolpa",
+      "riskScore": 24,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 94000 },
+        { "year": 2027, "forestCoverHa": 93700 },
+        { "year": 2028, "forestCoverHa": 93400 },
+        { "year": 2029, "forestCoverHa": 93100 },
+        { "year": 2030, "forestCoverHa": 92800 }
+      ]
+    },
+    {
+      "name": "Rukum East",
+      "riskScore": 18,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 82300 },
+        { "year": 2027, "forestCoverHa": 82100 },
+        { "year": 2028, "forestCoverHa": 81900 },
+        { "year": 2029, "forestCoverHa": 81700 },
+        { "year": 2030, "forestCoverHa": 81500 }
+      ]
+    },
+    {
+      "name": "Rukum West",
+      "riskScore": 14,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 96700 },
+        { "year": 2027, "forestCoverHa": 96500 },
+        { "year": 2028, "forestCoverHa": 96300 },
+        { "year": 2029, "forestCoverHa": 96100 },
+        { "year": 2030, "forestCoverHa": 95900 }
+      ]
+    },
+    {
+      "name": "Salyan",
+      "riskScore": 20,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 106200 },
+        { "year": 2027, "forestCoverHa": 106000 },
+        { "year": 2028, "forestCoverHa": 105700 },
+        { "year": 2029, "forestCoverHa": 105400 },
+        { "year": 2030, "forestCoverHa": 105100 }
+      ]
+    },
+    {
+      "name": "Dang",
+      "riskScore": 55,
+      "riskLevel": "Medium",
+      "confidencePct": 84,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 148100 },
+        { "year": 2027, "forestCoverHa": 147300 },
+        { "year": 2028, "forestCoverHa": 146500 },
+        { "year": 2029, "forestCoverHa": 145700 },
+        { "year": 2030, "forestCoverHa": 144900 }
+      ]
+    },
+    {
+      "name": "Banke",
+      "riskScore": 71,
+      "riskLevel": "High",
+      "confidencePct": 87,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 67700 },
+        { "year": 2027, "forestCoverHa": 66600 },
+        { "year": 2028, "forestCoverHa": 65500 },
+        { "year": 2029, "forestCoverHa": 64500 },
+        { "year": 2030, "forestCoverHa": 63400 }
+      ]
+    },
+    {
+      "name": "Bardiya",
+      "riskScore": 44,
+      "riskLevel": "Medium",
+      "confidencePct": 81,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 124700 },
+        { "year": 2027, "forestCoverHa": 124200 },
+        { "year": 2028, "forestCoverHa": 123700 },
+        { "year": 2029, "forestCoverHa": 123200 },
+        { "year": 2030, "forestCoverHa": 122700 }
+      ]
+    },
+    {
+      "name": "Surkhet",
+      "riskScore": 32,
+      "riskLevel": "Low",
+      "confidencePct": 78,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 128100 },
+        { "year": 2027, "forestCoverHa": 127800 },
+        { "year": 2028, "forestCoverHa": 127500 },
+        { "year": 2029, "forestCoverHa": 127200 },
+        { "year": 2030, "forestCoverHa": 126900 }
+      ]
+    },
+    {
+      "name": "Dailekh",
+      "riskScore": 22,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 82400 },
+        { "year": 2027, "forestCoverHa": 82200 },
+        { "year": 2028, "forestCoverHa": 82000 },
+        { "year": 2029, "forestCoverHa": 81800 },
+        { "year": 2030, "forestCoverHa": 81600 }
+      ]
+    },
+    {
+      "name": "Jajarkot",
+      "riskScore": 18,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 118100 },
+        { "year": 2027, "forestCoverHa": 117900 },
+        { "year": 2028, "forestCoverHa": 117700 },
+        { "year": 2029, "forestCoverHa": 117500 },
+        { "year": 2030, "forestCoverHa": 117300 }
+      ]
+    },
+    {
+      "name": "Dolpa",
+      "riskScore": 8,
+      "riskLevel": "Low",
+      "confidencePct": 74,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 98400 },
+        { "year": 2027, "forestCoverHa": 98300 },
+        { "year": 2028, "forestCoverHa": 98200 },
+        { "year": 2029, "forestCoverHa": 98100 },
+        { "year": 2030, "forestCoverHa": 98000 }
+      ]
+    },
+    {
+      "name": "Mugu",
+      "riskScore": 8,
+      "riskLevel": "Low",
+      "confidencePct": 74,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 78600 },
+        { "year": 2027, "forestCoverHa": 78500 },
+        { "year": 2028, "forestCoverHa": 78400 },
+        { "year": 2029, "forestCoverHa": 78300 },
+        { "year": 2030, "forestCoverHa": 78200 }
+      ]
+    },
+    {
+      "name": "Humla",
+      "riskScore": 6,
+      "riskLevel": "Low",
+      "confidencePct": 74,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 62400 },
+        { "year": 2027, "forestCoverHa": 62300 },
+        { "year": 2028, "forestCoverHa": 62200 },
+        { "year": 2029, "forestCoverHa": 62100 },
+        { "year": 2030, "forestCoverHa": 62000 }
+      ]
+    },
+    {
+      "name": "Jumla",
+      "riskScore": 10,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 98100 },
+        { "year": 2027, "forestCoverHa": 98000 },
+        { "year": 2028, "forestCoverHa": 97800 },
+        { "year": 2029, "forestCoverHa": 97600 },
+        { "year": 2030, "forestCoverHa": 97400 }
+      ]
+    },
+    {
+      "name": "Kalikot",
+      "riskScore": 16,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 86300 },
+        { "year": 2027, "forestCoverHa": 86100 },
+        { "year": 2028, "forestCoverHa": 85900 },
+        { "year": 2029, "forestCoverHa": 85700 },
+        { "year": 2030, "forestCoverHa": 85500 }
+      ]
+    },
+    {
+      "name": "Achham",
+      "riskScore": 26,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 94400 },
+        { "year": 2027, "forestCoverHa": 94100 },
+        { "year": 2028, "forestCoverHa": 93800 },
+        { "year": 2029, "forestCoverHa": 93500 },
+        { "year": 2030, "forestCoverHa": 93200 }
+      ]
+    },
+    {
+      "name": "Bajura",
+      "riskScore": 14,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 72300 },
+        { "year": 2027, "forestCoverHa": 72100 },
+        { "year": 2028, "forestCoverHa": 71900 },
+        { "year": 2029, "forestCoverHa": 71700 },
+        { "year": 2030, "forestCoverHa": 71500 }
+      ]
+    },
+    {
+      "name": "Bajhang",
+      "riskScore": 12,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 88100 },
+        { "year": 2027, "forestCoverHa": 87900 },
+        { "year": 2028, "forestCoverHa": 87700 },
+        { "year": 2029, "forestCoverHa": 87500 },
+        { "year": 2030, "forestCoverHa": 87300 }
+      ]
+    },
+    {
+      "name": "Darchula",
+      "riskScore": 14,
+      "riskLevel": "Low",
+      "confidencePct": 75,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 82300 },
+        { "year": 2027, "forestCoverHa": 82100 },
+        { "year": 2028, "forestCoverHa": 81900 },
+        { "year": 2029, "forestCoverHa": 81700 },
+        { "year": 2030, "forestCoverHa": 81500 }
+      ]
+    },
+    {
+      "name": "Baitadi",
+      "riskScore": 20,
+      "riskLevel": "Low",
+      "confidencePct": 76,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 78000 },
+        { "year": 2027, "forestCoverHa": 77800 },
+        { "year": 2028, "forestCoverHa": 77600 },
+        { "year": 2029, "forestCoverHa": 77400 },
+        { "year": 2030, "forestCoverHa": 77200 }
+      ]
+    },
+    {
+      "name": "Dadeldhura",
+      "riskScore": 28,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 68200 },
+        { "year": 2027, "forestCoverHa": 67900 },
+        { "year": 2028, "forestCoverHa": 67600 },
+        { "year": 2029, "forestCoverHa": 67300 },
+        { "year": 2030, "forestCoverHa": 67000 }
+      ]
+    },
+    {
+      "name": "Doti",
+      "riskScore": 24,
+      "riskLevel": "Low",
+      "confidencePct": 77,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 86200 },
+        { "year": 2027, "forestCoverHa": 86000 },
+        { "year": 2028, "forestCoverHa": 85700 },
+        { "year": 2029, "forestCoverHa": 85400 },
+        { "year": 2030, "forestCoverHa": 85100 }
+      ]
+    },
+    {
+      "name": "Kailali",
+      "riskScore": 76,
+      "riskLevel": "High",
+      "confidencePct": 88,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 107800 },
+        { "year": 2027, "forestCoverHa": 106300 },
+        { "year": 2028, "forestCoverHa": 104800 },
+        { "year": 2029, "forestCoverHa": 103300 },
+        { "year": 2030, "forestCoverHa": 101900 }
+      ]
+    },
+    {
+      "name": "Kanchanpur",
+      "riskScore": 73,
+      "riskLevel": "High",
+      "confidencePct": 87,
+      "projectedCover": [
+        { "year": 2026, "forestCoverHa": 85600 },
+        { "year": 2027, "forestCoverHa": 84300 },
+        { "year": 2028, "forestCoverHa": 83000 },
+        { "year": 2029, "forestCoverHa": 81700 },
+        { "year": 2030, "forestCoverHa": 80500 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+/* css/animations.css — Animation and transition rules */
+/* Requirements: 18.1, 18.5, 18.6, 7.5 */
+
+/* ============================================================
+   1. SECTION REVEAL (IntersectionObserver driven)
+   Sections start visible. JS adds .section-hidden to non-visible
+   sections AFTER the hero is confirmed showing, then fades them in
+   via .revealed when they enter the viewport.
+   ============================================================ */
+
+/* Only hide sections that JS has explicitly marked */
+html.js-loaded section.section-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+/* Revealed state — also covers sections that never got section-hidden */
+section,
+html.js-loaded section.revealed {
+  opacity: 1;
+  transform: none;
+}
+
+html.js-loaded section.section-hidden.revealed {
+  opacity: 1;
+  transform: none;
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+/* ============================================================
+   2. SCROLL INDICATOR BOUNCE
+   ============================================================ */
+@keyframes bounce-down {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.scroll-indicator {
+  animation: bounce-down 1.6s ease-in-out infinite;
+}
+
+/* ============================================================
+   3. YEAR-CHANGE SECTION TRANSITION
+   ============================================================ */
+.section-transitioning {
+  opacity: 0.6;
+  transition: opacity 150ms ease;
+}
+
+/* ============================================================
+   4. CHART WRAPPER UPDATE TRANSITION
+   ============================================================ */
+.chart-wrapper {
+  transition: opacity 200ms ease;
+}
+
+.chart-wrapper.updating {
+  opacity: 0.4;
+}
+
+/* ============================================================
+   5. MAP FULLSCREEN TRANSITION
+   ============================================================ */
+#map-container {
+  transition: all 300ms ease;
+}
+
+#map-container.map-fullscreen {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2000 !important;
+  height: 100vh !important;
+  width: 100vw !important;
+  border-radius: 0 !important;
+}
+
+/* ============================================================
+   6. LOADING OVERLAY FADE OUT
+   ============================================================ */
+#loading-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+
+/* ============================================================
+   7. CARD HOVER TRANSITIONS
+   ============================================================ */
+.card,
+.stat-card,
+.download-card,
+.team-card,
+.prediction-card,
+.insight-card {
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+/* ============================================================
+   8. NAV LINK TRANSITIONS
+   ============================================================ */
+.nav-link {
+  transition: color 150ms ease, background 150ms ease;
+}
+
+/* ============================================================
+   9. BUTTON TRANSITIONS
+   ============================================================ */
+.btn,
+#contact-submit,
+#back-to-top {
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.btn:active,
+#contact-submit:active,
+#back-to-top:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================
+   10. YEAR BUTTON TRANSITIONS
+   ============================================================ */
+.year-btn {
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+/* ============================================================
+   11. SLIDER HANDLE TRANSITION
+   ============================================================ */
+.slider-handle {
+  transition: left 0ms linear; /* no lag on pointer drag */
+}
+
+/* ============================================================
+   12. RISK BAR FILL ANIMATION
+   ============================================================ */
+.risk-bar {
+  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   13. TOAST ENTRANCE
+   ============================================================ */
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toast {
+  animation: slide-in-right 250ms ease forwards;
+}
+
+/* ============================================================
+   14. PREFERS-REDUCED-MOTION — disable all non-essential
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Immediately show all sections — skip reveal animation */
+  html.js-loaded section,
+  html.js-loaded section.section-hidden,
+  section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Remove scroll indicator bounce */
+  .scroll-indicator {
+    animation: none;
+  }
+
+  /* Remove chart wrapper fade */
+  .chart-wrapper,
+  .chart-wrapper.updating {
+    opacity: 1;
+    transition: none;
+  }
+
+  /* Remove section transitioning fade */
+  .section-transitioning {
+    opacity: 1;
+    transition: none;
+  }
+
+  /* Remove skeleton pulse */
+  .skeleton-card {
+    animation: none;
+    opacity: 1;
+  }
+
+  /* Remove loading spinner */
+  .loading-spinner {
+    animation: none;
+    border-top-color: var(--color-primary);
+  }
+
+  /* Remove toast slide-in */
+  .toast {
+    animation: none;
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "deforestation-watch-nepal",
+  "version": "1.0.0",
+  "description": "Static GIS intelligence dashboard for Nepal deforestation monitoring",
+  "type": "module",
+  "scripts": {
+    "dev": "http-server",
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "fast-check": "4.9.0",
+    "http-server": "^14.1.1",
+    "jsdom": "30.0.1",
+    "vitest": "4.1.10"
+  }
+}
