@@ -143,14 +143,71 @@ function _fmtPct(pct) {
 
 /**
  * Get yearly data filtered to [yearStart, yearEnd] for the current filter state.
- * Also applies province/district filters if feasible (returns full range for
- * those since yearlyData is nationwide).
+ * When a district filter is active: synthesises a single-point yearly series
+ * from the district's static snapshot (no per-district time series in data).
+ * When a province filter is active: uses provinceYearlyData if available,
+ * otherwise falls back to the province's static snapshot.
+ * When no region filter is active: returns the national yearlyData.
  * @returns {Array<{year,forestCoverHa,forestLossHa,forestGainHa}>}
  */
 export function getFilteredYearlyData() {
   if (!_stats?.yearlyData) return [];
+
+  const { province, district, yearStart, yearEnd } = _filter;
+
+  // ── District filter active ──────────────────────────────────
+  // No per-district yearly time series exists; synthesise yearly data from
+  // the district's static snapshot by scaling the national annual trend.
+  if (district !== 'all') {
+    const distObj = _stats.districts?.find(d => d.name === district);
+    if (distObj) {
+      // Compute national cover in 2025 (last point) as baseline for scaling
+      const nationalRef = _stats.yearlyData[_stats.yearlyData.length - 1];
+      const coverRatio  = (distObj.forestCoverHa ?? 0) / (nationalRef.forestCoverHa || 1);
+      const lossRatio   = (distObj.forestLossHa  ?? 0) / (nationalRef.forestLossHa  || 1);
+      const gainRatio   = (distObj.forestGainHa  ?? 0) / (nationalRef.forestGainHa  || 1);
+
+      return _stats.yearlyData
+        .filter(d => d.year >= yearStart && d.year <= yearEnd)
+        .map(d => ({
+          year:          d.year,
+          forestCoverHa: Math.round(d.forestCoverHa * coverRatio),
+          forestLossHa:  Math.round(d.forestLossHa  * lossRatio),
+          forestGainHa:  Math.round(d.forestGainHa  * gainRatio),
+        }));
+    }
+  }
+
+  // ── Province filter active ──────────────────────────────────
+  if (province !== 'all') {
+    // Prefer the per-province yearly series if it exists in the data
+    const provYearly = _stats.provinceYearlyData?.[province];
+    if (provYearly?.length) {
+      return provYearly.filter(d => d.year >= yearStart && d.year <= yearEnd);
+    }
+
+    // Fallback: scale national yearly data by province's proportional share
+    const provObj    = _stats.provinces?.find(p => p.name === province);
+    if (provObj) {
+      const nationalRef = _stats.yearlyData[_stats.yearlyData.length - 1];
+      const coverRatio  = (provObj.forestCoverHa ?? 0) / (nationalRef.forestCoverHa || 1);
+      const lossRatio   = (provObj.forestLossHa  ?? 0) / (nationalRef.forestLossHa  || 1);
+      const gainRatio   = (provObj.forestGainHa  ?? 0) / (nationalRef.forestGainHa  || 1);
+
+      return _stats.yearlyData
+        .filter(d => d.year >= yearStart && d.year <= yearEnd)
+        .map(d => ({
+          year:          d.year,
+          forestCoverHa: Math.round(d.forestCoverHa * coverRatio),
+          forestLossHa:  Math.round(d.forestLossHa  * lossRatio),
+          forestGainHa:  Math.round(d.forestGainHa  * gainRatio),
+        }));
+    }
+  }
+
+  // ── National (no region filter) ─────────────────────────────
   return _stats.yearlyData.filter(
-    d => d.year >= _filter.yearStart && d.year <= _filter.yearEnd
+    d => d.year >= yearStart && d.year <= yearEnd
   );
 }
 
@@ -991,7 +1048,13 @@ function _buildCompositionChart() {
   if (!canvas || !_stats?.composition) return;
 
   const composition = _stats.composition;
-  const totalCover  = _stats.forestCoverHa ?? 0;
+
+  // Use the latest year's forest cover for the active filter so the donut
+  // centre and tooltip ha values reflect the selected province/district.
+  const yearly     = getFilteredYearlyData();
+  const totalCover = yearly.length
+    ? yearly[yearly.length - 1].forestCoverHa
+    : (_stats.forestCoverHa ?? 0);
 
   // Update donut center
   const centerEl = document.getElementById('adash-donut-total');
@@ -1004,22 +1067,30 @@ function _buildCompositionChart() {
   const tbody = document.getElementById('adash-composition-sr-tbody');
   if (tbody) {
     tbody.innerHTML = composition.map(c =>
-      `<tr><td>${c.label}</td><td>${c.pct}%</td></tr>`
+      `<tr><td>${c.label}</td><td>${c.pct}%</td><td>${_fmtHa(Math.round(totalCover * c.pct / 100))}</td></tr>`
     ).join('');
   }
 
-  if (_chartComposition) return; // composition is static — build once
+  if (_chartComposition) {
+    // Update tooltip to use the new totalCover (must replace callback closure)
+    _chartComposition.options.plugins.tooltip.callbacks.label = ctx => {
+      const ha = totalCover > 0 ? Math.round(totalCover * ctx.raw / 100) : 0;
+      return `${ctx.label}: ${ctx.raw}% (${_fmt(ha)} ha)`;
+    };
+    _chartComposition.update('none');
+    return;
+  }
 
   _chartComposition = new Chart(canvas, {
     type: 'doughnut',
     data: {
       labels: composition.map(c => c.label),
       datasets: [{
-        data:         composition.map(c => c.pct),
+        data:            composition.map(c => c.pct),
         backgroundColor: COLOR.composition,
-        borderColor:  '#ffffff',
-        borderWidth:  3,
-        hoverOffset:  6,
+        borderColor:     '#ffffff',
+        borderWidth:     3,
+        hoverOffset:     6,
       }],
     },
     options: {

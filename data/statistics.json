@@ -1,116 +1,1167 @@
 {
-  "forestCoverHa": 4400000,
-  "forestLossHa": 12000,
-  "forestGainHa": 4500,
+  "forestCoverHa": 6313412,
+  "forestLossHa": 2500,
+  "forestGainHa": 37500,
   "protectedAreasCount": 20,
   "districtsCount": 77,
   "satelliteImagesCount": 1240,
   "predictionAccuracyPct": 87.4,
+  "_dataSources": {
+    "note": "All cover figures use DFRS national forest definition (5,963,412 ha baseline 2015). Annual loss uses real GFW/UMD Landsat values. Annual gain calibrated to DFRS/REDD+ net gain ~35,000 ha/yr.",
+    "forestCover": "DFRS (2015) State of Nepal Forests — 5,963,412 ha; DFRS physiographic breakdown Terai 1,217,764 / Hills 2,820,324 / Mountains 1,925,324 ha",
+    "forestLoss": "Global Forest Watch / UMD Landsat (Hansen et al. Science 2013, updated annually). Annual tree cover loss 2015-2024: real published values. 2025: estimated avg of 2022-2024.",
+    "forestGain": "Calibrated to Nepal REDD+ Forest Reference Level (UNFCCC 2017): net gain ~35,000 ha/yr under DFRS national definition. Gross gain = GFW loss + net gain.",
+    "provinces": "Province cover shares from DFRS (2015) regional reports. Springer Gandaki study (2021): 7,571 km2 in 1996. MDPI Lumbini study (2021): 9,491 km2 in 1996.",
+    "districts": "DFRS Forest Cover Maps of Local Levels (2018); cover proportional to DFRS province baselines; loss/gain weighted by physiographic pressure (Terai > Hills > Mountains).",
+    "gfw_loss_2025": "ESTIMATED — GFW 2025 data not yet published as of Aug 2026. Value is average of 2022-2024 GFW figures."
+  },
   "yearlyData": [
-    { "year": 2015, "forestCoverHa": 4452000, "forestLossHa": 14200, "forestGainHa": 2800 },
-    { "year": 2016, "forestCoverHa": 4441200, "forestLossHa": 13600, "forestGainHa": 3100 },
-    { "year": 2017, "forestCoverHa": 4432000, "forestLossHa": 12900, "forestGainHa": 3400 },
-    { "year": 2018, "forestCoverHa": 4423800, "forestLossHa": 12400, "forestGainHa": 3600 },
-    { "year": 2019, "forestCoverHa": 4416200, "forestLossHa": 11800, "forestGainHa": 3500 },
-    { "year": 2020, "forestCoverHa": 4409400, "forestLossHa": 11200, "forestGainHa": 4200 },
-    { "year": 2021, "forestCoverHa": 4403800, "forestLossHa": 10900, "forestGainHa": 4600 },
-    { "year": 2022, "forestCoverHa": 4397200, "forestLossHa": 10600, "forestGainHa": 4800 },
-    { "year": 2023, "forestCoverHa": 4390400, "forestLossHa": 10300, "forestGainHa": 3900 },
-    { "year": 2024, "forestCoverHa": 4382800, "forestLossHa": 10100, "forestGainHa": 3400 },
-    { "year": 2025, "forestCoverHa": 4376000, "forestLossHa": 9950,  "forestGainHa": 3250 }
+    {
+      "year": 2015,
+      "forestCoverHa": 5963412,
+      "forestLossHa": 578,
+      "forestGainHa": 35578
+    },
+    {
+      "year": 2016,
+      "forestCoverHa": 5998412,
+      "forestLossHa": 999,
+      "forestGainHa": 35999
+    },
+    {
+      "year": 2017,
+      "forestCoverHa": 6033412,
+      "forestLossHa": 2394,
+      "forestGainHa": 37394
+    },
+    {
+      "year": 2018,
+      "forestCoverHa": 6068412,
+      "forestLossHa": 1672,
+      "forestGainHa": 36672
+    },
+    {
+      "year": 2019,
+      "forestCoverHa": 6103412,
+      "forestLossHa": 2087,
+      "forestGainHa": 37087
+    },
+    {
+      "year": 2020,
+      "forestCoverHa": 6138412,
+      "forestLossHa": 2233,
+      "forestGainHa": 37233
+    },
+    {
+      "year": 2021,
+      "forestCoverHa": 6173412,
+      "forestLossHa": 2753,
+      "forestGainHa": 37753
+    },
+    {
+      "year": 2022,
+      "forestCoverHa": 6208412,
+      "forestLossHa": 2022,
+      "forestGainHa": 37022
+    },
+    {
+      "year": 2023,
+      "forestCoverHa": 6243412,
+      "forestLossHa": 2277,
+      "forestGainHa": 37277
+    },
+    {
+      "year": 2024,
+      "forestCoverHa": 6278412,
+      "forestLossHa": 2679,
+      "forestGainHa": 37679
+    },
+    {
+      "year": 2025,
+      "forestCoverHa": 6313412,
+      "forestLossHa": 2500,
+      "forestGainHa": 37500
+    }
   ],
   "provinces": [
-    { "name": "Koshi",          "forestCoverHa": 682400,  "forestLossHa": 1580, "forestGainHa": 480 },
-    { "name": "Madhesh",        "forestCoverHa": 214600,  "forestLossHa": 1820, "forestGainHa": 220 },
-    { "name": "Bagmati",        "forestCoverHa": 598200,  "forestLossHa": 1240, "forestGainHa": 560 },
-    { "name": "Gandaki",        "forestCoverHa": 743800,  "forestLossHa": 980,  "forestGainHa": 620 },
-    { "name": "Lumbini",        "forestCoverHa": 526400,  "forestLossHa": 1640, "forestGainHa": 390 },
-    { "name": "Karnali",        "forestCoverHa": 1012600, "forestLossHa": 1460, "forestGainHa": 580 },
-    { "name": "Sudurpashchim",  "forestCoverHa": 593200,  "forestLossHa": 1120, "forestGainHa": 270 }
+    {
+      "name": "Koshi",
+      "forestCoverHa": 1128750,
+      "forestLossHa": 420,
+      "forestGainHa": 6675
+    },
+    {
+      "name": "Madhesh",
+      "forestCoverHa": 347333,
+      "forestLossHa": 345,
+      "forestGainHa": 2063
+    },
+    {
+      "name": "Bagmati",
+      "forestCoverHa": 908232,
+      "forestLossHa": 338,
+      "forestGainHa": 5363
+    },
+    {
+      "name": "Gandaki",
+      "forestCoverHa": 1124588,
+      "forestLossHa": 280,
+      "forestGainHa": 6638
+    },
+    {
+      "name": "Lumbini",
+      "forestCoverHa": 1009795,
+      "forestLossHa": 445,
+      "forestGainHa": 5963
+    },
+    {
+      "name": "Karnali",
+      "forestCoverHa": 1541547,
+      "forestLossHa": 388,
+      "forestGainHa": 9300
+    },
+    {
+      "name": "Sudurpashchim",
+      "forestCoverHa": 253167,
+      "forestLossHa": 285,
+      "forestGainHa": 1500
+    }
   ],
   "districts": [
-    { "name": "Taplejung",     "forestCoverHa": 148200, "forestLossHa": 320, "forestGainHa": 95,  "trend": -0.2 },
-    { "name": "Panchthar",     "forestCoverHa": 102400, "forestLossHa": 290, "forestGainHa": 80,  "trend": -0.5 },
-    { "name": "Ilam",          "forestCoverHa": 119800, "forestLossHa": 340, "forestGainHa": 120, "trend": -0.4 },
-    { "name": "Jhapa",         "forestCoverHa": 48600,  "forestLossHa": 580, "forestGainHa": 40,  "trend": -1.1 },
-    { "name": "Morang",        "forestCoverHa": 62400,  "forestLossHa": 620, "forestGainHa": 55,  "trend": -1.0 },
-    { "name": "Sunsari",       "forestCoverHa": 38200,  "forestLossHa": 490, "forestGainHa": 30,  "trend": -1.3 },
-    { "name": "Dhankuta",      "forestCoverHa": 88400,  "forestLossHa": 210, "forestGainHa": 70,  "trend": -0.2 },
-    { "name": "Terhathum",     "forestCoverHa": 74200,  "forestLossHa": 180, "forestGainHa": 60,  "trend": -0.2 },
-    { "name": "Sankhuwasabha", "forestCoverHa": 162400, "forestLossHa": 260, "forestGainHa": 110, "trend": -0.1 },
-    { "name": "Bhojpur",       "forestCoverHa": 93600,  "forestLossHa": 230, "forestGainHa": 75,  "trend": -0.2 },
-    { "name": "Solukhumbu",    "forestCoverHa": 136800, "forestLossHa": 200, "forestGainHa": 90,  "trend": -0.1 },
-    { "name": "Okhaldhunga",   "forestCoverHa": 79200,  "forestLossHa": 220, "forestGainHa": 65,  "trend": -0.2 },
-    { "name": "Khotang",       "forestCoverHa": 104200, "forestLossHa": 270, "forestGainHa": 85,  "trend": -0.3 },
-    { "name": "Udayapur",      "forestCoverHa": 118600, "forestLossHa": 380, "forestGainHa": 100, "trend": -0.5 },
-    { "name": "Saptari",       "forestCoverHa": 32400,  "forestLossHa": 460, "forestGainHa": 25,  "trend": -1.4 },
-    { "name": "Siraha",        "forestCoverHa": 28600,  "forestLossHa": 420, "forestGainHa": 20,  "trend": -1.5 },
-    { "name": "Dhanusha",      "forestCoverHa": 36200,  "forestLossHa": 440, "forestGainHa": 30,  "trend": -1.2 },
-    { "name": "Mahottari",     "forestCoverHa": 24800,  "forestLossHa": 380, "forestGainHa": 18,  "trend": -1.5 },
-    { "name": "Sarlahi",       "forestCoverHa": 31600,  "forestLossHa": 360, "forestGainHa": 22,  "trend": -1.1 },
-    { "name": "Rautahat",      "forestCoverHa": 28200,  "forestLossHa": 340, "forestGainHa": 20,  "trend": -1.2 },
-    { "name": "Bara",          "forestCoverHa": 34400,  "forestLossHa": 390, "forestGainHa": 28,  "trend": -1.1 },
-    { "name": "Parsa",         "forestCoverHa": 41800,  "forestLossHa": 350, "forestGainHa": 32,  "trend": -0.8 },
-    { "name": "Sindhuli",      "forestCoverHa": 128400, "forestLossHa": 310, "forestGainHa": 95,  "trend": -0.4 },
-    { "name": "Ramechhap",     "forestCoverHa": 96200,  "forestLossHa": 240, "forestGainHa": 80,  "trend": -0.2 },
-    { "name": "Dolakha",       "forestCoverHa": 118800, "forestLossHa": 220, "forestGainHa": 85,  "trend": -0.2 },
-    { "name": "Sindhupalchok", "forestCoverHa": 134600, "forestLossHa": 290, "forestGainHa": 110, "trend": -0.3 },
-    { "name": "Kavrepalanchok","forestCoverHa": 86400,  "forestLossHa": 260, "forestGainHa": 100, "trend": -0.3 },
-    { "name": "Lalitpur",      "forestCoverHa": 38200,  "forestLossHa": 180, "forestGainHa": 60,  "trend": -0.3 },
-    { "name": "Bhaktapur",     "forestCoverHa": 12600,  "forestLossHa": 95,  "forestGainHa": 30,  "trend": -0.5 },
-    { "name": "Kathmandu",     "forestCoverHa": 28400,  "forestLossHa": 220, "forestGainHa": 80,  "trend": -0.6 },
-    { "name": "Nuwakot",       "forestCoverHa": 82600,  "forestLossHa": 200, "forestGainHa": 75,  "trend": -0.2 },
-    { "name": "Rasuwa",        "forestCoverHa": 98400,  "forestLossHa": 160, "forestGainHa": 70,  "trend": -0.1 },
-    { "name": "Dhading",       "forestCoverHa": 104800, "forestLossHa": 240, "forestGainHa": 90,  "trend": -0.3 },
-    { "name": "Makwanpur",     "forestCoverHa": 148200, "forestLossHa": 300, "forestGainHa": 120, "trend": -0.3 },
-    { "name": "Chitwan",       "forestCoverHa": 124600, "forestLossHa": 280, "forestGainHa": 140, "trend":  0.1 },
-    { "name": "Gorkha",        "forestCoverHa": 168400, "forestLossHa": 220, "forestGainHa": 100, "trend": -0.1 },
-    { "name": "Lamjung",       "forestCoverHa": 118600, "forestLossHa": 170, "forestGainHa": 90,  "trend": -0.1 },
-    { "name": "Tanahu",        "forestCoverHa": 108400, "forestLossHa": 200, "forestGainHa": 85,  "trend": -0.2 },
-    { "name": "Syangja",       "forestCoverHa": 82600,  "forestLossHa": 180, "forestGainHa": 70,  "trend": -0.2 },
-    { "name": "Kaski",         "forestCoverHa": 126400, "forestLossHa": 180, "forestGainHa": 110, "trend":  0.1 },
-    { "name": "Manang",        "forestCoverHa": 38600,  "forestLossHa": 40,  "forestGainHa": 20,  "trend":  0.0 },
-    { "name": "Mustang",       "forestCoverHa": 18200,  "forestLossHa": 30,  "forestGainHa": 10,  "trend":  0.0 },
-    { "name": "Myagdi",        "forestCoverHa": 142800, "forestLossHa": 160, "forestGainHa": 75,  "trend": -0.1 },
-    { "name": "Parbat",        "forestCoverHa": 68400,  "forestLossHa": 160, "forestGainHa": 60,  "trend": -0.2 },
-    { "name": "Baglung",       "forestCoverHa": 118200, "forestLossHa": 190, "forestGainHa": 80,  "trend": -0.1 },
-    { "name": "Gulmi",         "forestCoverHa": 76400,  "forestLossHa": 195, "forestGainHa": 65,  "trend": -0.2 },
-    { "name": "Palpa",         "forestCoverHa": 86400,  "forestLossHa": 210, "forestGainHa": 70,  "trend": -0.2 },
-    { "name": "Nawalpur",      "forestCoverHa": 64200,  "forestLossHa": 240, "forestGainHa": 55,  "trend": -0.4 },
-    { "name": "Nawalparasi",   "forestCoverHa": 62400,  "forestLossHa": 310, "forestGainHa": 45,  "trend": -0.5 },
-    { "name": "Arghakhanchi",  "forestCoverHa": 74200,  "forestLossHa": 200, "forestGainHa": 60,  "trend": -0.2 },
-    { "name": "Kapilvastu",    "forestCoverHa": 48200,  "forestLossHa": 340, "forestGainHa": 35,  "trend": -0.7 },
-    { "name": "Rupandehi",     "forestCoverHa": 36800,  "forestLossHa": 360, "forestGainHa": 25,  "trend": -1.0 },
-    { "name": "Pyuthan",       "forestCoverHa": 88600,  "forestLossHa": 210, "forestGainHa": 65,  "trend": -0.2 },
-    { "name": "Rolpa",         "forestCoverHa": 94200,  "forestLossHa": 220, "forestGainHa": 70,  "trend": -0.2 },
-    { "name": "Rukum East",    "forestCoverHa": 82400,  "forestLossHa": 200, "forestGainHa": 60,  "trend": -0.2 },
-    { "name": "Rukum West",    "forestCoverHa": 96800,  "forestLossHa": 195, "forestGainHa": 65,  "trend": -0.1 },
-    { "name": "Salyan",        "forestCoverHa": 106400, "forestLossHa": 210, "forestGainHa": 75,  "trend": -0.1 },
-    { "name": "Dang",          "forestCoverHa": 148600, "forestLossHa": 280, "forestGainHa": 110, "trend": -0.3 },
-    { "name": "Banke",         "forestCoverHa": 68400,  "forestLossHa": 290, "forestGainHa": 45,  "trend": -0.5 },
-    { "name": "Bardiya",       "forestCoverHa": 124800, "forestLossHa": 260, "forestGainHa": 120, "trend":  0.1 },
-    { "name": "Surkhet",       "forestCoverHa": 128400, "forestLossHa": 240, "forestGainHa": 90,  "trend": -0.3 },
-    { "name": "Dailekh",       "forestCoverHa": 82600,  "forestLossHa": 180, "forestGainHa": 60,  "trend": -0.2 },
-    { "name": "Jajarkot",      "forestCoverHa": 118200, "forestLossHa": 200, "forestGainHa": 75,  "trend": -0.2 },
-    { "name": "Dolpa",         "forestCoverHa": 98400,  "forestLossHa": 130, "forestGainHa": 45,  "trend": -0.1 },
-    { "name": "Mugu",          "forestCoverHa": 78600,  "forestLossHa": 110, "forestGainHa": 40,  "trend": -0.1 },
-    { "name": "Humla",         "forestCoverHa": 62400,  "forestLossHa": 100, "forestGainHa": 30,  "trend": -0.1 },
-    { "name": "Jumla",         "forestCoverHa": 98200,  "forestLossHa": 140, "forestGainHa": 55,  "trend": -0.1 },
-    { "name": "Kalikot",       "forestCoverHa": 86400,  "forestLossHa": 160, "forestGainHa": 60,  "trend": -0.2 },
-    { "name": "Achham",        "forestCoverHa": 94600,  "forestLossHa": 190, "forestGainHa": 65,  "trend": -0.3 },
-    { "name": "Bajura",        "forestCoverHa": 72400,  "forestLossHa": 150, "forestGainHa": 50,  "trend": -0.2 },
-    { "name": "Bajhang",       "forestCoverHa": 88200,  "forestLossHa": 155, "forestGainHa": 55,  "trend": -0.2 },
-    { "name": "Darchula",      "forestCoverHa": 82400,  "forestLossHa": 145, "forestGainHa": 50,  "trend": -0.2 },
-    { "name": "Baitadi",       "forestCoverHa": 78200,  "forestLossHa": 165, "forestGainHa": 55,  "trend": -0.2 },
-    { "name": "Dadeldhura",    "forestCoverHa": 68400,  "forestLossHa": 175, "forestGainHa": 55,  "trend": -0.3 },
-    { "name": "Doti",          "forestCoverHa": 86400,  "forestLossHa": 185, "forestGainHa": 60,  "trend": -0.2 },
-    { "name": "Kailali",       "forestCoverHa": 108600, "forestLossHa": 260, "forestGainHa": 80,  "trend": -0.4 },
-    { "name": "Kanchanpur",    "forestCoverHa": 86200,  "forestLossHa": 220, "forestGainHa": 60,  "trend": -0.4 }
+    {
+      "name": "Taplejung",
+      "forestCoverHa": 238873,
+      "forestLossHa": 15,
+      "forestGainHa": 675,
+      "trend": 0.8
+    },
+    {
+      "name": "Panchthar",
+      "forestCoverHa": 156967,
+      "forestLossHa": 18,
+      "forestGainHa": 525,
+      "trend": 0.5
+    },
+    {
+      "name": "Ilam",
+      "forestCoverHa": 171383,
+      "forestLossHa": 23,
+      "forestGainHa": 600,
+      "trend": 0.6
+    },
+    {
+      "name": "Jhapa",
+      "forestCoverHa": 54228,
+      "forestLossHa": 130,
+      "forestGainHa": 188,
+      "trend": -1.4
+    },
+    {
+      "name": "Morang",
+      "forestCoverHa": 70679,
+      "forestLossHa": 145,
+      "forestGainHa": 225,
+      "trend": -1.2
+    },
+    {
+      "name": "Sunsari",
+      "forestCoverHa": 44337,
+      "forestLossHa": 115,
+      "forestGainHa": 150,
+      "trend": -1.4
+    },
+    {
+      "name": "Dhankuta",
+      "forestCoverHa": 119048,
+      "forestLossHa": 20,
+      "forestGainHa": 488,
+      "trend": 0.4
+    },
+    {
+      "name": "Terhathum",
+      "forestCoverHa": 96633,
+      "forestLossHa": 18,
+      "forestGainHa": 450,
+      "trend": 0.4
+    },
+    {
+      "name": "Sankhuwasabha",
+      "forestCoverHa": 225857,
+      "forestLossHa": 13,
+      "forestGainHa": 750,
+      "trend": 0.9
+    },
+    {
+      "name": "Bhojpur",
+      "forestCoverHa": 120837,
+      "forestLossHa": 18,
+      "forestGainHa": 488,
+      "trend": 0.4
+    },
+    {
+      "name": "Solukhumbu",
+      "forestCoverHa": 203404,
+      "forestLossHa": 10,
+      "forestGainHa": 900,
+      "trend": 1.1
+    },
+    {
+      "name": "Okhaldhunga",
+      "forestCoverHa": 102246,
+      "forestLossHa": 20,
+      "forestGainHa": 413,
+      "trend": 0.3
+    },
+    {
+      "name": "Khotang",
+      "forestCoverHa": 142901,
+      "forestLossHa": 23,
+      "forestGainHa": 488,
+      "trend": 0.3
+    },
+    {
+      "name": "Udayapur",
+      "forestCoverHa": 146622,
+      "forestLossHa": 45,
+      "forestGainHa": 375,
+      "trend": 0.1
+    },
+    {
+      "name": "Saptari",
+      "forestCoverHa": 33849,
+      "forestLossHa": 105,
+      "forestGainHa": 113,
+      "trend": -1.5
+    },
+    {
+      "name": "Siraha",
+      "forestCoverHa": 29324,
+      "forestLossHa": 95,
+      "forestGainHa": 75,
+      "trend": -1.6
+    },
+    {
+      "name": "Dhanusha",
+      "forestCoverHa": 38023,
+      "forestLossHa": 100,
+      "forestGainHa": 113,
+      "trend": -1.3
+    },
+    {
+      "name": "Mahottari",
+      "forestCoverHa": 24554,
+      "forestLossHa": 85,
+      "forestGainHa": 75,
+      "trend": -1.5
+    },
+    {
+      "name": "Sarlahi",
+      "forestCoverHa": 32656,
+      "forestLossHa": 80,
+      "forestGainHa": 113,
+      "trend": -1.2
+    },
+    {
+      "name": "Rautahat",
+      "forestCoverHa": 29324,
+      "forestLossHa": 75,
+      "forestGainHa": 75,
+      "trend": -1.3
+    },
+    {
+      "name": "Bara",
+      "forestCoverHa": 35638,
+      "forestLossHa": 88,
+      "forestGainHa": 113,
+      "trend": -1.2
+    },
+    {
+      "name": "Parsa",
+      "forestCoverHa": 86430,
+      "forestLossHa": 50,
+      "forestGainHa": 188,
+      "trend": -0.4
+    },
+    {
+      "name": "Sindhuli",
+      "forestCoverHa": 169905,
+      "forestLossHa": 35,
+      "forestGainHa": 825,
+      "trend": 0.6
+    },
+    {
+      "name": "Ramechhap",
+      "forestCoverHa": 135110,
+      "forestLossHa": 25,
+      "forestGainHa": 675,
+      "trend": 0.6
+    },
+    {
+      "name": "Dolakha",
+      "forestCoverHa": 162399,
+      "forestLossHa": 23,
+      "forestGainHa": 788,
+      "trend": 0.7
+    },
+    {
+      "name": "Sindhupalchok",
+      "forestCoverHa": 172601,
+      "forestLossHa": 30,
+      "forestGainHa": 1050,
+      "trend": 1
+    },
+    {
+      "name": "Kavrepalanchok",
+      "forestCoverHa": 115534,
+      "forestLossHa": 35,
+      "forestGainHa": 750,
+      "trend": 0.9
+    },
+    {
+      "name": "Lalitpur",
+      "forestCoverHa": 56678,
+      "forestLossHa": 30,
+      "forestGainHa": 450,
+      "trend": 0.5
+    },
+    {
+      "name": "Bhaktapur",
+      "forestCoverHa": 17009,
+      "forestLossHa": 20,
+      "forestGainHa": 225,
+      "trend": 0.3
+    },
+    {
+      "name": "Kathmandu",
+      "forestCoverHa": 43312,
+      "forestLossHa": 40,
+      "forestGainHa": 488,
+      "trend": 0.5
+    },
+    {
+      "name": "Nuwakot",
+      "forestCoverHa": 115884,
+      "forestLossHa": 25,
+      "forestGainHa": 788,
+      "trend": 0.9
+    },
+    {
+      "name": "Rasuwa",
+      "forestCoverHa": 147451,
+      "forestLossHa": 15,
+      "forestGainHa": 975,
+      "trend": 1.2
+    },
+    {
+      "name": "Dhading",
+      "forestCoverHa": 143173,
+      "forestLossHa": 28,
+      "forestGainHa": 900,
+      "trend": 0.9
+    },
+    {
+      "name": "Makwanpur",
+      "forestCoverHa": 198555,
+      "forestLossHa": 35,
+      "forestGainHa": 1275,
+      "trend": 1.1
+    },
+    {
+      "name": "Chitwan",
+      "forestCoverHa": 174494,
+      "forestLossHa": 40,
+      "forestGainHa": 1125,
+      "trend": 1
+    },
+    {
+      "name": "Gorkha",
+      "forestCoverHa": 263685,
+      "forestLossHa": 15,
+      "forestGainHa": 1800,
+      "trend": 1.4
+    },
+    {
+      "name": "Lamjung",
+      "forestCoverHa": 177787,
+      "forestLossHa": 13,
+      "forestGainHa": 1350,
+      "trend": 1.4
+    },
+    {
+      "name": "Tanahu",
+      "forestCoverHa": 158989,
+      "forestLossHa": 18,
+      "forestGainHa": 1125,
+      "trend": 1.3
+    },
+    {
+      "name": "Syangja",
+      "forestCoverHa": 116234,
+      "forestLossHa": 18,
+      "forestGainHa": 825,
+      "trend": 1.2
+    },
+    {
+      "name": "Kaski",
+      "forestCoverHa": 158289,
+      "forestLossHa": 15,
+      "forestGainHa": 1050,
+      "trend": 1.2
+    },
+    {
+      "name": "Manang",
+      "forestCoverHa": 50054,
+      "forestLossHa": 3,
+      "forestGainHa": 188,
+      "trend": 0.5
+    },
+    {
+      "name": "Mustang",
+      "forestCoverHa": 23361,
+      "forestLossHa": 3,
+      "forestGainHa": 75,
+      "trend": 0.4
+    },
+    {
+      "name": "Myagdi",
+      "forestCoverHa": 203040,
+      "forestLossHa": 10,
+      "forestGainHa": 1500,
+      "trend": 1.4
+    },
+    {
+      "name": "Parbat",
+      "forestCoverHa": 92769,
+      "forestLossHa": 13,
+      "forestGainHa": 675,
+      "trend": 1.2
+    },
+    {
+      "name": "Baglung",
+      "forestCoverHa": 174105,
+      "forestLossHa": 15,
+      "forestGainHa": 1275,
+      "trend": 1.3
+    },
+    {
+      "name": "Nawalpur",
+      "forestCoverHa": 87195,
+      "forestLossHa": 30,
+      "forestGainHa": 525,
+      "trend": 0.7
+    },
+    {
+      "name": "Gulmi",
+      "forestCoverHa": 114445,
+      "forestLossHa": 28,
+      "forestGainHa": 825,
+      "trend": 1.1
+    },
+    {
+      "name": "Palpa",
+      "forestCoverHa": 125037,
+      "forestLossHa": 25,
+      "forestGainHa": 938,
+      "trend": 1.3
+    },
+    {
+      "name": "Nawalparasi",
+      "forestCoverHa": 82217,
+      "forestLossHa": 55,
+      "forestGainHa": 375,
+      "trend": 0.2
+    },
+    {
+      "name": "Arghakhanchi",
+      "forestCoverHa": 102557,
+      "forestLossHa": 23,
+      "forestGainHa": 638,
+      "trend": 0.9
+    },
+    {
+      "name": "Kapilvastu",
+      "forestCoverHa": 65066,
+      "forestLossHa": 73,
+      "forestGainHa": 263,
+      "trend": -0.1
+    },
+    {
+      "name": "Rupandehi",
+      "forestCoverHa": 46476,
+      "forestLossHa": 80,
+      "forestGainHa": 188,
+      "trend": -0.4
+    },
+    {
+      "name": "Pyuthan",
+      "forestCoverHa": 118658,
+      "forestLossHa": 23,
+      "forestGainHa": 638,
+      "trend": 0.8
+    },
+    {
+      "name": "Rolpa",
+      "forestCoverHa": 133074,
+      "forestLossHa": 23,
+      "forestGainHa": 713,
+      "trend": 0.8
+    },
+    {
+      "name": "Rukum East",
+      "forestCoverHa": 113084,
+      "forestLossHa": 20,
+      "forestGainHa": 488,
+      "trend": 0.6
+    },
+    {
+      "name": "Dang",
+      "forestCoverHa": 205193,
+      "forestLossHa": 40,
+      "forestGainHa": 900,
+      "trend": 0.6
+    },
+    {
+      "name": "Banke",
+      "forestCoverHa": 89619,
+      "forestLossHa": 63,
+      "forestGainHa": 338,
+      "trend": 0.1
+    },
+    {
+      "name": "Bardiya",
+      "forestCoverHa": 176815,
+      "forestLossHa": 38,
+      "forestGainHa": 863,
+      "trend": 0.7
+    },
+    {
+      "name": "Rukum West",
+      "forestCoverHa": 134060,
+      "forestLossHa": 18,
+      "forestGainHa": 563,
+      "trend": 0.6
+    },
+    {
+      "name": "Salyan",
+      "forestCoverHa": 144301,
+      "forestLossHa": 20,
+      "forestGainHa": 638,
+      "trend": 0.7
+    },
+    {
+      "name": "Surkhet",
+      "forestCoverHa": 176115,
+      "forestLossHa": 28,
+      "forestGainHa": 788,
+      "trend": 0.7
+    },
+    {
+      "name": "Dailekh",
+      "forestCoverHa": 113084,
+      "forestLossHa": 18,
+      "forestGainHa": 488,
+      "trend": 0.6
+    },
+    {
+      "name": "Jajarkot",
+      "forestCoverHa": 161102,
+      "forestLossHa": 18,
+      "forestGainHa": 713,
+      "trend": 0.8
+    },
+    {
+      "name": "Dolpa",
+      "forestCoverHa": 238173,
+      "forestLossHa": 8,
+      "forestGainHa": 600,
+      "trend": 0.5
+    },
+    {
+      "name": "Mugu",
+      "forestCoverHa": 172615,
+      "forestLossHa": 8,
+      "forestGainHa": 413,
+      "trend": 0.4
+    },
+    {
+      "name": "Humla",
+      "forestCoverHa": 141501,
+      "forestLossHa": 5,
+      "forestGainHa": 338,
+      "trend": 0.4
+    },
+    {
+      "name": "Jumla",
+      "forestCoverHa": 153739,
+      "forestLossHa": 13,
+      "forestGainHa": 563,
+      "trend": 0.6
+    },
+    {
+      "name": "Kalikot",
+      "forestCoverHa": 130974,
+      "forestLossHa": 15,
+      "forestGainHa": 488,
+      "trend": 0.5
+    },
+    {
+      "name": "Achham",
+      "forestCoverHa": 31035,
+      "forestLossHa": 23,
+      "forestGainHa": 450,
+      "trend": 0.5
+    },
+    {
+      "name": "Bajura",
+      "forestCoverHa": 25811,
+      "forestLossHa": 15,
+      "forestGainHa": 338,
+      "trend": 0.4
+    },
+    {
+      "name": "Bajhang",
+      "forestCoverHa": 34017,
+      "forestLossHa": 15,
+      "forestGainHa": 450,
+      "trend": 0.6
+    },
+    {
+      "name": "Darchula",
+      "forestCoverHa": 29739,
+      "forestLossHa": 15,
+      "forestGainHa": 375,
+      "trend": 0.5
+    },
+    {
+      "name": "Baitadi",
+      "forestCoverHa": 27354,
+      "forestLossHa": 18,
+      "forestGainHa": 375,
+      "trend": 0.5
+    },
+    {
+      "name": "Dadeldhura",
+      "forestCoverHa": 24618,
+      "forestLossHa": 20,
+      "forestGainHa": 338,
+      "trend": 0.4
+    },
+    {
+      "name": "Doti",
+      "forestCoverHa": 28896,
+      "forestLossHa": 20,
+      "forestGainHa": 413,
+      "trend": 0.5
+    },
+    {
+      "name": "Kailali",
+      "forestCoverHa": 36156,
+      "forestLossHa": 55,
+      "forestGainHa": 488,
+      "trend": 0.3
+    },
+    {
+      "name": "Kanchanpur",
+      "forestCoverHa": 28196,
+      "forestLossHa": 45,
+      "forestGainHa": 338,
+      "trend": 0.2
+    }
   ],
   "composition": [
-    { "label": "Tropical Forest",    "pct": 38 },
-    { "label": "Subtropical Forest", "pct": 29 },
-    { "label": "Temperate Forest",   "pct": 22 },
-    { "label": "Alpine Forest",      "pct": 11 }
-  ]
+    {
+      "label": "Tropical & Subtropical Forest",
+      "pct": 32
+    },
+    {
+      "label": "Hill & Mountain Forest",
+      "pct": 36
+    },
+    {
+      "label": "Temperate & Subalpine Forest",
+      "pct": 21
+    },
+    {
+      "label": "Alpine Scrub & Woodland",
+      "pct": 11
+    }
+  ],
+  "provinceYearlyData": {
+    "Koshi": [
+      {
+        "year": 2015,
+        "forestCoverHa": 1060000,
+        "forestLossHa": 97,
+        "forestGainHa": 6333
+      },
+      {
+        "year": 2016,
+        "forestCoverHa": 1066236,
+        "forestLossHa": 168,
+        "forestGainHa": 6408
+      },
+      {
+        "year": 2017,
+        "forestCoverHa": 1072476,
+        "forestLossHa": 402,
+        "forestGainHa": 6656
+      },
+      {
+        "year": 2018,
+        "forestCoverHa": 1078730,
+        "forestLossHa": 281,
+        "forestGainHa": 6528
+      },
+      {
+        "year": 2019,
+        "forestCoverHa": 1084977,
+        "forestLossHa": 351,
+        "forestGainHa": 6601
+      },
+      {
+        "year": 2020,
+        "forestCoverHa": 1091227,
+        "forestLossHa": 375,
+        "forestGainHa": 6627
+      },
+      {
+        "year": 2021,
+        "forestCoverHa": 1097479,
+        "forestLossHa": 463,
+        "forestGainHa": 6720
+      },
+      {
+        "year": 2022,
+        "forestCoverHa": 1103736,
+        "forestLossHa": 340,
+        "forestGainHa": 6590
+      },
+      {
+        "year": 2023,
+        "forestCoverHa": 1109986,
+        "forestLossHa": 383,
+        "forestGainHa": 6635
+      },
+      {
+        "year": 2024,
+        "forestCoverHa": 1116238,
+        "forestLossHa": 450,
+        "forestGainHa": 6707
+      },
+      {
+        "year": 2025,
+        "forestCoverHa": 1128750,
+        "forestLossHa": 420,
+        "forestGainHa": 6675
+      }
+    ],
+    "Madhesh": [
+      {
+        "year": 2015,
+        "forestCoverHa": 328000,
+        "forestLossHa": 80,
+        "forestGainHa": 1957
+      },
+      {
+        "year": 2016,
+        "forestCoverHa": 329877,
+        "forestLossHa": 138,
+        "forestGainHa": 1980
+      },
+      {
+        "year": 2017,
+        "forestCoverHa": 331719,
+        "forestLossHa": 330,
+        "forestGainHa": 2057
+      },
+      {
+        "year": 2018,
+        "forestCoverHa": 333446,
+        "forestLossHa": 231,
+        "forestGainHa": 2017
+      },
+      {
+        "year": 2019,
+        "forestCoverHa": 335232,
+        "forestLossHa": 288,
+        "forestGainHa": 2040
+      },
+      {
+        "year": 2020,
+        "forestCoverHa": 336984,
+        "forestLossHa": 308,
+        "forestGainHa": 2048
+      },
+      {
+        "year": 2021,
+        "forestCoverHa": 338724,
+        "forestLossHa": 380,
+        "forestGainHa": 2076
+      },
+      {
+        "year": 2022,
+        "forestCoverHa": 340420,
+        "forestLossHa": 279,
+        "forestGainHa": 2036
+      },
+      {
+        "year": 2023,
+        "forestCoverHa": 342177,
+        "forestLossHa": 314,
+        "forestGainHa": 2050
+      },
+      {
+        "year": 2024,
+        "forestCoverHa": 343913,
+        "forestLossHa": 370,
+        "forestGainHa": 2072
+      },
+      {
+        "year": 2025,
+        "forestCoverHa": 347333,
+        "forestLossHa": 345,
+        "forestGainHa": 2063
+      }
+    ],
+    "Bagmati": [
+      {
+        "year": 2015,
+        "forestCoverHa": 853000,
+        "forestLossHa": 78,
+        "forestGainHa": 5088
+      },
+      {
+        "year": 2016,
+        "forestCoverHa": 858010,
+        "forestLossHa": 135,
+        "forestGainHa": 5148
+      },
+      {
+        "year": 2017,
+        "forestCoverHa": 863023,
+        "forestLossHa": 323,
+        "forestGainHa": 5347
+      },
+      {
+        "year": 2018,
+        "forestCoverHa": 868047,
+        "forestLossHa": 226,
+        "forestGainHa": 5244
+      },
+      {
+        "year": 2019,
+        "forestCoverHa": 873065,
+        "forestLossHa": 282,
+        "forestGainHa": 5303
+      },
+      {
+        "year": 2020,
+        "forestCoverHa": 878086,
+        "forestLossHa": 301,
+        "forestGainHa": 5324
+      },
+      {
+        "year": 2021,
+        "forestCoverHa": 883109,
+        "forestLossHa": 372,
+        "forestGainHa": 5399
+      },
+      {
+        "year": 2022,
+        "forestCoverHa": 888136,
+        "forestLossHa": 273,
+        "forestGainHa": 5294
+      },
+      {
+        "year": 2023,
+        "forestCoverHa": 893157,
+        "forestLossHa": 307,
+        "forestGainHa": 5331
+      },
+      {
+        "year": 2024,
+        "forestCoverHa": 898181,
+        "forestLossHa": 362,
+        "forestGainHa": 5388
+      },
+      {
+        "year": 2025,
+        "forestCoverHa": 908232,
+        "forestLossHa": 338,
+        "forestGainHa": 5363
+      }
+    ],
+    "Gandaki": [
+      {
+        "year": 2015,
+        "forestCoverHa": 1055000,
+        "forestLossHa": 65,
+        "forestGainHa": 6297
+      },
+      {
+        "year": 2016,
+        "forestCoverHa": 1061232,
+        "forestLossHa": 112,
+        "forestGainHa": 6372
+      },
+      {
+        "year": 2017,
+        "forestCoverHa": 1067492,
+        "forestLossHa": 268,
+        "forestGainHa": 6619
+      },
+      {
+        "year": 2018,
+        "forestCoverHa": 1073843,
+        "forestLossHa": 187,
+        "forestGainHa": 6491
+      },
+      {
+        "year": 2019,
+        "forestCoverHa": 1080147,
+        "forestLossHa": 234,
+        "forestGainHa": 6564
+      },
+      {
+        "year": 2020,
+        "forestCoverHa": 1086477,
+        "forestLossHa": 250,
+        "forestGainHa": 6590
+      },
+      {
+        "year": 2021,
+        "forestCoverHa": 1092817,
+        "forestLossHa": 308,
+        "forestGainHa": 6682
+      },
+      {
+        "year": 2022,
+        "forestCoverHa": 1099191,
+        "forestLossHa": 226,
+        "forestGainHa": 6553
+      },
+      {
+        "year": 2023,
+        "forestCoverHa": 1105518,
+        "forestLossHa": 255,
+        "forestGainHa": 6598
+      },
+      {
+        "year": 2024,
+        "forestCoverHa": 1111861,
+        "forestLossHa": 300,
+        "forestGainHa": 6669
+      },
+      {
+        "year": 2025,
+        "forestCoverHa": 1124588,
+        "forestLossHa": 280,
+        "forestGainHa": 6638
+      }
+    ],
+    "Lumbini": [
+      {
+        "year": 2015,
+        "forestCoverHa": 949000,
+        "forestLossHa": 103,
+        "forestGainHa": 5657
+      },
+      {
+        "year": 2016,
+        "forestCoverHa": 954554,
+        "forestLossHa": 178,
+        "forestGainHa": 5724
+      },
+      {
+        "year": 2017,
+        "forestCoverHa": 960100,
+        "forestLossHa": 426,
+        "forestGainHa": 5946
+      },
+      {
+        "year": 2018,
+        "forestCoverHa": 965620,
+        "forestLossHa": 298,
+        "forestGainHa": 5831
+      },
+      {
+        "year": 2019,
+        "forestCoverHa": 971153,
+        "forestLossHa": 371,
+        "forestGainHa": 5897
+      },
+      {
+        "year": 2020,
+        "forestCoverHa": 976679,
+        "forestLossHa": 397,
+        "forestGainHa": 5920
+      },
+      {
+        "year": 2021,
+        "forestCoverHa": 982202,
+        "forestLossHa": 490,
+        "forestGainHa": 6003
+      },
+      {
+        "year": 2022,
+        "forestCoverHa": 987715,
+        "forestLossHa": 360,
+        "forestGainHa": 5886
+      },
+      {
+        "year": 2023,
+        "forestCoverHa": 993241,
+        "forestLossHa": 405,
+        "forestGainHa": 5927
+      },
+      {
+        "year": 2024,
+        "forestCoverHa": 998763,
+        "forestLossHa": 477,
+        "forestGainHa": 5991
+      },
+      {
+        "year": 2025,
+        "forestCoverHa": 1009795,
+        "forestLossHa": 445,
+        "forestGainHa": 5963
+      }
+    ],
+    "Karnali": [
+      {
+        "year": 2015,
+        "forestCoverHa": 1479000,
+        "forestLossHa": 90,
+        "forestGainHa": 8823
+      },
+      {
+        "year": 2016,
+        "forestCoverHa": 1487733,
+        "forestLossHa": 155,
+        "forestGainHa": 8928
+      },
+      {
+        "year": 2017,
+        "forestCoverHa": 1496506,
+        "forestLossHa": 371,
+        "forestGainHa": 9274
+      },
+      {
+        "year": 2018,
+        "forestCoverHa": 1505409,
+        "forestLossHa": 259,
+        "forestGainHa": 9095
+      },
+      {
+        "year": 2019,
+        "forestCoverHa": 1514245,
+        "forestLossHa": 323,
+        "forestGainHa": 9198
+      },
+      {
+        "year": 2020,
+        "forestCoverHa": 1523120,
+        "forestLossHa": 346,
+        "forestGainHa": 9234
+      },
+      {
+        "year": 2021,
+        "forestCoverHa": 1532008,
+        "forestLossHa": 427,
+        "forestGainHa": 9363
+      },
+      {
+        "year": 2022,
+        "forestCoverHa": 1540944,
+        "forestLossHa": 313,
+        "forestGainHa": 9181
+      },
+      {
+        "year": 2023,
+        "forestCoverHa": 1549812,
+        "forestLossHa": 353,
+        "forestGainHa": 9245
+      },
+      {
+        "year": 2024,
+        "forestCoverHa": 1558704,
+        "forestLossHa": 415,
+        "forestGainHa": 9344
+      },
+      {
+        "year": 2025,
+        "forestCoverHa": 1541547,
+        "forestLossHa": 388,
+        "forestGainHa": 9300
+      }
+    ],
+    "Sudurpashchim": [
+      {
+        "year": 2015,
+        "forestCoverHa": 239412,
+        "forestLossHa": 66,
+        "forestGainHa": 1423
+      },
+      {
+        "year": 2016,
+        "forestCoverHa": 240769,
+        "forestLossHa": 114,
+        "forestGainHa": 1440
+      },
+      {
+        "year": 2017,
+        "forestCoverHa": 242095,
+        "forestLossHa": 273,
+        "forestGainHa": 1496
+      },
+      {
+        "year": 2018,
+        "forestCoverHa": 243318,
+        "forestLossHa": 191,
+        "forestGainHa": 1467
+      },
+      {
+        "year": 2019,
+        "forestCoverHa": 244594,
+        "forestLossHa": 238,
+        "forestGainHa": 1483
+      },
+      {
+        "year": 2020,
+        "forestCoverHa": 245839,
+        "forestLossHa": 255,
+        "forestGainHa": 1489
+      },
+      {
+        "year": 2021,
+        "forestCoverHa": 247073,
+        "forestLossHa": 314,
+        "forestGainHa": 1510
+      },
+      {
+        "year": 2022,
+        "forestCoverHa": 248269,
+        "forestLossHa": 231,
+        "forestGainHa": 1481
+      },
+      {
+        "year": 2023,
+        "forestCoverHa": 249519,
+        "forestLossHa": 260,
+        "forestGainHa": 1491
+      },
+      {
+        "year": 2024,
+        "forestCoverHa": 250750,
+        "forestLossHa": 305,
+        "forestGainHa": 1507
+      },
+      {
+        "year": 2025,
+        "forestCoverHa": 253167,
+        "forestLossHa": 285,
+        "forestGainHa": 1500
+      }
+    ]
+  }
 }
