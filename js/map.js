@@ -51,6 +51,10 @@ let adminGeoJsonLayer = null;
 const NEPAL_CENTER = [28.3949, 84.1240];
 const DEFAULT_ZOOM = 7;
 
+// Nepal bounding box — defined as plain arrays; converted to L.latLngBounds inside init()
+// SW: [26.30, 79.80]  NE: [30.55, 88.35]  (small padding around actual 26.36–30.45, 80.06–88.20)
+const NEPAL_BOUNDS_RAW = [[26.30, 79.80], [30.55, 88.35]];
+
 // ============================================================
 // Helpers — style factories
 // ============================================================
@@ -282,6 +286,8 @@ const ResetViewControl = L.Control.extend({
     const reset = (e) => {
       L.DomEvent.preventDefault(e);
       mapInstance.setView(NEPAL_CENTER, DEFAULT_ZOOM);
+      // Also clamp view back to Nepal bounds in case user somehow went outside
+      mapInstance.setMaxBounds(L.latLngBounds(NEPAL_BOUNDS_RAW[0], NEPAL_BOUNDS_RAW[1]));
     };
 
     L.DomEvent.on(btn, 'click', reset);
@@ -530,6 +536,10 @@ export function init(districtGeo, forestGeo, risk) {
     zoomControl: false,   // replaced by CustomZoomControl below
     center: NEPAL_CENTER,
     zoom: DEFAULT_ZOOM,
+    minZoom: 6,           // prevent zooming out so far Nepal is tiny
+    maxZoom: 16,
+    maxBounds: L.latLngBounds(NEPAL_BOUNDS_RAW[0], NEPAL_BOUNDS_RAW[1]),
+    maxBoundsViscosity: 0.85,   // rubber-band effect when hitting the edge
   });
 
   // ── Base tile layers ──────────────────────────────────────

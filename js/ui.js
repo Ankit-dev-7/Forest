@@ -138,6 +138,15 @@ export function init(stats, districtGeo) {
     _wireCounterObserver(valueEl, value);
   });
 
+  // 2b. Populate hero stat cards (data-hero-stat spans in the hero section)
+  document.querySelectorAll('[data-hero-stat]').forEach(card => {
+    const key = card.dataset.heroStat;
+    const valueEl = card.querySelector('.hero-stat-value');
+    if (valueEl && stats[key] != null) {
+      valueEl.textContent = formatHa(stats[key]);
+    }
+  });
+
   // 3. Subscribe to year changes
   EventBus.on('year:changed', ({ year }) => renderStatCards(year));
   EventBus.on('year:changed', ({ year }) => renderInsights(year));
@@ -253,48 +262,48 @@ export function showErrorToast(message) {
 // ─────────────────────────────────────────────────────────────
 
 /**
- * Build one insight card element.
- * @param {string} title
- * @param {string} value
- * @param {string} description
+ * Build one insight card element using the CSS BEM classes defined in style.css.
+ * Uses insight-card--{accent} modifier for the colour top-bar and icon badge,
+ * and insight-card__{title|value|desc} for inner elements.
+ * No inline styles — everything driven by the stylesheet.
+ *
+ * @param {string} icon        Font Awesome icon name (e.g. 'fa-triangle-exclamation')
+ * @param {string} title       Short uppercase label
+ * @param {string} value       Large display value
+ * @param {string} description Supporting sentence
  * @param {'danger'|'success'|'info'} accent
  * @returns {HTMLElement}
  */
-function _buildInsightCard(title, value, description, accent) {
-  const accentColors = {
-    danger:  { border: '#ef4444', badge: '#fef2f2', text: '#991b1b' },
-    success: { border: '#22c55e', badge: '#f0fdf4', text: '#166534' },
-    info:    { border: '#3b82f6', badge: '#eff6ff', text: '#1d4ed8' },
-  };
-  const colors = accentColors[accent] || accentColors.info;
+function _buildInsightCard(icon, title, value, description, accent) {
+  const safeAccent = ['danger', 'success', 'info'].includes(accent) ? accent : 'info';
 
   const card = document.createElement('article');
-  card.className = 'insight-card';
-  Object.assign(card.style, {
-    border:       `2px solid ${colors.border}`,
-    borderRadius: '0.75rem',
-    padding:      '1.25rem',
-    background:   '#1f2937',
-    display:      'flex',
-    flexDirection:'column',
-    gap:          '0.5rem',
-  });
+  card.className = `insight-card insight-card--${safeAccent}`;
 
+  // Icon badge
+  const iconWrap = document.createElement('div');
+  iconWrap.className = 'insight-card__icon';
+  const iconEl = document.createElement('i');
+  iconEl.className = `fa-solid ${icon}`;
+  iconEl.setAttribute('aria-hidden', 'true');
+  iconWrap.appendChild(iconEl);
+
+  // Title
   const titleEl = document.createElement('h3');
-  titleEl.className = 'insight-title';
-  titleEl.style.cssText = `color: ${colors.border}; font-size: 0.875rem; font-weight: 600; margin: 0;`;
+  titleEl.className = 'insight-card__title';
   titleEl.textContent = title;
 
+  // Value
   const valueEl = document.createElement('p');
-  valueEl.className = 'insight-value';
-  valueEl.style.cssText = 'font-size: 1.5rem; font-weight: 700; color: #f9fafb; margin: 0;';
+  valueEl.className = 'insight-card__value';
   valueEl.textContent = value;
 
+  // Description
   const descEl = document.createElement('p');
-  descEl.className = 'insight-desc';
-  descEl.style.cssText = 'font-size: 0.8rem; color: #9ca3af; margin: 0; line-height: 1.5;';
+  descEl.className = 'insight-card__desc';
   descEl.textContent = description;
 
+  card.appendChild(iconWrap);
   card.appendChild(titleEl);
   card.appendChild(valueEl);
   card.appendChild(descEl);
@@ -303,91 +312,148 @@ function _buildInsightCard(title, value, description, accent) {
 
 /**
  * Export: derive 6 environmental insight cards and populate #insights-grid.
- * Falls back gracefully when districtGeo is null.
- * @param {number|null} year  Current selected year (used for % change fallback)
+ *
+ * District-level data is sourced from _stats.districts (statistics.json) when
+ * available, falling back to _districtGeo features. This makes the geo data
+ * optional rather than required — the section still renders with meaningful
+ * content even when the GeoJSON file fails to load.
+ *
+ * The nationwide % change insight is year-aware: when a year is selected it
+ * computes the change between that year and the previous year rather than
+ * always using the last two entries.
+ *
+ * @param {number|null} year  Currently selected year from the time explorer
  */
 export function renderInsights(year) {
   const grid = document.getElementById('insights-grid');
   if (!grid) return;
 
-  // ── Fallback when no geo data ──────────────────────────────
-  if (!_districtGeo || !_districtGeo.features || _districtGeo.features.length === 0) {
+  // ── Resolve district-level data source ────────────────────
+  // Prefer stats.districts (always has name/forestLossHa/forestGainHa/forestCoverHa).
+  // Fall back to GeoJSON feature properties if stats are unavailable.
+  let districtProps = null;
+
+  if (_stats && Array.isArray(_stats.districts) && _stats.districts.length > 0) {
+    districtProps = _stats.districts;
+  } else if (_districtGeo && Array.isArray(_districtGeo.features) && _districtGeo.features.length > 0) {
+    // Only use features whose properties have the required numeric fields.
+    const candidates = _districtGeo.features
+      .map(f => f.properties)
+      .filter(p => p && typeof p.forestLossHa === 'number' && typeof p.forestGainHa === 'number');
+    if (candidates.length > 0) districtProps = candidates;
+  }
+
+  if (!districtProps) {
     grid.innerHTML =
-      '<p style="color:#9ca3af;grid-column:1/-1;text-align:center">Insight data unavailable.</p>';
+      '<p style="color:var(--color-text-muted);grid-column:1/-1;text-align:center;padding:2rem 0">Insight data unavailable.</p>';
     return;
   }
 
-  const features = _districtGeo.features;
-  const props = features.map(f => f.properties);
+  // ── District-level insights ────────────────────────────────
 
-  // Insight 1 — district with max forestLossHa
-  const maxLoss = props.reduce((a, b) => (b.forestLossHa > a.forestLossHa ? b : a));
+  // Insight 1 — district with highest forest loss
+  const maxLoss = districtProps.reduce((a, b) =>
+    (b.forestLossHa || 0) > (a.forestLossHa || 0) ? b : a);
 
-  // Insight 2 — district with max forestGainHa
-  const maxGain = props.reduce((a, b) => (b.forestGainHa > a.forestGainHa ? b : a));
+  // Insight 2 — district with highest forest gain
+  const maxGain = districtProps.reduce((a, b) =>
+    (b.forestGainHa || 0) > (a.forestGainHa || 0) ? b : a);
 
-  // Insight 3 — max |loss − gain| (greatest imbalance)
-  const maxImbalance = props.reduce((a, b) =>
-    Math.abs(b.forestLossHa - b.forestGainHa) > Math.abs(a.forestLossHa - a.forestGainHa) ? b : a);
+  // Insight 3 — district with greatest |loss − gain| imbalance
+  const maxImbalance = districtProps.reduce((a, b) =>
+    Math.abs((b.forestLossHa || 0) - (b.forestGainHa || 0)) >
+    Math.abs((a.forestLossHa || 0) - (a.forestGainHa || 0)) ? b : a);
 
-  // Insight 4 — min |loss − gain| (most balanced)
-  const minImbalance = props.reduce((a, b) =>
-    Math.abs(b.forestLossHa - b.forestGainHa) < Math.abs(a.forestLossHa - a.forestGainHa) ? b : a);
+  // Insight 4 — district with smallest |loss − gain| (most balanced)
+  const minImbalance = districtProps.reduce((a, b) =>
+    Math.abs((b.forestLossHa || 0) - (b.forestGainHa || 0)) <
+    Math.abs((a.forestLossHa || 0) - (a.forestGainHa || 0)) ? b : a);
 
-  // Insight 5 — nationwide annual % change (from stats if available, else from geo)
-  let pctChange = null;
-  if (_stats && _stats.yearlyData && _stats.yearlyData.length >= 2) {
+  // ── Insight 5 — nationwide annual % change (year-aware) ───
+  // When a valid year is selected, compare that year to the previous one.
+  // If no year is selected (null) or no previous year exists, fall back to
+  // comparing the last two entries in yearlyData.
+  let pctChange = 0;
+  let changeYear = null;
+
+  if (_stats && Array.isArray(_stats.yearlyData) && _stats.yearlyData.length >= 2) {
     const sorted = [..._stats.yearlyData].sort((a, b) => a.year - b.year);
-    const latest = sorted[sorted.length - 1];
-    const prev   = sorted[sorted.length - 2];
-    pctChange = prev.forestCoverHa > 0
-      ? ((latest.forestCoverHa - prev.forestCoverHa) / prev.forestCoverHa) * 100
+
+    let current = null;
+    let previous = null;
+
+    if (year !== null && year !== undefined) {
+      current  = sorted.find(d => d.year === year) ?? null;
+      const ci = sorted.findIndex(d => d.year === year);
+      previous = ci > 0 ? sorted[ci - 1] : null;
+    }
+
+    // Fall back to last two entries if year not found or no predecessor
+    if (!current || !previous) {
+      current  = sorted[sorted.length - 1];
+      previous = sorted[sorted.length - 2];
+    }
+
+    changeYear = current.year;
+    pctChange  = previous.forestCoverHa > 0
+      ? ((current.forestCoverHa - previous.forestCoverHa) / previous.forestCoverHa) * 100
       : 0;
   } else {
-    const totalLoss = props.reduce((s, p) => s + (p.forestLossHa || 0), 0);
-    const totalCover = props.reduce((s, p) => s + (p.forestCoverHa || 0), 0);
+    // Stats unavailable — derive from geo totals
+    const totalLoss  = districtProps.reduce((s, p) => s + (p.forestLossHa  || 0), 0);
+    const totalCover = districtProps.reduce((s, p) => s + (p.forestCoverHa || 0), 0);
     pctChange = totalCover > 0 ? (-totalLoss / totalCover) * 100 : 0;
   }
 
-  // Insight 6 — protected forest summary
-  const protectedCount = _stats ? (_stats.protectedAreasCount || 0) : 0;
-  const totalCoverHa   = _stats ? (_stats.forestCoverHa || 0) :
-    props.reduce((s, p) => s + (p.forestCoverHa || 0), 0);
+  const pctLabel    = `${pctChange >= 0 ? '+' : ''}${pctChange.toFixed(3)}%`;
+  const pctYearNote = changeYear ? ` in ${changeYear} vs ${changeYear - 1}` : ' in the most recent year';
 
-  // ── Build cards ────────────────────────────────────────────
+  // ── Insight 6 — protected areas ───────────────────────────
+  const protectedCount = _stats ? (_stats.protectedAreasCount || 0) : 0;
+  const totalCoverHa   = _stats
+    ? (_stats.forestCoverHa || 0)
+    : districtProps.reduce((s, p) => s + (p.forestCoverHa || 0), 0);
+
+  // ── Render cards ──────────────────────────────────────────
   const cards = [
     _buildInsightCard(
-      '⚠ Highest Forest Loss District',
+      'fa-triangle-exclamation',
+      'Highest Forest Loss District',
       maxLoss.name || 'Unknown',
-      `${maxLoss.name} recorded the highest annual forest loss at ${formatHa(maxLoss.forestLossHa)}, indicating severe deforestation pressure.`,
+      `${maxLoss.name} recorded the highest annual forest loss at ${formatHa(maxLoss.forestLossHa || 0)}, indicating severe deforestation pressure.`,
       'danger'
     ),
     _buildInsightCard(
-      '✦ Highest Forest Gain District',
+      'fa-seedling',
+      'Highest Forest Gain District',
       maxGain.name || 'Unknown',
-      `${maxGain.name} leads reforestation efforts with an annual forest gain of ${formatHa(maxGain.forestGainHa)}.`,
+      `${maxGain.name} leads reforestation efforts with an annual forest gain of ${formatHa(maxGain.forestGainHa || 0)}.`,
       'success'
     ),
     _buildInsightCard(
-      '⚡ Greatest Loss–Gain Imbalance',
+      'fa-bolt',
+      'Greatest Loss–Gain Imbalance',
       maxImbalance.name || 'Unknown',
-      `${maxImbalance.name} shows the largest net imbalance (${formatHa(Math.abs(maxImbalance.forestLossHa - maxImbalance.forestGainHa))}), requiring urgent intervention.`,
+      `${maxImbalance.name} shows the largest net imbalance (${formatHa(Math.abs((maxImbalance.forestLossHa || 0) - (maxImbalance.forestGainHa || 0)))}), requiring urgent intervention.`,
       'danger'
     ),
     _buildInsightCard(
-      '⚖ Most Balanced District',
+      'fa-scale-balanced',
+      'Most Balanced District',
       minImbalance.name || 'Unknown',
-      `${minImbalance.name} maintains the closest balance between forest loss and gain (${formatHa(Math.abs(minImbalance.forestLossHa - minImbalance.forestGainHa))} difference).`,
+      `${minImbalance.name} maintains the closest balance between forest loss and gain (${formatHa(Math.abs((minImbalance.forestLossHa || 0) - (minImbalance.forestGainHa || 0)))} difference).`,
       'success'
     ),
     _buildInsightCard(
-      '📈 Nationwide Annual Change',
-      `${pctChange >= 0 ? '+' : ''}${pctChange.toFixed(3)}%`,
-      `Nepal's total forest cover changed by ${pctChange.toFixed(3)}% in the most recent recorded year, reflecting ongoing land-use dynamics.`,
-      'info'
+      'fa-chart-line',
+      'Nationwide Annual Change',
+      pctLabel,
+      `Nepal's total forest cover changed by ${pctLabel}${pctYearNote}, reflecting ongoing land-use dynamics.`,
+      pctChange >= 0 ? 'success' : 'danger'
     ),
     _buildInsightCard(
-      '🛡 Protected Forest Areas',
+      'fa-shield-halved',
+      'Protected Forest Areas',
       formatNumber(protectedCount),
       `Nepal has ${formatNumber(protectedCount)} protected areas safeguarding portions of the ${formatHa(totalCoverHa)} total forest cover.`,
       'info'
@@ -447,12 +513,12 @@ function _initSlider() {
   container.addEventListener('pointerdown', e => {
     isDragging = true;
     container.setPointerCapture(e.pointerId);
-    _moveSplider(e, container);
+    _moveSlider(e, container);
   });
 
   container.addEventListener('pointermove', e => {
     if (!isDragging) return;
-    _moveSplider(e, container);
+    _moveSlider(e, container);
   });
 
   container.addEventListener('pointerup', e => {
@@ -479,7 +545,7 @@ function _initSlider() {
  * @param {PointerEvent} e
  * @param {HTMLElement}  container
  */
-function _moveSplider(e, container) {
+function _moveSlider(e, container) {
   const rect = container.getBoundingClientRect();
   const pct  = ((e.clientX - rect.left) / rect.width) * 100;
   updateSlider(pct);

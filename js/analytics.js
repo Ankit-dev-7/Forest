@@ -1471,13 +1471,22 @@ function _wireMetricButtons() {
  * @param {{ year: number }} payload
  */
 function _onYearChanged({ year }) {
-  const endEl = document.getElementById('adash-year-end');
+  const startEl = document.getElementById('adash-year-start');
+  const endEl   = document.getElementById('adash-year-end');
   if (!endEl) return;
-  // Snap end-year to selected year if it's within data range
+
+  // Snap year-end to the selected year if it's within the available range
   if ([...endEl.options].some(o => Number(o.value) === year)) {
     endEl.value = String(year);
     _filter.yearEnd = year;
-    _refreshAll();
+
+    // If the new end is before the current start, snap start back too
+    if (_filter.yearStart > year && startEl) {
+      startEl.value = String(year);
+      _filter.yearStart = year;
+    }
+
+    _applyFilters();
   }
 }
 

@@ -2516,3 +2516,128 @@ main section:nth-of-type(even) {
   padding: 1rem 0;
   text-align: center;
 }
+
+/* ============================================================
+   COMPARISON SLIDER — #comparison-slider aliases .slider-container
+   + wrapper / hint / label styles added for prediction section
+   ============================================================ */
+#comparison-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-2xl, 1rem);
+  min-height: 320px;
+  cursor: col-resize;
+  user-select: none;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md, 0 4px 6px rgba(0,0,0,.07));
+  background: var(--color-surface-soft);
+}
+
+.comparison-slider-wrap {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl, 0.75rem);
+}
+
+.comparison-slider-heading {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.comparison-slider-hint {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.slider-label {
+  position: absolute;
+  top: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.slider-label--before { left: 0.75rem; }
+.slider-label--after  { right: 0.75rem; }
+
+/* Colour the two halves so the slider is visible even without images */
+.slider-before {
+  background: linear-gradient(135deg, #166534 0%, #15803d 100%);
+}
+
+.slider-after {
+  background: linear-gradient(135deg, #854d0e 0%, #92400e 100%);
+}
+
+#comparison-slider .slider-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 3px;
+  background: rgba(255,255,255,0.9);
+  cursor: col-resize;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.slider-handle__line {
+  flex: 1;
+  width: 2px;
+  background: rgba(255,255,255,0.5);
+}
+
+.slider-handle__circle {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  color: var(--color-primary-dark, #15803d);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+/* ── Time Explorer section wrap ── */
+.time-explorer-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.time-explorer-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}

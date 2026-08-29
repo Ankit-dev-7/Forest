@@ -131,6 +131,21 @@
            style="min-height: 600px;"></div>
     </section>
 
+    <!-- Time Explorer — Year selector that drives year:changed events to all sections -->
+    <section id="time-explorer" aria-labelledby="time-explorer-heading">
+      <h2 id="time-explorer-heading" class="sr-only">Time Explorer</h2>
+      <div class="time-explorer-wrap">
+        <span class="time-explorer-label">
+          <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+          Explore by Year
+        </span>
+        <div id="year-timeline"
+             role="toolbar"
+             aria-label="Select year to filter all data"
+             tabindex="0"></div>
+      </div>
+    </section>
+
     <!-- Analytics Dashboard Section -->
     <section id="analytics" aria-labelledby="analytics-heading">
 
@@ -478,12 +493,6 @@
                 aria-label="Historical vs Predicted Forest Cover"></canvas>
       </article>
 
-      <!-- Future forest cover chart -->
-      <article class="chart-wrapper" aria-labelledby="chart-future-label">
-        <h3 id="chart-future-label">Projected Future Forest Cover (2026–2030)</h3>
-        <canvas id="chart-future-cover"
-                aria-label="Future Forest Cover Projection 2026-2030"></canvas>
-      </article>
     </section>
 
     <!-- Environmental Insights Section -->
@@ -506,7 +515,7 @@
           <div class="team-card-info">
             <h3 class="team-member-name">Ashish Pandey</h3>
             <p class="team-member-role">Mentor</p>
-            <p class="team-member-bio"></p>AI Research Intern at CAIR-Nepal</p>
+            <p class="team-member-bio">AI Research Intern at CAIR-Nepal</p>
             <div class="team-member-links">
               <a href="https://github.com/Ashish-Pandey62"
                  target="_blank"
