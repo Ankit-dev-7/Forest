@@ -17,8 +17,7 @@
     { "year": 2022, "forestCoverHa": 4397200, "forestLossHa": 10600, "forestGainHa": 4800 },
     { "year": 2023, "forestCoverHa": 4390400, "forestLossHa": 10300, "forestGainHa": 3900 },
     { "year": 2024, "forestCoverHa": 4382800, "forestLossHa": 10100, "forestGainHa": 3400 },
-    { "year": 2025, "forestCoverHa": 4376000, "forestLossHa": 9950,  "forestGainHa": 3250 },
-    { "year": 2026, "forestCoverHa": 4371200, "forestLossHa": 9840,  "forestGainHa": 3120 }
+    { "year": 2025, "forestCoverHa": 4376000, "forestLossHa": 9950,  "forestGainHa": 3250 }
   ],
   "provinces": [
     { "name": "Koshi",          "forestCoverHa": 682400,  "forestLossHa": 1580, "forestGainHa": 480 },

@@ -440,7 +440,9 @@ function buildCompositionChart(composition) {
     options: {
       animation: defaultAnimation(),
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
+        legend: { display: false },
         tooltip: {
           callbacks: {
             label: ctx => `${ctx.label}: ${ctx.raw}%`,

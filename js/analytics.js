@@ -53,10 +53,11 @@ const DISTRICT_PROVINCE_MAP = {
   Nuwakot:'Bagmati',Rasuwa:'Bagmati',Dhading:'Bagmati',Makwanpur:'Bagmati',Chitwan:'Bagmati',
   Gorkha:'Gandaki',Lamjung:'Gandaki',Tanahu:'Gandaki',Syangja:'Gandaki',Kaski:'Gandaki',
   Manang:'Gandaki',Mustang:'Gandaki',Myagdi:'Gandaki',Parbat:'Gandaki',Baglung:'Gandaki',
-  Gulmi:'Lumbini',Palpa:'Lumbini',Nawalpur:'Lumbini',Nawalparasi:'Lumbini',
+  Nawalpur:'Gandaki',
+  Gulmi:'Lumbini',Palpa:'Lumbini',Nawalparasi:'Lumbini',
   Arghakhanchi:'Lumbini',Kapilvastu:'Lumbini',Rupandehi:'Lumbini',Pyuthan:'Lumbini',
   Rolpa:'Lumbini','Rukum East':'Lumbini',
-  'Rukum West':'Karnali',Salyan:'Karnali',Dang:'Karnali',Banke:'Karnali',Bardiya:'Karnali',
+  'Rukum West':'Karnali',Salyan:'Karnali',Dang:'Lumbini',Banke:'Lumbini',Bardiya:'Lumbini',
   Surkhet:'Karnali',Dailekh:'Karnali',Jajarkot:'Karnali',Dolpa:'Karnali',
   Mugu:'Karnali',Humla:'Karnali',Jumla:'Karnali',Kalikot:'Karnali',
   Achham:'Sudurpashchim',Bajura:'Sudurpashchim',Bajhang:'Sudurpashchim',
@@ -74,7 +75,7 @@ let _stats = null;
 /** Active filter state */
 const _filter = {
   yearStart:  2015,
-  yearEnd:    2026,
+  yearEnd:    2025,
   province:   'all',
   district:   'all',
 };
@@ -1320,6 +1321,7 @@ function _refreshAll() {
   _buildGainLossChart();
   _buildProvinceChart(_provinceMetric);
   _renderDistrictRanking(_districtMetric);
+  _buildCompositionChart();
   _renderFindings();
   _renderTable();
 }
@@ -1408,6 +1410,8 @@ export function init(stats) {
   if (endEl)      endEl.addEventListener('change', _applyFilters);
   if (provinceEl) {
     provinceEl.addEventListener('change', () => {
+      _filter.province = provinceEl.value;
+      _filter.district = 'all';
       _populateDistrictSelect();
       _applyFilters();
     });
