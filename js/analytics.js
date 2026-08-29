@@ -1045,25 +1045,55 @@ function _renderDistrictRanking(metricKey) {
 
 function _buildCompositionChart() {
   const canvas = document.getElementById('chart-composition');
-  if (!canvas || !_stats?.composition) return;
+  if (!canvas) return;
 
-  const composition = _stats.composition;
+  // ── Resolve composition data based on active filter ──────────
+  // Priority: district > province > national
+  // Falls back to national if the selected entity has no composition data.
+  let composition = null;
+  let scopeLabel  = 'Nepal (National)';
 
-  // Use the latest year's forest cover for the active filter so the donut
-  // centre and tooltip ha values reflect the selected province/district.
+  if (_filter.district !== 'all') {
+    const distObj = _stats?.districts?.find(d => d.name === _filter.district);
+    if (distObj?.composition) {
+      composition = distObj.composition;
+      scopeLabel  = _filter.district + ' District';
+    }
+  }
+
+  if (!composition && _filter.province !== 'all') {
+    const provObj = _stats?.provinces?.find(p => p.name === _filter.province);
+    if (provObj?.composition) {
+      composition = provObj.composition;
+      scopeLabel  = _filter.province + ' Province';
+    }
+  }
+
+  if (!composition) {
+    composition = _stats?.composition;
+    scopeLabel  = 'Nepal (National)';
+  }
+
+  if (!composition) return;
+
+  // ── Total cover for centre value and tooltip ha ───────────────
   const yearly     = getFilteredYearlyData();
   const totalCover = yearly.length
     ? yearly[yearly.length - 1].forestCoverHa
     : (_stats.forestCoverHa ?? 0);
 
-  // Update donut center
+  // ── Update donut centre ───────────────────────────────────────
   const centerEl = document.getElementById('adash-donut-total');
   if (centerEl) centerEl.textContent = _fmt(totalCover);
 
-  // Build composition legend
+  // ── Update scope subtitle ─────────────────────────────────────
+  const scopeEl = document.getElementById('adash-composition-scope');
+  if (scopeEl) scopeEl.textContent = scopeLabel;
+
+  // ── Build composition legend ──────────────────────────────────
   _buildCompositionLegend(composition);
 
-  // SR table
+  // ── SR table ─────────────────────────────────────────────────
   const tbody = document.getElementById('adash-composition-sr-tbody');
   if (tbody) {
     tbody.innerHTML = composition.map(c =>
@@ -1072,12 +1102,14 @@ function _buildCompositionChart() {
   }
 
   if (_chartComposition) {
-    // Update tooltip to use the new totalCover (must replace callback closure)
+    // Update both data and tooltip when filter changes
+    _chartComposition.data.labels                  = composition.map(c => c.label);
+    _chartComposition.data.datasets[0].data        = composition.map(c => c.pct);
     _chartComposition.options.plugins.tooltip.callbacks.label = ctx => {
       const ha = totalCover > 0 ? Math.round(totalCover * ctx.raw / 100) : 0;
       return `${ctx.label}: ${ctx.raw}% (${_fmt(ha)} ha)`;
     };
-    _chartComposition.update('none');
+    _chartComposition.update('active');
     return;
   }
 
