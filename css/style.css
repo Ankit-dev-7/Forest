@@ -2090,6 +2090,196 @@ main section:nth-of-type(even) {
   max-height: 340px;
 }
 
+/* ─────────────────────────────────────────────────────────────
+   ── RADIAL PROVINCE CHART ──────────────────────────────────
+   ───────────────────────────────────────────────────────────── */
+
+/* Outer wrapper — replaces the canvas-wrap for the province card */
+.adash-radial-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+  overflow: visible;
+}
+
+/* Flex row: legend column + SVG column */
+.radial-chart-inner {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 0;
+}
+
+/* ── Left legend column ── */
+.radial-legend {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 88px;
+  max-width: 124px;
+  width: 28%;
+}
+
+.radial-legend-item {
+  position: absolute;
+  left: 0;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+  transition: opacity 0.2s ease;
+}
+
+.radial-legend-item--active .radial-legend-name {
+  font-weight: 600;
+  color: var(--ring-color, #16a34a);
+}
+
+.radial-legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.radial-legend-item--active .radial-legend-dot {
+  transform: scale(1.4);
+}
+
+.radial-legend-name {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 88px;
+  transition: color 0.2s ease;
+  letter-spacing: 0.01em;
+}
+
+/* ── SVG area ── */
+.radial-svg-area {
+  position: relative;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radial-svg {
+  display: block;
+  overflow: visible;
+  max-width: 100%;
+}
+
+/* SVG track (background arc) */
+.radial-track {
+  stroke: rgba(0, 0, 0, 0.08);
+}
+
+/* SVG progress arc — animation applied inline via JS */
+.radial-progress {
+  transition: opacity 0.25s ease, stroke 0.3s ease;
+  cursor: pointer;
+}
+
+.radial-ring:hover .radial-progress,
+.radial-ring:focus .radial-progress {
+  filter: brightness(1.18) drop-shadow(0 0 4px currentColor);
+}
+
+/* Value labels inside SVG */
+.radial-val-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  paint-order: stroke fill;
+  stroke: rgba(255,255,255,0.85);
+  stroke-width: 3px;
+  pointer-events: none;
+}
+
+/* ── Center label (overlaid on SVG) ── */
+.radial-center-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+  line-height: 1.25;
+}
+
+.radial-center-metric {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #374151;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.radial-center-sub {
+  font-size: 0.62rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* ── Tooltip ── */
+.radial-tooltip {
+  position: absolute;
+  z-index: 50;
+  background: #1e2a1e;
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  border-radius: 8px;
+  padding: 9px 13px;
+  min-width: 150px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+}
+
+.radial-tooltip--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.radial-tip-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #d1fae5;
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+
+.radial-tip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.73rem;
+  color: #9ca3af;
+  margin-bottom: 3px;
+}
+
+.radial-tip-row span:last-child {
+  color: #e5e7eb;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.radial-tip-risk {
+  color: #fbbf24 !important;
+}
+
 /* ── Trend legend ── */
 #adash-trend-legend {
   display: flex;

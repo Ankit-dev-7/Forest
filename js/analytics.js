@@ -868,101 +868,298 @@ function _updateGainLossSrTable(yearly) {
 // ── CHART 4: PROVINCE COMPARISON (horizontal bar) ─────────
 // ─────────────────────────────────────────────────────────────
 
+// ─────────────────────────────────────────────────────────────
+// ── RADIAL PROVINCE CHART (SVG) ───────────────────────────
+// ─────────────────────────────────────────────────────────────
+
 /**
- * Build or update the province horizontal bar chart for the active metric.
+ * Environmental intelligence color palette — greens / teals.
+ * One color per province, outermost ring first.
+ */
+const RADIAL_COLORS = [
+  '#0d9488', // teal-600       — Koshi       (outermost)
+  '#0f766e', // teal-700       — Madhesh
+  '#059669', // emerald-600    — Bagmati
+  '#16a34a', // green-600      — Gandaki
+  '#15803d', // green-700      — Lumbini
+  '#166534', // green-800      — Karnali
+  '#134e4a', // teal-900       — Sudurpashchim (innermost)
+];
+
+/** Radial chart state — stored so metric switches can re-render in-place. */
+let _radialState = null;
+
+/**
+ * Build or update the province radial progress chart for the active metric.
+ * Pure SVG implementation — no Chart.js dependency.
  * @param {string} [metricKey]
  */
 function _buildProvinceChart(metricKey) {
   if (metricKey) _provinceMetric = metricKey;
 
-  const canvas = document.getElementById('chart-province');
-  if (!canvas) return;
+  const wrap = document.getElementById('province-radial-wrap');
+  if (!wrap) return;
 
   const provinces = getProvinces();
-  const sorted    = getProvinceComparison(provinces, _provinceMetric);
 
-  const labels = sorted.map(p => p.name);
-  const values = sorted.map(p => Math.abs(p[_provinceMetric] ?? 0));
-
-  // Color based on metric
-  const barColor = _provinceMetric === 'forestLossHa'
-    ? 'rgba(220, 38, 38, 0.70)'
-    : _provinceMetric === 'forestGainHa'
-      ? 'rgba(3, 105, 161, 0.70)'
-      : _provinceMetric === 'netChange'
-        ? sorted.map(p => (p[_provinceMetric] ?? 0) >= 0
-            ? 'rgba(3,105,161,0.70)' : 'rgba(220,38,38,0.70)')
-        : 'rgba(22, 163, 74, 0.70)';
-
-  const borderColor = _provinceMetric === 'forestLossHa'
-    ? COLOR.loss
-    : _provinceMetric === 'forestGainHa'
-      ? COLOR.gain
-      : _provinceMetric === 'netChange'
-        ? sorted.map(p => (p[_provinceMetric] ?? 0) >= 0 ? COLOR.gain : COLOR.loss)
-        : COLOR.green;
+  // Sort descending by absolute value of the active metric so the
+  // largest value always gets the outermost ring.
+  const sorted = getProvinceComparison(provinces, _provinceMetric);
 
   const metricLabel = {
-    forestCoverHa: 'Forest Cover (ha)',
-    forestLossHa:  'Forest Loss (ha)',
-    forestGainHa:  'Forest Gain (ha)',
-    netChange:     'Net Change (ha)',
-  }[_provinceMetric] ?? 'ha';
+    forestCoverHa: 'Forest Cover',
+    forestLossHa:  'Forest Loss',
+    forestGainHa:  'Forest Gain',
+    netChange:     'Net Change',
+  }[_provinceMetric] ?? 'Value';
 
-  if (_chartProvince) {
-    _chartProvince.data.labels                           = labels;
-    _chartProvince.data.datasets[0].data                = values;
-    _chartProvince.data.datasets[0].backgroundColor     = barColor;
-    _chartProvince.data.datasets[0].borderColor         = borderColor;
-    _chartProvince.data.datasets[0].label               = metricLabel;
-    _chartProvince.options.scales.x.title.text          = metricLabel;
-    _chartProvince.update('active');
-    _updateProvinceSrTable(sorted);
-    return;
-  }
+  const metricUnit = 'ha';
 
-  _chartProvince = new Chart(canvas, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label:            metricLabel,
-        data:             values,
-        backgroundColor:  barColor,
-        borderColor:      borderColor,
-        borderWidth:      1,
-        borderRadius:     3,
-      }],
-    },
-    options: {
-      ..._chartDefaults(),
-      indexAxis: 'y',
-      plugins: {
-        ..._chartDefaults().plugins,
-        tooltip: {
-          ..._chartDefaults().plugins.tooltip,
-          callbacks: {
-            label: ctx => `${ctx.dataset.label}: ${_fmtHa(ctx.raw)}`,
-          },
-        },
-      },
-      scales: {
-        y: {
-          grid:  { display: false },
-          ticks: { color: COLOR.text, font: { size: 12 } },
-          border: { display: false },
-        },
-        x: {
-          title: { display: true, text: metricLabel, color: COLOR.textMuted, font: { size: 11 } },
-          grid:  { color: 'rgba(0,0,0,0.05)', drawBorder: false },
-          ticks: { color: COLOR.textMuted, font: { size: 11 }, callback: v => _fmt(v) },
-          border: { dash: [3,3], display: false },
-        },
-      },
-    },
+  // Raw values (signed for netChange, absolute for others)
+  const rawValues = sorted.map(p => {
+    const v = p[_provinceMetric] ?? 0;
+    return _provinceMetric === 'netChange' ? v : Math.abs(v);
   });
 
+  // Max absolute value → maps to 100% arc fill
+  const maxVal = Math.max(...rawValues.map(Math.abs), 1);
+
+  // Progress fraction [0,1] for each province
+  const fractions = rawValues.map(v => Math.abs(v) / maxVal);
+
+  // ── Derived dimensions ──────────────────────────────────────
+  const N          = sorted.length;           // 7 provinces
+  const GAP_DEG    = 90;                      // opening gap at bottom (degrees)
+  const ARC_DEG    = 360 - GAP_DEG;          // active arc span = 270°
+  const START_DEG  = 135;                     // arc starts at bottom-left
+
+  // Responsive sizing: read container width, fall back to 340
+  const containerW = wrap.offsetWidth || 340;
+  const LABEL_W    = Math.min(Math.max(containerW * 0.30, 90), 120); // label column
+  const chartW     = containerW - LABEL_W;
+  const SVG_SIZE   = Math.min(chartW, 320);
+
+  const cx = SVG_SIZE / 2;
+  const cy = SVG_SIZE / 2;
+
+  // Ring geometry: outermost ring first
+  const TRACK_W    = Math.max(SVG_SIZE * 0.048, 10);  // stroke width
+  const RING_GAP   = Math.max(SVG_SIZE * 0.022, 5);   // gap between rings
+  const OUTER_R    = (SVG_SIZE / 2) - TRACK_W / 2 - 4;
+
+  // ── Helper: polar → cartesian ───────────────────────────────
+  function polarToCart(cx, cy, r, angleDeg) {
+    const rad = (angleDeg - 90) * Math.PI / 180;
+    return {
+      x: cx + r * Math.cos(rad),
+      y: cy + r * Math.sin(rad),
+    };
+  }
+
+  // ── Helper: SVG arc path for a progress ring ────────────────
+  function arcPath(cx, cy, r, startDeg, endDeg) {
+    const s   = polarToCart(cx, cy, r, startDeg);
+    const e   = polarToCart(cx, cy, r, endDeg);
+    const lg  = endDeg - startDeg > 180 ? 1 : 0;
+    return `M ${s.x} ${s.y} A ${r} ${r} 0 ${lg} 1 ${e.x} ${e.y}`;
+  }
+
+  // ── Helper: format value for tooltip / label ────────────────
+  // (used in tooltip; defined here for closure over metricUnit)
+  // ── Build SVG markup ────────────────────────────────────────
+  const svgTotalH = SVG_SIZE;
+
+  // For each province ring (i=0 = outermost = sorted[0] = highest value)
+  let rings = '';
+  let animDefs = '';
+
+  sorted.forEach((prov, i) => {
+    const r         = OUTER_R - i * (TRACK_W + RING_GAP);
+    if (r < TRACK_W) return; // skip if rings run out of space
+
+    const fraction  = fractions[i];
+    const color     = RADIAL_COLORS[i % RADIAL_COLORS.length];
+    const endDeg    = START_DEG + ARC_DEG * fraction;
+    const trackEnd  = START_DEG + ARC_DEG;
+
+    // Track (background arc)
+    const trackPath = arcPath(cx, cy, r, START_DEG, trackEnd);
+    // Progress arc
+    const progPath  = arcPath(cx, cy, r, START_DEG, endDeg);
+
+    // Arc length for stroke-dasharray animation
+    const arcLen    = r * 2 * Math.PI * (ARC_DEG / 360);
+    const dashFill  = arcLen * fraction;
+    const pathId    = `radial-path-${i}`;
+
+    // Value label: positioned just past the end of the progress arc
+    const labelPt   = polarToCart(cx, cy, r, endDeg);
+
+    // Signed value label text
+    const dispVal = _provinceMetric === 'netChange'
+      ? (rawValues[i] >= 0 ? `+${_fmt(rawValues[i])}` : `−${_fmt(Math.abs(rawValues[i]))}`) + ' ha'
+      : `${_fmt(rawValues[i])} ha`;
+
+    // Risk level via data attribute for tooltip
+    const riskAttr = prov.riskLevel ? ` data-risk="${prov.riskLevel}"` : '';
+
+    // Province's share of the 7-province total (computed after rawValues is fully built)
+    // We'll patch the aria-label after the loop; for now use a placeholder.
+    const pctOfMax = (fraction * 100).toFixed(0);
+
+    rings += `
+      <g class="radial-ring" data-idx="${i}" data-name="${prov.name}"
+         data-value="${rawValues[i]}" data-pct="${pctOfMax}"
+         data-metric="${metricLabel}" data-unit="${metricUnit}"${riskAttr}
+         tabindex="0" role="img" aria-label="${prov.name}: ${dispVal}">
+        <!-- Background track -->
+        <path class="radial-track"
+              d="${trackPath}"
+              stroke-width="${TRACK_W}"
+              fill="none" />
+        <!-- Progress arc -->
+        <path class="radial-progress"
+              id="${pathId}"
+              d="${progPath}"
+              stroke="${color}"
+              stroke-width="${TRACK_W}"
+              stroke-linecap="round"
+              fill="none"
+              style="--arc-fill:${dashFill};--arc-total:${arcLen};"
+              stroke-dasharray="${arcLen}"
+              stroke-dashoffset="${arcLen}" />
+        <!-- Value badge near arc end -->
+        <text class="radial-val-label"
+              x="${labelPt.x + (labelPt.x > cx ? 5 : -5)}"
+              y="${labelPt.y + (labelPt.y > cy ? 8 : -4)}"
+              text-anchor="${labelPt.x > cx ? 'start' : 'end'}"
+              fill="${color}">${dispVal}</text>
+      </g>`;
+
+    // CSS keyframe per ring with staggered delay
+    animDefs += `
+      #${pathId} { animation: radialFill ${0.9 + i * 0.12}s cubic-bezier(0.4,0,0.2,1) ${i * 0.08}s both; }`;
+  });
+
+  // ── Province name labels (left side legend) ─────────────────
+  // Evenly space labels vertically inside the SVG height
+  let legendItems = '';
+  const legendH = svgTotalH;
+  sorted.forEach((prov, i) => {
+    const color   = RADIAL_COLORS[i % RADIAL_COLORS.length];
+    const yPos    = ((i + 0.5) / N) * legendH;
+    legendItems += `
+      <div class="radial-legend-item" data-ring="${i}"
+           style="top:${yPos.toFixed(1)}px; --ring-color:${color};">
+        <span class="radial-legend-dot" style="background:${color};"></span>
+        <span class="radial-legend-name">${prov.name}</span>
+      </div>`;
+  });
+
+  // ── Center label ─────────────────────────────────────────────
+  const centerLabel = metricLabel;
+  const centerSub   = `${N} Provinces`;
+
+  // ── Assemble final HTML ──────────────────────────────────────
+  wrap.innerHTML = `
+    <style>
+      @keyframes radialFill {
+        from { stroke-dashoffset: var(--arc-total); }
+        to   { stroke-dashoffset: calc(var(--arc-total) - var(--arc-fill)); }
+      }
+      ${animDefs}
+    </style>
+    <div class="radial-chart-inner">
+      <div class="radial-legend" style="height:${svgTotalH}px;" aria-hidden="true">
+        ${legendItems}
+      </div>
+      <div class="radial-svg-area">
+        <svg viewBox="0 0 ${SVG_SIZE} ${svgTotalH}"
+             width="${SVG_SIZE}" height="${svgTotalH}"
+             role="presentation" aria-hidden="true"
+             class="radial-svg">
+          ${rings}
+        </svg>
+        <div class="radial-center-label" aria-hidden="true">
+          <span class="radial-center-metric">${centerLabel}</span>
+          <span class="radial-center-sub">${centerSub}</span>
+        </div>
+      </div>
+    </div>
+    <div class="radial-tooltip" id="province-radial-tooltip" role="tooltip" aria-live="polite"></div>`;
+
+  // ── National total for real percentage share in tooltip ──────
+  const nationalTotal = rawValues.reduce((s, v) => s + Math.abs(v), 0);
+
+  // ── Wire hover / focus interactions ──────────────────────────
+  _wireRadialInteractions(wrap, sorted, rawValues, fractions, metricLabel, nationalTotal);
+
+  // ── Accessibility table ──────────────────────────────────────
   _updateProvinceSrTable(sorted);
+
+  // ── Store state for resize re-renders ────────────────────────
+  _radialState = { metricKey: _provinceMetric };
+}
+
+/**
+ * Wire hover/focus interactions for radial rings.
+ * @private
+ */
+function _wireRadialInteractions(wrap, sorted, rawValues, fractions, metricLabel, nationalTotal) {
+  const tooltip = wrap.querySelector('#province-radial-tooltip');
+  if (!tooltip) return;
+
+  wrap.querySelectorAll('.radial-ring').forEach((ring, i) => {
+    const showTip = () => {
+      const prov    = sorted[i];
+      const val     = rawValues[i];
+      // Real share of the national total across all 7 provinces
+      const sharePct = nationalTotal > 0
+        ? ((Math.abs(val) / nationalTotal) * 100).toFixed(1)
+        : '—';
+      const risk    = ring.dataset.risk ? `<div class="radial-tip-row"><span>Risk</span><span class="radial-tip-risk">${ring.dataset.risk}</span></div>` : '';
+      const dispVal = _provinceMetric === 'netChange'
+        ? (val >= 0 ? `+${_fmt(val)}` : `−${_fmt(Math.abs(val))}`) + ' ha'
+        : `${_fmt(val)} ha`;
+
+      tooltip.innerHTML = `
+        <div class="radial-tip-name">${prov.name}</div>
+        <div class="radial-tip-row"><span>${metricLabel}</span><span>${dispVal}</span></div>
+        <div class="radial-tip-row"><span>Share of total</span><span>${sharePct}%</span></div>
+        ${risk}`;
+      tooltip.classList.add('radial-tooltip--visible');
+
+      // Highlight the hovered ring, dim others
+      wrap.querySelectorAll('.radial-progress').forEach((p, j) => {
+        p.style.opacity = (j === i) ? '1' : '0.35';
+      });
+      wrap.querySelectorAll('.radial-legend-item').forEach((l, j) => {
+        l.classList.toggle('radial-legend-item--active', j === i);
+      });
+    };
+
+    const hideTip = () => {
+      tooltip.classList.remove('radial-tooltip--visible');
+      wrap.querySelectorAll('.radial-progress').forEach(p => { p.style.opacity = ''; });
+      wrap.querySelectorAll('.radial-legend-item').forEach(l => l.classList.remove('radial-legend-item--active'));
+    };
+
+    ring.addEventListener('mouseenter', showTip);
+    ring.addEventListener('focusin',    showTip);
+    ring.addEventListener('mouseleave', hideTip);
+    ring.addEventListener('focusout',   hideTip);
+  });
+
+  // Position tooltip near mouse
+  wrap.addEventListener('mousemove', e => {
+    const rect = wrap.getBoundingClientRect();
+    const x    = e.clientX - rect.left;
+    const y    = e.clientY - rect.top;
+    const tipW = tooltip.offsetWidth  || 170;
+    const tipH = tooltip.offsetHeight || 90;
+    tooltip.style.left = `${Math.min(x + 14, rect.width  - tipW - 8)}px`;
+    tooltip.style.top  = `${Math.max(y - tipH - 10, 8)}px`;
+  });
 }
 
 function _updateProvinceSrTable(sorted) {
@@ -1543,4 +1740,15 @@ export function init(stats) {
 
   // 6. Initial full render
   _refreshAll();
+
+  // 7. Re-render radial chart on container resize (responsive)
+  const radialWrap = document.getElementById('province-radial-wrap');
+  if (radialWrap && typeof ResizeObserver !== 'undefined') {
+    let _resizeTimer = null;
+    const ro = new ResizeObserver(() => {
+      clearTimeout(_resizeTimer);
+      _resizeTimer = setTimeout(() => _buildProvinceChart(), 120);
+    });
+    ro.observe(radialWrap);
+  }
 }

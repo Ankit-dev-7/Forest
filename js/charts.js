@@ -6,7 +6,9 @@
  * NOTE: Chart (Chart.js) is a CDN global — not imported.
  *
  * NOTE: analytics.js (loaded first in main.js) claims the shared canvas IDs
- * (chart-trend, chart-loss, chart-gain, chart-province, chart-composition).
+ * (chart-trend, chart-loss, chart-gain, chart-composition).
+ * The province chart (chart-province) no longer uses a canvas — it is a pure
+ * SVG radial chart rendered into #province-radial-wrap by analytics.js.
  * Each buildXxxChart() guard-checks via Chart.getChart(canvas) and returns
  * early when a Chart.js instance already exists on the element.  This avoids
  * the "Canvas is already in use" error while preserving the year-highlight

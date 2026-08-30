@@ -521,3 +521,67 @@
     gap: 1rem;
   }
 }
+
+/* ── Radial Province Chart — responsive ───────────────────── */
+
+/* Tablet (≤ 900px): tighten font, allow slight squeeze */
+@media (max-width: 900px) {
+  .radial-legend-name {
+    font-size: 0.66rem;
+    max-width: 72px;
+  }
+
+  .radial-val-label {
+    font-size: 0.58rem;
+  }
+
+  .radial-center-metric {
+    font-size: 0.65rem;
+  }
+
+  .radial-center-sub {
+    font-size: 0.56rem;
+  }
+}
+
+/* Mobile (≤ 640px): collapse to single column, legend below chart */
+@media (max-width: 640px) {
+  .radial-chart-inner {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .radial-legend {
+    position: static;
+    width: 100%;
+    max-width: 100%;
+    height: auto !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    padding: 0 0.25rem;
+  }
+
+  .radial-legend-item {
+    position: static;
+    transform: none;
+  }
+
+  .radial-legend-name {
+    font-size: 0.7rem;
+    max-width: 100px;
+  }
+
+  .radial-svg-area {
+    width: 100%;
+  }
+
+  .radial-svg {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .radial-val-label {
+    font-size: 0.55rem;
+  }
+}

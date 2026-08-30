@@ -74,7 +74,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 3. Analytics Dashboard — initialised before legacy charts so it owns
     //    the shared canvas IDs (chart-trend, chart-loss, chart-gain,
-    //    chart-province, chart-composition) that are now part of the new layout.
+    //    chart-composition). The province chart is now a pure SVG radial
+    //    chart rendered into #province-radial-wrap (no canvas).
     //    initCharts() will still wire year-range highlight via EventBus but
     //    its canvas lookups for chart-district return the hidden stub element,
     //    which is safe (returns null → no-op).

@@ -11,7 +11,7 @@
     "forestCover": "DFRS (2015) State of Nepal Forests — 5,963,412 ha; DFRS physiographic breakdown Terai 1,217,764 / Hills 2,820,324 / Mountains 1,925,324 ha",
     "forestLoss": "Global Forest Watch / UMD Landsat (Hansen et al. Science 2013, updated annually). Annual tree cover loss 2015-2024: real published values. 2025: estimated avg of 2022-2024.",
     "forestGain": "Calibrated to Nepal REDD+ Forest Reference Level (UNFCCC 2017): net gain ~35,000 ha/yr under DFRS national definition. Gross gain = GFW loss + net gain.",
-    "provinces": "Province cover shares from DFRS (2015) regional reports. Springer Gandaki study (2021): 7,571 km2 in 1996. MDPI Lumbini study (2021): 9,491 km2 in 1996.",
+    "provinces": "Province cover shares from DFRS (2015) regional reports. Springer Gandaki study (2021): 7,778 km2 forest in 2016 = 777,800 ha (corrected from erroneous 1,124,588 ha). MDPI Lumbini study (2021): 9,491 km2 in 1996, growing to 9,691 km2 by 2016 = 969,100 ha.",
     "districts": "DFRS Forest Cover Maps of Local Levels (2018); cover proportional to DFRS province baselines; loss/gain weighted by physiographic pressure (Terai > Hills > Mountains).",
     "gfw_loss_2025": "ESTIMATED — GFW 2025 data not yet published as of Aug 2026. Value is average of 2022-2024 GFW figures."
   },
@@ -158,9 +158,9 @@
     },
     {
       "name": "Gandaki",
-      "forestCoverHa": 1124588,
-      "forestLossHa": 280,
-      "forestGainHa": 6638,
+      "forestCoverHa": 777800,
+      "forestLossHa": 208,
+      "forestGainHa": 4592,
       "composition": [
         {
           "label": "Tropical & Subtropical Forest",
