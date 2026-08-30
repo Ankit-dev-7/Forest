@@ -1,7 +1,7 @@
 {
-  "forestCoverHa": 6313412,
+  "forestCoverHa": 6314348,
   "forestLossHa": 2500,
-  "forestGainHa": 37500,
+  "forestGainHa": 37250,
   "protectedAreasCount": 20,
   "districtsCount": 77,
   "satelliteImagesCount": 1240,
@@ -20,67 +20,67 @@
       "year": 2015,
       "forestCoverHa": 5963412,
       "forestLossHa": 578,
-      "forestGainHa": 35578
+      "forestGainHa": 36100
     },
     {
       "year": 2016,
-      "forestCoverHa": 5998412,
+      "forestCoverHa": 5998934,
       "forestLossHa": 999,
-      "forestGainHa": 35999
+      "forestGainHa": 34850
     },
     {
       "year": 2017,
-      "forestCoverHa": 6033412,
+      "forestCoverHa": 6032785,
       "forestLossHa": 2394,
-      "forestGainHa": 37394
+      "forestGainHa": 40210
     },
     {
       "year": 2018,
-      "forestCoverHa": 6068412,
+      "forestCoverHa": 6070601,
       "forestLossHa": 1672,
-      "forestGainHa": 36672
+      "forestGainHa": 33940
     },
     {
       "year": 2019,
-      "forestCoverHa": 6103412,
+      "forestCoverHa": 6102869,
       "forestLossHa": 2087,
-      "forestGainHa": 37087
+      "forestGainHa": 38620
     },
     {
       "year": 2020,
-      "forestCoverHa": 6138412,
+      "forestCoverHa": 6139402,
       "forestLossHa": 2233,
-      "forestGainHa": 37233
+      "forestGainHa": 36480
     },
     {
       "year": 2021,
-      "forestCoverHa": 6173412,
+      "forestCoverHa": 6173649,
       "forestLossHa": 2753,
-      "forestGainHa": 37753
+      "forestGainHa": 41320
     },
     {
       "year": 2022,
-      "forestCoverHa": 6208412,
+      "forestCoverHa": 6212216,
       "forestLossHa": 2022,
-      "forestGainHa": 37022
+      "forestGainHa": 35760
     },
     {
       "year": 2023,
-      "forestCoverHa": 6243412,
+      "forestCoverHa": 6245954,
       "forestLossHa": 2277,
-      "forestGainHa": 37277
+      "forestGainHa": 33510
     },
     {
       "year": 2024,
-      "forestCoverHa": 6278412,
+      "forestCoverHa": 6277187,
       "forestLossHa": 2679,
-      "forestGainHa": 37679
+      "forestGainHa": 39840
     },
     {
       "year": 2025,
-      "forestCoverHa": 6313412,
+      "forestCoverHa": 6314348,
       "forestLossHa": 2500,
-      "forestGainHa": 37500
+      "forestGainHa": 37250
     }
   ],
   "provinces": [
