@@ -1380,11 +1380,25 @@ function _renderFindings() {
   const trend         = getOverallTrend(yearly);
   const topLossDist   = getTopDistricts(districts, 'forestLossHa', 1)[0];
   const topGainDist   = getTopDistricts(districts, 'forestGainHa', 1)[0];
-  const topLossProv   = getProvinceComparison(provinces, 'forestLossHa')[0];
   const netTotal      = calculateNetChange(yearly);
   const trendPct      = yearly.length >= 2
     ? calculatePercentageChange(yearly[0].forestCoverHa, yearly[yearly.length - 1].forestCoverHa)
     : 0;
+
+  // Highest forest cover entity — respects province/district filter
+  let topCoverName   = '—';
+  let topCoverHa     = null;
+  let topCoverDetail = '';
+  if (_filter.district !== 'all') {
+    const distObj = _stats.districts?.find(d => d.name === _filter.district);
+    if (distObj) { topCoverName = distObj.name; topCoverHa = distObj.forestCoverHa; topCoverDetail = 'District'; }
+  } else if (_filter.province !== 'all') {
+    const topD = getTopDistricts(districts, 'forestCoverHa', 1)[0];
+    if (topD) { topCoverName = topD.name; topCoverHa = topD.forestCoverHa; topCoverDetail = `Top in ${_filter.province}`; }
+  } else {
+    const topP = getProvinceComparison(provinces, 'forestCoverHa')[0];
+    if (topP) { topCoverName = topP.name; topCoverHa = topP.forestCoverHa; topCoverDetail = 'Province'; }
+  }
 
   const trendIcon  = trend === 'Decreasing' ? '📉' : trend === 'Increasing' ? '📈' : '➡';
   const trendColor = trend === 'Decreasing' ? 'loss' : trend === 'Increasing' ? 'gain' : 'neutral';
@@ -1412,11 +1426,11 @@ function _renderFindings() {
       detail:  topGainDist ? _fmtHa(topGainDist.forestGainHa) : '',
     },
     {
-      icon:    'fa-map',
-      iconCls: 'findings-icon--province',
-      title:   'Highest Loss Province',
-      value:   topLossProv?.name ?? '—',
-      detail:  topLossProv ? _fmtHa(topLossProv.forestLossHa) : '',
+      icon:    'fa-mountain-sun',
+      iconCls: 'findings-icon--gain',
+      title:   'Highest Forest Cover',
+      value:   topCoverName,
+      detail:  topCoverHa != null ? `${_fmtHa(topCoverHa)}${topCoverDetail ? ' · ' + topCoverDetail : ''}` : '',
     },
     {
       icon:    'fa-scale-balanced',

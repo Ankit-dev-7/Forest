@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Deforestation Watch Nepal</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="Photos/Logo 2.png">
+  <link rel="apple-touch-icon" href="Photos/Logo 2.png">
+
   <!-- CDN: Leaflet CSS 1.9.4 -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
@@ -31,7 +35,11 @@
       <!-- Logo -->
       <div class="nav-logo">
         <a href="#hero" aria-label="Deforestation Watch Nepal — go to top">
-          <i class="fa-solid fa-tree" aria-hidden="true"></i>
+          <img src="Photos/Logo 2.png"
+               alt="Deforestation Watch Nepal logo"
+               class="nav-logo-img"
+               width="48"
+               height="48">
           <span>Deforestation Watch Nepal</span>
         </a>
       </div>
@@ -77,43 +85,60 @@
 
       <!-- Layer 2: hero content -->
       <div class="hero-content">
-        <div class="hero-badge">
-          <i class="fa-solid fa-leaf" aria-hidden="true"></i>
-          <span>Nepal Environmental Monitoring</span>
-        </div>
-        <h1 id="hero-heading" class="hero-title">Deforestation Watch Nepal</h1>
-        <p class="hero-subtitle">
-          Real-time GIS intelligence platform monitoring Nepal's forest cover dynamics,
-          deforestation risk, data from 2015 to 2025.
-        </p>
 
-        <!-- Hero stat placeholder cards (Forest Cover, Forest Loss, Forest Gain).
-             ui.init() replaces these with live data from statistics.json. -->
-        <div id="hero-stats" aria-label="Key forest statistics">
-          <div class="hero-stat-card" data-hero-stat="forestCoverHa" aria-label="Total Forest Cover">
-            <i class="fa-solid fa-tree" aria-hidden="true"></i>
-            <span class="hero-stat-value">—</span>
-            <span class="hero-stat-label">Forest Cover</span>
+        <!-- Left: text, stats, scroll indicator -->
+        <div class="hero-text">
+          <div class="hero-badge">
+            <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+            <span>Nepal Environmental Monitoring</span>
           </div>
-          <div class="hero-stat-card" data-hero-stat="forestLossHa" aria-label="Annual Forest Loss">
-            <i class="fa-solid fa-circle-minus" aria-hidden="true"></i>
-            <span class="hero-stat-value">—</span>
-            <span class="hero-stat-label">Forest Loss</span>
+          <h1 id="hero-heading" class="hero-title">Deforestation Watch Nepal</h1>
+          <p class="hero-subtitle">
+            Real-time GIS intelligence platform monitoring Nepal's forest cover dynamics,
+            deforestation risk, data from 2015 to 2025.
+          </p>
+
+          <!-- Hero stat placeholder cards (Forest Cover, Forest Loss, Forest Gain).
+               ui.init() replaces these with live data from statistics.json. -->
+          <div id="hero-stats" aria-label="Key forest statistics">
+            <div class="hero-stat-card" data-hero-stat="forestCoverHa" aria-label="Total Forest Cover">
+              <i class="fa-solid fa-tree" aria-hidden="true"></i>
+              <span class="hero-stat-value">—</span>
+              <span class="hero-stat-label">Forest Cover</span>
+            </div>
+            <div class="hero-stat-card" data-hero-stat="forestLossHa" aria-label="Annual Forest Loss">
+              <i class="fa-solid fa-circle-minus" aria-hidden="true"></i>
+              <span class="hero-stat-value">—</span>
+              <span class="hero-stat-label">Forest Loss</span>
+            </div>
+            <div class="hero-stat-card" data-hero-stat="forestGainHa" aria-label="Annual Forest Gain">
+              <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+              <span class="hero-stat-value">—</span>
+              <span class="hero-stat-label">Forest Gain</span>
+            </div>
           </div>
-          <div class="hero-stat-card" data-hero-stat="forestGainHa" aria-label="Annual Forest Gain">
-            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
-            <span class="hero-stat-value">—</span>
-            <span class="hero-stat-label">Forest Gain</span>
-          </div>
+
         </div>
 
-        <!-- Scroll indicator: bounces via CSS; smooth-scrolls to #statistics -->
-        <button class="scroll-indicator"
-                aria-label="Scroll to statistics"
-                onclick="document.getElementById('statistics').scrollIntoView({behavior:'smooth'})">
-          <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-        </button>
+        <!-- Right: floating logo -->
+        <div class="hero-logo-wrap" aria-hidden="true">
+          <img src="Photos/Logo 2.png"
+               alt="Deforestation Watch Nepal logo"
+               class="hero-logo-img"
+               width="240"
+               height="240"
+               loading="eager">
+        </div>
+
       </div>
+
+      <!-- Scroll indicator: centered below the full hero row -->
+      <button class="scroll-indicator"
+              aria-label="Scroll to statistics"
+              onclick="document.getElementById('statistics').scrollIntoView({behavior:'smooth'})">
+        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+      </button>
+
     </section>
 
     <!-- Statistics Cards Section -->
@@ -806,16 +831,8 @@
         height="80">
       <p class="footer-branding-name">Coding for Social Good Nepal</p>
       <p class="footer-branding-tagline">Technology&nbsp;•&nbsp;Community&nbsp;•&nbsp;Social Impact</p>
-    </div>
 
-    <div class="footer-content">
-      <div class="footer-brand">
-        <i class="fa-solid fa-tree" aria-hidden="true"></i>
-        <span>Deforestation Watch Nepal</span>
-        <p class="footer-copyright">&copy; <span id="footer-year"></span> Deforestation Watch Nepal. All rights reserved.</p>
-      </div>
-
-      <nav aria-label="Footer navigation">
+      <nav aria-label="Footer navigation" class="footer-branding-nav">
         <ul role="list">
           <li>
             <a href="https://github.com/deforestation-watch-nepal"
@@ -837,6 +854,21 @@
           </li>
         </ul>
       </nav>
+    </div>
+
+    <div class="footer-content">
+      <div class="footer-brand">
+        <span>
+          <img src="Photos/Logo 2.png"
+               alt="Deforestation Watch Nepal logo"
+               class="footer-logo-img"
+               width="36"
+               height="36"
+               loading="lazy">
+          Deforestation Watch Nepal
+        </span>
+        <p class="footer-copyright">&copy; <span id="footer-year"></span> Deforestation Watch Nepal. All rights reserved.</p>
+      </div>
 
       <button id="back-to-top"
               aria-label="Back to top">

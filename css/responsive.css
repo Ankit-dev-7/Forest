@@ -585,3 +585,85 @@
     font-size: 0.55rem;
   }
 }
+
+/* ============================================================
+   LOGO RESPONSIVE OVERRIDES
+   ============================================================ */
+
+/* ── Tablet (768px–1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Hero: tighten gap, slightly smaller logo */
+  .hero-content {
+    gap: 2rem;
+    padding: 2rem 1.75rem;
+  }
+
+  .hero-logo-img {
+    width: 190px;
+    max-width: 190px;
+  }
+
+  /* Navbar logo: unchanged at this size */
+  .nav-logo-img {
+    height: 44px;
+    max-width: 44px;
+  }
+}
+
+/* ── Mobile (≤767px) ── */
+@media (max-width: 767px) {
+  /* Hero: stack vertically — text first, logo below */
+  .hero-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+    gap: 2rem;
+  }
+
+  .hero-text {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-text .hero-badge {
+    align-self: center;
+  }
+
+  .hero-text .hero-subtitle {
+    margin: 0 auto 2rem;
+  }
+
+  .hero-text #hero-stats {
+    justify-content: center;
+  }
+
+  /* Logo moves below the text/buttons on mobile */
+  .hero-logo-wrap {
+    order: 2;
+  }
+
+  .hero-logo-img {
+    width: 160px;
+    max-width: 160px;
+  }
+
+  /* Navbar logo: slightly smaller on mobile */
+  .nav-logo-img {
+    height: 36px;
+    max-width: 36px;
+  }
+}
+
+/* ── Small mobile (≤380px) ── */
+@media (max-width: 380px) {
+  .hero-logo-img {
+    width: 130px;
+    max-width: 130px;
+  }
+
+  .nav-logo-img {
+    height: 32px;
+    max-width: 32px;
+  }
+}

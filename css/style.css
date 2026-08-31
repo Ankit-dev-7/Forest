@@ -2831,3 +2831,163 @@ main section:nth-of-type(even) {
   gap: 0.4rem;
   white-space: nowrap;
 }
+
+/* ============================================================
+   LOGO INTEGRATION — Navbar + Hero
+   ============================================================ */
+
+/* ── Navbar logo image ── */
+.nav-logo-img {
+  height: 48px;
+  width: auto;
+  max-width: 48px;
+  object-fit: contain;
+  border-radius: 50%;
+  /* Blend out white background against any navbar color */
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+  flex-shrink: 0;
+  transition: transform var(--transition-fast), filter var(--transition-fast);
+}
+
+.nav-logo a:hover .nav-logo-img {
+  transform: scale(1.07);
+  filter: drop-shadow(0 2px 6px rgba(22, 163, 74, 0.45));
+}
+
+/* When navbar is scrolled (light background), soften the shadow */
+#navbar.navbar--scrolled .nav-logo-img {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
+}
+
+/* ── Hero section layout — two-column on desktop ── */
+.hero-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  max-width: 1200px;
+  width: 100%;
+  padding: 2rem 2.5rem;
+  text-align: left;
+}
+
+/* Left column: all existing hero text */
+.hero-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Keep badge, subtitle, stats left-aligned */
+.hero-text .hero-badge {
+  align-self: flex-start;
+}
+
+.hero-text .hero-subtitle {
+  margin: 0 0 2.5rem;
+}
+
+.hero-text #hero-stats {
+  justify-content: flex-start;
+}
+
+/* ── Hero logo — right column ── */
+.hero-logo-wrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-logo-img {
+  width: 230px;
+  height: auto;
+  max-width: 230px;
+  object-fit: contain;
+  border-radius: 50%;
+  /* Soft glow to separate from dark background */
+  filter: drop-shadow(0 4px 24px rgba(34, 197, 94, 0.30))
+          drop-shadow(0 0 60px rgba(22, 163, 74, 0.18));
+  /* Floating animation applied via keyframe below */
+  animation: hero-logo-float 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* ── Floating keyframe (minimal, professional) ── */
+@keyframes hero-logo-float {
+  0%,  100% { transform: translateY(0px);  }
+  50%        { transform: translateY(-14px); }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .hero-logo-img {
+    animation: none;
+  }
+}
+
+/* ── Footer logo image ── */
+.footer-logo-img {
+  height: 36px;
+  width: auto;
+  max-width: 36px;
+  object-fit: contain;
+  border-radius: 50%;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.40));
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* ── Scroll indicator — centered below hero content row ── */
+#hero > .scroll-indicator {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-self: center;
+  margin-top: 1.5rem;
+}
+
+/* ── Hero: column layout so scroll indicator sits below the content row ── */
+#hero {
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 2.5rem;
+}
+
+/* ── Footer nav — centered below COSOG branding ── */
+.footer-branding-nav {
+  margin-top: 0.75rem;
+}
+
+.footer-branding-nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-branding-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #9ca3af;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-md);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.footer-branding-nav a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.06);
+}
