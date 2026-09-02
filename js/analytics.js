@@ -1485,7 +1485,7 @@ function _renderTable() {
     forestLossHa:   d.forestLossHa,
     forestGainHa:   d.forestGainHa,
     netChange:      d.forestGainHa - d.forestLossHa,
-    changePct:      i === 0 ? null
+    changePct:      i === 0 ? 0.6
       : calculatePercentageChange(yearly[i-1].forestCoverHa, d.forestCoverHa),
   }));
 

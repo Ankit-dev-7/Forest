@@ -306,10 +306,6 @@ export function init(prediction, risk, stats) {
   // Render prediction cards (top 5)
   renderPredictionCards(sortedDistricts);
 
-  // Render confidence badge — use the top-level model confidence value,
-  // not a per-district average.
-  renderConfidenceBadge(prediction.confidencePct ?? 0);
-
   // Render top-10 list from risk data
   if (risk && risk.districts) {
     renderTop10List(risk.districts);

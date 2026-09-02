@@ -2002,8 +2002,8 @@ main section:nth-of-type(even) {
   line-height: 1.1;
 }
 
-.adash-kpi-card__value--negative { color: #dc2626; }
-.adash-kpi-card__value--positive { color: var(--color-primary-dark); }
+.adash-kpi-card__value--negative { color: #000000; }
+.adash-kpi-card__value--positive { color: #000000; }
 
 .adash-kpi-card__unit {
   font-size: var(--text-xs);
@@ -2843,8 +2843,8 @@ main section:nth-of-type(even) {
   max-width: 48px;
   object-fit: contain;
   border-radius: 50%;
-  /* Blend out white background against any navbar color */
-  mix-blend-mode: normal;
+  /* screen blend removes white background on dark navbar */
+  mix-blend-mode: screen;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
   flex-shrink: 0;
   transition: transform var(--transition-fast), filter var(--transition-fast);
@@ -2855,8 +2855,9 @@ main section:nth-of-type(even) {
   filter: drop-shadow(0 2px 6px rgba(22, 163, 74, 0.45));
 }
 
-/* When navbar is scrolled (light background), soften the shadow */
+/* When navbar is scrolled (light background), revert blend mode */
 #navbar.navbar--scrolled .nav-logo-img {
+  mix-blend-mode: normal;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.18));
 }
 

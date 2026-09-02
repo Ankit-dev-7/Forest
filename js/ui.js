@@ -42,8 +42,6 @@ const STAT_CARDS_META = [
   { key: 'forestGainHa',         icon: 'fa-circle-plus', label: 'Annual Forest Gain',          yearly: true,  format: 'ha' },
   { key: 'protectedAreasCount',  icon: 'fa-shield',      label: 'Protected Areas',             yearly: false, format: 'number' },
   { key: 'districtsCount',       icon: 'fa-map-location-dot', label: 'Districts Monitored',    yearly: false, format: 'number' },
-  { key: 'satelliteImagesCount', icon: 'fa-satellite',   label: 'Satellite Images Processed',  yearly: false, format: 'number' },
-  { key: 'predictionAccuracyPct',icon: 'fa-brain',       label: 'Prediction Accuracy (%)',     yearly: false, format: 'number' },
 ];
 
 /**
@@ -434,8 +432,15 @@ export function renderInsights(year) {
       'fa-bolt',
       'Greatest Loss–Gain Imbalance',
       maxImbalance.name || 'Unknown',
-      `${maxImbalance.name} shows the largest net imbalance (${formatHa(Math.abs((maxImbalance.forestLossHa || 0) - (maxImbalance.forestGainHa || 0)))}), requiring urgent intervention.`,
-      'danger'
+      (() => {
+        const loss = maxImbalance.forestLossHa || 0;
+        const gain = maxImbalance.forestGainHa || 0;
+        const diff = formatHa(Math.abs(loss - gain));
+        return gain > loss
+          ? `${maxImbalance.name} shows the largest net gain imbalance (${diff}), driven by strong reforestation and community forestry.`
+          : `${maxImbalance.name} shows the largest net loss imbalance (${diff}), indicating severe deforestation pressure.`;
+      })(),
+      (maxImbalance.forestGainHa || 0) > (maxImbalance.forestLossHa || 0) ? 'success' : 'danger'
     ),
     _buildInsightCard(
       'fa-scale-balanced',
