@@ -583,23 +583,49 @@ function _initNavbar() {
   // ── Active nav-link via IntersectionObserver ──────────────
   const sections = document.querySelectorAll('main section[id]');
   if (sections.length) {
+    // Track intersection ratios so we can always highlight the most-visible section.
+    // Using threshold: 0 (fires on any visibility change) + rootMargin to bias
+    // toward the top of the viewport.  This handles tall sections like #map and
+    // #analytics that can never reach 50 % visibility.
+    const visibilityMap = new Map();
+
     const sectionObserver = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            document.querySelectorAll('.nav-link').forEach(link => {
-              link.classList.remove('nav-link--active');
-              if (link.getAttribute('href') === `#${id}`) {
-                link.classList.add('nav-link--active');
-              }
-            });
+          visibilityMap.set(entry.target.id, entry.intersectionRatio);
+        });
+
+        // Pick the section with the highest intersection ratio
+        let bestId = null;
+        let bestRatio = 0;
+        visibilityMap.forEach((ratio, id) => {
+          if (ratio > bestRatio) {
+            bestRatio = ratio;
+            bestId = id;
           }
         });
+
+        if (bestId) {
+          document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('nav-link--active');
+            if (link.getAttribute('href') === `#${bestId}`) {
+              link.classList.add('nav-link--active');
+            }
+          });
+        }
       },
-      { threshold: 0.5 }
+      {
+        // Multiple thresholds give us a finer-grained ratio on every scroll tick
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+        // Shrink the bottom of the root so sections near the top win when several
+        // sections are partially visible at once
+        rootMargin: '0px 0px -40% 0px'
+      }
     );
-    sections.forEach(sec => sectionObserver.observe(sec));
+    sections.forEach(sec => {
+      visibilityMap.set(sec.id, 0);
+      sectionObserver.observe(sec);
+    });
   }
 
   // ── Hamburger ─────────────────────────────────────────────

@@ -559,11 +559,19 @@ function _buildTrendChart() {
   const lossDs   = yearly.map(d => d.forestLossHa);
   const gainDs   = yearly.map(d => d.forestGainHa);
 
+  // Set the cover Y-axis min to just below the lowest cover value so the
+  // natural year-to-year variation is visible instead of a flat line.
+  const coverMin = Math.min(...coverDs);
+  const coverMax = Math.max(...coverDs);
+  const coverPad = Math.round((coverMax - coverMin) * 0.15) || 50000;
+  const coverAxisMin = Math.floor((coverMin - coverPad) / 50000) * 50000;
+
   if (_chartTrend) {
     _chartTrend.data.labels              = labels;
     _chartTrend.data.datasets[0].data   = coverDs;
     _chartTrend.data.datasets[1].data   = lossDs;
     _chartTrend.data.datasets[2].data   = gainDs;
+    _chartTrend.options.scales.yCover.min = coverAxisMin;
     _chartTrend.update('active');
     _updateTrendSrTable(yearly);
     return;
@@ -629,6 +637,7 @@ function _buildTrendChart() {
         yCover: {
           ..._yAxis('Forest Cover (ha)'),
           position: 'left',
+          min: coverAxisMin,
         },
         yLossGain: {
           ..._yAxis('Loss / Gain (ha)'),
@@ -942,10 +951,17 @@ function _buildProvinceChart(metricKey) {
   const cx = SVG_SIZE / 2;
   const cy = SVG_SIZE / 2;
 
-  // Ring geometry: outermost ring first
-  const TRACK_W    = Math.max(SVG_SIZE * 0.048, 10);  // stroke width
-  const RING_GAP   = Math.max(SVG_SIZE * 0.022, 5);   // gap between rings
-  const OUTER_R    = (SVG_SIZE / 2) - TRACK_W / 2 - 4;
+  // Ring geometry: outermost ring first.
+  // Dynamically scale TRACK_W and RING_GAP so all N rings always fit inside
+  // the SVG, regardless of how many provinces there are.
+  const INNER_MARGIN = 12;                              // minimum center clearance
+  const usableR      = SVG_SIZE / 2 - INNER_MARGIN;    // total radial space available
+  // Each ring consumes (TRACK_W + RING_GAP); solve for the step that fits N rings
+  // while keeping the gap-to-stroke ratio ≈ 0.46 (same feel as before).
+  const RING_STEP  = usableR / (N + 0.5);              // +0.5 leaves a tidy outer margin
+  const TRACK_W    = Math.max(RING_STEP * 0.68, 6);    // ~68% stroke, ~32% gap
+  const RING_GAP   = Math.max(RING_STEP - TRACK_W, 3);
+  const OUTER_R    = usableR - TRACK_W / 2;            // outermost ring centre-line
 
   // ── Helper: polar → cartesian ───────────────────────────────
   function polarToCart(cx, cy, r, angleDeg) {
