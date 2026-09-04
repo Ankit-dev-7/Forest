@@ -337,11 +337,8 @@ export function getFilteredProvinces() {
     };
   });
 
-  // When a specific province is selected, show only that province
-  if (province !== 'all') {
-    provinces = provinces.filter(p => p.name === province);
-  }
-
+  // Province chart always shows all 7 provinces regardless of the province filter
+  // (the filter only applies to other widgets like the trend chart and KPIs)
   return provinces;
 }
 
@@ -655,23 +652,13 @@ function _buildTrendChart() {
   const yearly = getFilteredYearlyData();
 
   const labels   = yearly.map(d => d.year);
-  const coverDs  = yearly.map(d => d.forestCoverHa);
   const lossDs   = yearly.map(d => d.forestLossHa);
   const gainDs   = yearly.map(d => d.forestGainHa);
 
-  // Set the cover Y-axis min to just below the lowest cover value so the
-  // natural year-to-year variation is visible instead of a flat line.
-  const coverMin = Math.min(...coverDs);
-  const coverMax = Math.max(...coverDs);
-  const coverPad = Math.round((coverMax - coverMin) * 0.15) || 50000;
-  const coverAxisMin = Math.floor((coverMin - coverPad) / 50000) * 50000;
-
   if (_chartTrend) {
     _chartTrend.data.labels              = labels;
-    _chartTrend.data.datasets[0].data   = coverDs;
-    _chartTrend.data.datasets[1].data   = lossDs;
-    _chartTrend.data.datasets[2].data   = gainDs;
-    _chartTrend.options.scales.yCover.min = coverAxisMin;
+    _chartTrend.data.datasets[0].data   = lossDs;
+    _chartTrend.data.datasets[1].data   = gainDs;
     _chartTrend.update('active');
     _updateTrendSrTable(yearly);
     return;
@@ -683,18 +670,6 @@ function _buildTrendChart() {
       labels,
       datasets: [
         {
-          label:            'Forest Cover',
-          data:             coverDs,
-          borderColor:      COLOR.green,
-          backgroundColor:  COLOR.greenArea,
-          fill:             false,
-          tension:          0.35,
-          pointRadius:      4,
-          pointHoverRadius: 7,
-          borderWidth:      2.5,
-          yAxisID:          'yCover',
-        },
-        {
           label:            'Forest Loss',
           data:             lossDs,
           borderColor:      COLOR.loss,
@@ -704,7 +679,7 @@ function _buildTrendChart() {
           pointRadius:      3,
           pointHoverRadius: 6,
           borderWidth:      2,
-          yAxisID:          'yLossGain',
+          yAxisID:          'yLoss',
         },
         {
           label:            'Forest Gain',
@@ -716,7 +691,7 @@ function _buildTrendChart() {
           pointRadius:      3,
           pointHoverRadius: 6,
           borderWidth:      2,
-          yAxisID:          'yLossGain',
+          yAxisID:          'yGain',
         },
       ],
     },
@@ -734,13 +709,12 @@ function _buildTrendChart() {
       },
       scales: {
         x: _xAxis(),
-        yCover: {
-          ..._yAxis('Forest Cover (ha)'),
+        yLoss: {
+          ..._yAxis('Forest Loss (ha)'),
           position: 'left',
-          min: coverAxisMin,
         },
-        yLossGain: {
-          ..._yAxis('Loss / Gain (ha)'),
+        yGain: {
+          ..._yAxis('Forest Gain (ha)'),
           position: 'right',
           grid: { drawOnChartArea: false },
         },
@@ -763,7 +737,6 @@ function _buildTrendLegend() {
   container.innerHTML = '';
 
   const datasets = [
-    { label: 'Forest Cover', color: COLOR.green },
     { label: 'Forest Loss',  color: COLOR.loss  },
     { label: 'Forest Gain',  color: COLOR.gain  },
   ];
@@ -1741,7 +1714,7 @@ function _resetFilters() {
   _filter.district  = 'all';
 
   _populateDistrictSelect();
-  _refreshAll();
+  _refreshAllWithProvince();
 }
 
 /**
@@ -1752,11 +1725,20 @@ function _refreshAll() {
   _buildTrendChart();
   _buildLossChart();
   _buildGainLossChart();
-  _buildProvinceChart(_provinceMetric);
   _renderDistrictRanking(_districtMetric);
   _buildCompositionChart();
   _renderFindings();
   _renderTable();
+}
+
+/**
+ * Refresh everything AND rebuild the province chart.
+ * Called only from year-change paths so the province chart
+ * is unaffected by province/district filter changes.
+ */
+function _refreshAllWithProvince() {
+  _refreshAll();
+  _buildProvinceChart(_provinceMetric);
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -1816,7 +1798,7 @@ function _onYearChanged({ year }) {
       _filter.yearStart = year;
     }
 
-    _applyFilters();
+    _refreshAllWithProvince();
   }
 }
 
@@ -1848,8 +1830,8 @@ export function init(stats) {
   const districtEl = document.getElementById('adash-district');
   const resetBtn   = document.getElementById('adash-reset');
 
-  if (startEl)    startEl.addEventListener('change', _applyFilters);
-  if (endEl)      endEl.addEventListener('change', _applyFilters);
+  if (startEl)    startEl.addEventListener('change', () => { _applyFilters(); _buildProvinceChart(_provinceMetric); });
+  if (endEl)      endEl.addEventListener('change',   () => { _applyFilters(); _buildProvinceChart(_provinceMetric); });
   if (provinceEl) {
     provinceEl.addEventListener('change', () => {
       _filter.province = provinceEl.value;
@@ -1872,7 +1854,7 @@ export function init(stats) {
   EventBus.on('year:changed', _onYearChanged);
 
   // 6. Initial full render
-  _refreshAll();
+  _refreshAllWithProvince();
 
   // 7. Re-render radial chart on container resize (responsive)
   const radialWrap = document.getElementById('province-radial-wrap');
