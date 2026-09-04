@@ -603,6 +603,20 @@ export function init(stats) {
   if (startEl) startEl.addEventListener('change', applyFilter);
   if (endEl)   endEl.addEventListener('change', applyFilter);
 
-  // Subscribe to year:changed from Time Explorer
-  EventBus.on('year:changed', ({ year }) => filterChartsToYear(year));
+  // Subscribe to year:changed only when charts.js owns the canvases.
+  // analytics.js claims chart-trend/loss/gain/composition first (see main.js
+  // init order), so filterChartsToYear() would immediately return early.
+  // We check at subscription time — if analytics.js already owns chart-trend
+  // we skip wiring the listener entirely to avoid a silent no-op on every event.
+  try {
+    const trendCanvas = document.getElementById('chart-trend');
+    if (!trendCanvas || !Chart.getChart(trendCanvas)) {
+      EventBus.on('year:changed', ({ year }) => filterChartsToYear(year));
+    }
+    // If analytics.js owns the canvases it handles year highlight itself
+    // via its own _onYearChanged → _applyFilters() subscription.
+  } catch (_) {
+    // Chart global not yet available — wire anyway as a safety fallback
+    EventBus.on('year:changed', ({ year }) => filterChartsToYear(year));
+  }
 }

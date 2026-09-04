@@ -306,6 +306,11 @@ export function init(prediction, risk, stats) {
   // Render prediction cards (top 5)
   renderPredictionCards(sortedDistricts);
 
+  // Render model confidence badge using the top-level value from prediction.json
+  if (prediction.confidencePct != null) {
+    renderConfidenceBadge(prediction.confidencePct);
+  }
+
   // Render top-10 list from risk data
   if (risk && risk.districts) {
     renderTop10List(risk.districts);

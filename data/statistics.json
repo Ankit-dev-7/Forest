@@ -4,8 +4,6 @@
     "forestGainHa":  37250,
     "protectedAreasCount":  20,
     "districtsCount":  77,
-    "satelliteImagesCount":  1240,
-    "predictionAccuracyPct":  87.4,
     "_dataSources":  {
                          "note":  "All cover figures use DFRS national forest definition (5,963,412 ha baseline 2015). Annual loss uses real GFW/UMD Landsat values. Annual gain calibrated to DFRS/REDD+ net gain ~35,000 ha/yr.",
                          "forestCover":  "DFRS (2015) State of Nepal Forests â€” 5,963,412 ha; DFRS physiographic breakdown Terai 1,217,764 / Hills 2,820,324 / Mountains 1,925,324 ha",
