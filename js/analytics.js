@@ -212,16 +212,55 @@ export function getFilteredYearlyData() {
 }
 
 /**
- * Get districts filtered by the active province filter.
- * Enriches each district with a `netChange` field.
+ * Get districts filtered by the active province/district filter,
+ * with loss/gain/cover values scaled to the selected year range.
+ *
+ * District data in statistics.json is a static snapshot covering the full
+ * dataset period. To make values respond to the year-range filter we scale
+ * each district proportionally, using the same ratio approach as
+ * getFilteredProvinces(): (national metric in selected range) / (national
+ * metric over full dataset).
+ *
  * @returns {Array}
  */
 export function getFilteredDistricts() {
   if (!_stats?.districts) return [];
-  let districts = _stats.districts.map(d => ({
-    ...d,
-    netChange: (d.forestGainHa ?? 0) - (d.forestLossHa ?? 0),
-  }));
+
+  // ── Compute year-range scale ratios ──────────────────────────
+  const allYears = _stats.yearlyData ?? [];
+  const { yearStart, yearEnd } = _filter;
+
+  const fullLoss  = allYears.reduce((s, d) => s + (d.forestLossHa ?? 0), 0);
+  const fullGain  = allYears.reduce((s, d) => s + (d.forestGainHa ?? 0), 0);
+
+  const rangeYears = allYears.filter(d => d.year >= yearStart && d.year <= yearEnd);
+  const rangeLoss  = rangeYears.reduce((s, d) => s + (d.forestLossHa ?? 0), 0);
+  const rangeGain  = rangeYears.reduce((s, d) => s + (d.forestGainHa ?? 0), 0);
+
+  const lossRatio = fullLoss > 0 ? rangeLoss / fullLoss : 1;
+  const gainRatio = fullGain > 0 ? rangeGain / fullGain : 1;
+
+  // Cover ratio: national cover at year-end vs last data point
+  const lastEntry    = allYears[allYears.length - 1];
+  const yearEndEntry = rangeYears.length ? rangeYears[rangeYears.length - 1] : lastEntry;
+  const coverRatio   = lastEntry?.forestCoverHa > 0
+    ? (yearEndEntry?.forestCoverHa ?? lastEntry.forestCoverHa) / lastEntry.forestCoverHa
+    : 1;
+
+  // ── Build scaled + filtered district list ────────────────────
+  let districts = _stats.districts.map(d => {
+    const scaledLoss  = Math.round((d.forestLossHa  ?? 0) * lossRatio);
+    const scaledGain  = Math.round((d.forestGainHa  ?? 0) * gainRatio);
+    const scaledCover = Math.round((d.forestCoverHa ?? 0) * coverRatio);
+    return {
+      ...d,
+      forestLossHa:  scaledLoss,
+      forestGainHa:  scaledGain,
+      forestCoverHa: scaledCover,
+      netChange:     scaledGain - scaledLoss,
+    };
+  });
+
   if (_filter.province !== 'all') {
     districts = districts.filter(
       d => DISTRICT_PROVINCE_MAP[d.name] === _filter.province
@@ -235,6 +274,7 @@ export function getFilteredDistricts() {
 
 /**
  * Get provinces, enriched with netChange.
+ * Returns static snapshot values — use getFilteredProvinces() for filter-aware data.
  * @returns {Array}
  */
 export function getProvinces() {
@@ -243,6 +283,66 @@ export function getProvinces() {
     ...p,
     netChange: (p.forestGainHa ?? 0) - (p.forestLossHa ?? 0),
   }));
+}
+
+/**
+ * Get provinces scaled to the current filter state (year range + province selection).
+ *
+ * Loss and gain figures are proportionally scaled from the static province snapshot
+ * using the ratio: (national loss/gain in the selected year range) / (national full-range total).
+ * Forest cover is taken from the yearly entry closest to the selected year-end.
+ * When a specific province is selected, only that province is returned.
+ *
+ * @returns {Array<{name, forestCoverHa, forestLossHa, forestGainHa, netChange}>}
+ */
+export function getFilteredProvinces() {
+  if (!_stats?.provinces || !_stats?.yearlyData) return getProvinces();
+
+  const allYears     = _stats.yearlyData;
+  const { yearStart, yearEnd, province } = _filter;
+
+  // National totals over the FULL dataset (denominator for scaling)
+  const fullLoss  = allYears.reduce((s, d) => s + (d.forestLossHa ?? 0), 0);
+  const fullGain  = allYears.reduce((s, d) => s + (d.forestGainHa ?? 0), 0);
+
+  // National totals over the SELECTED year range (numerator for scaling)
+  const filtered  = allYears.filter(d => d.year >= yearStart && d.year <= yearEnd);
+  const rangeLoss = filtered.reduce((s, d) => s + (d.forestLossHa ?? 0), 0);
+  const rangeGain = filtered.reduce((s, d) => s + (d.forestGainHa ?? 0), 0);
+
+  // Scale ratios — fall back to 1 if full total is zero to avoid NaN
+  const lossRatio  = fullLoss > 0 ? rangeLoss / fullLoss : 1;
+  const gainRatio  = fullGain > 0 ? rangeGain / fullGain : 1;
+
+  // Cover ratio: pick the national cover at year-end vs the dataset's last entry
+  const lastEntry  = allYears[allYears.length - 1];
+  const yearEndEntry = filtered.length
+    ? filtered[filtered.length - 1]
+    : lastEntry;
+  const coverRatio = lastEntry?.forestCoverHa > 0
+    ? (yearEndEntry?.forestCoverHa ?? lastEntry.forestCoverHa) / lastEntry.forestCoverHa
+    : 1;
+
+  // Build scaled province list
+  let provinces = _stats.provinces.map(p => {
+    const scaledLoss  = Math.round((p.forestLossHa  ?? 0) * lossRatio);
+    const scaledGain  = Math.round((p.forestGainHa  ?? 0) * gainRatio);
+    const scaledCover = Math.round((p.forestCoverHa ?? 0) * coverRatio);
+    return {
+      ...p,
+      forestLossHa:  scaledLoss,
+      forestGainHa:  scaledGain,
+      forestCoverHa: scaledCover,
+      netChange:     scaledGain - scaledLoss,
+    };
+  });
+
+  // When a specific province is selected, show only that province
+  if (province !== 'all') {
+    provinces = provinces.filter(p => p.name === province);
+  }
+
+  return provinces;
 }
 
 /**
@@ -909,7 +1009,7 @@ function _buildProvinceChart(metricKey) {
   const wrap = document.getElementById('province-radial-wrap');
   if (!wrap) return;
 
-  const provinces = getProvinces();
+  const provinces = getFilteredProvinces();
 
   // Sort descending by absolute value of the active metric so the
   // largest value always gets the outermost ring.
@@ -1074,7 +1174,10 @@ function _buildProvinceChart(metricKey) {
 
   // ── Center label ─────────────────────────────────────────────
   const centerLabel = metricLabel;
-  const centerSub   = `${N} Provinces`;
+  const _yearLabel  = _filter.yearStart === _filter.yearEnd
+    ? String(_filter.yearStart)
+    : `${_filter.yearStart}–${_filter.yearEnd}`;
+  const centerSub   = N === 1 ? sorted[0]?.name ?? '1 Province' : `${N} Provinces · ${_yearLabel}`;
 
   // ── Assemble final HTML ──────────────────────────────────────
   wrap.innerHTML = `
