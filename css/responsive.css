@@ -587,23 +587,64 @@
 }
 
 /* ============================================================
-   LOGO RESPONSIVE OVERRIDES
+   HERO CINEMATIC — RESPONSIVE OVERRIDES
    ============================================================ */
 
-/* ── Tablet (768px–1023px) ── */
-@media (min-width: 768px) and (max-width: 1023px) {
-  /* Hero: tighten gap, slightly smaller logo */
+/* ── Large desktop (≥1536px) ── */
+@media (min-width: 1536px) {
   .hero-content {
-    gap: 2rem;
-    padding: 2rem 1.75rem;
+    max-width: 1500px;
+    padding: 7rem 4rem 2.5rem;
+    gap: 4rem;
+  }
+
+  .hero-logo-wrap {
+    width: 480px;
+    height: 480px;
   }
 
   .hero-logo-img {
-    width: 190px;
-    max-width: 190px;
+    max-width: 480px;
+  }
+}
+
+/* ── Laptop (1024px–1279px) ── */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .hero-content {
+    padding: 5.5rem 2.5rem 2rem;
+    gap: 2.5rem;
   }
 
-  /* Navbar logo: unchanged at this size */
+  .hero-logo-wrap {
+    width: 360px;
+    height: 360px;
+  }
+
+  .hero-logo-img {
+    max-width: 360px;
+  }
+}
+
+/* ── Tablet (768px–1023px) ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-content {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    padding: 5rem 2rem 2rem;
+  }
+
+  .hero-logo-wrap {
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+  }
+
+  .hero-logo-img {
+    max-width: 280px;
+  }
+
+  /* Navbar logo */
   .nav-logo-img {
     height: 44px;
     max-width: 44px;
@@ -612,13 +653,13 @@
 
 /* ── Mobile (≤767px) ── */
 @media (max-width: 767px) {
-  /* Hero: stack vertically — text first, logo below */
+  /* Stack vertically: text first, logo below as accent */
   .hero-content {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 2rem 1rem;
-    gap: 2rem;
+    padding: 5rem 1.25rem 1.5rem;
+    gap: 1.75rem;
   }
 
   .hero-text {
@@ -631,24 +672,25 @@
   }
 
   .hero-text .hero-subtitle {
-    margin: 0 auto 2rem;
+    margin: 0 auto 1.75rem;
   }
 
   .hero-text #hero-stats {
     justify-content: center;
   }
 
-  /* Logo moves below the text/buttons on mobile */
+  /* Logo sits below text, smaller — still atmospheric */
   .hero-logo-wrap {
     order: 2;
+    width: 220px;
+    height: 220px;
   }
 
   .hero-logo-img {
-    width: 160px;
-    max-width: 160px;
+    max-width: 220px;
   }
 
-  /* Navbar logo: slightly smaller on mobile */
+  /* Navbar logo */
   .nav-logo-img {
     height: 36px;
     max-width: 36px;
@@ -657,9 +699,17 @@
 
 /* ── Small mobile (≤380px) ── */
 @media (max-width: 380px) {
+  .hero-content {
+    padding: 4.5rem 1rem 1.5rem;
+  }
+
+  .hero-logo-wrap {
+    width: 175px;
+    height: 175px;
+  }
+
   .hero-logo-img {
-    width: 130px;
-    max-width: 130px;
+    max-width: 175px;
   }
 
   .nav-logo-img {

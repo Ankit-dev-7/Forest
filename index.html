@@ -35,7 +35,7 @@
       <!-- Logo -->
       <div class="nav-logo">
         <a href="#hero" aria-label="Deforestation Watch Nepal — go to top">
-          <img src="Photos/Logo%202.png"
+          <img src="Photos/Logo%203.png"
                alt="Deforestation Watch Nepal logo"
                class="nav-logo-img"
                width="48"
@@ -70,14 +70,22 @@
 
     <!-- Hero Section -->
     <section id="hero" aria-labelledby="hero-heading">
-      <!-- Layer 0: satellite background image + dark overlay -->
+
+      <!-- Layer 0: cinematic forest photograph + atmospheric overlays -->
       <div class="hero-bg" aria-hidden="true">
-        <img src="assets/images/hero-bg.jpg"
+        <!-- Actual forest photograph — the visual foundation -->
+        <img src="Photos/background%206.jpeg"
              alt=""
              aria-hidden="true"
-             loading="lazy"
-             class="hero-bg-img">
+             class="hero-bg-photo"
+             loading="eager"
+             decoding="async">
+        <!-- Cinematic colour-grade: very light so photo stays visible -->
         <div class="hero-bg-overlay"></div>
+        <!-- Left curtain: dark band behind text for readability -->
+        <div class="hero-bg-left-veil"></div>
+        <!-- Bottom fade → blends into next section -->
+        <div class="hero-bg-bottom-fade"></div>
       </div>
 
       <!-- Layer 1: particle canvas (above bg, below text) -->
@@ -86,7 +94,7 @@
       <!-- Layer 2: hero content -->
       <div class="hero-content">
 
-        <!-- Left: text, stats, scroll indicator -->
+        <!-- Left: text, stats -->
         <div class="hero-text">
           <div class="hero-badge">
             <i class="fa-solid fa-leaf" aria-hidden="true"></i>
@@ -98,8 +106,7 @@
             deforestation risk, data from 2015 to 2025.
           </p>
 
-          <!-- Hero stat placeholder cards (Forest Cover, Forest Loss, Forest Gain).
-               ui.init() replaces these with live data from statistics.json. -->
+          <!-- Hero stat placeholder cards — populated by ui.init() from statistics.json -->
           <div id="hero-stats" aria-label="Key forest statistics">
             <div class="hero-stat-card" data-hero-stat="forestCoverHa" aria-label="Total Forest Cover">
               <i class="fa-solid fa-tree" aria-hidden="true"></i>
@@ -120,24 +127,9 @@
 
         </div>
 
-        <!-- Right: floating logo -->
-        <div class="hero-logo-wrap" aria-hidden="true">
-          <img src="Photos/Logo%202.png"
-               alt="Deforestation Watch Nepal logo"
-               class="hero-logo-img"
-               width="240"
-               height="240"
-               loading="eager">
-        </div>
+
 
       </div>
-
-      <!-- Scroll indicator: centered below the full hero row -->
-      <button class="scroll-indicator"
-              aria-label="Scroll to statistics"
-              onclick="document.getElementById('statistics').scrollIntoView({behavior:'smooth'})">
-        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
-      </button>
 
     </section>
 

@@ -218,3 +218,61 @@ html.js-loaded section.section-hidden.revealed {
     animation: none;
   }
 }
+
+/* ============================================================
+   HERO CINEMATIC — KEYFRAMES & ENTRANCE ANIMATIONS
+   ============================================================ */
+
+/* ── Text entrance: fade up from below ── */
+@keyframes hero-text-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Logo entrance: fade in + gentle scale up from centre ── */
+@keyframes hero-logo-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.90) translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Slow, barely-perceptible float ── */
+@keyframes hero-logo-float {
+  0%,  100% { transform: translateY(0px);   }
+  50%        { transform: translateY(-14px); }
+}
+
+/* ── Halo pulse: breathes gently ── */
+@keyframes hero-halo-pulse {
+  0%,  100% {
+    opacity: 0.70;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+}
+
+/* ── Reduced-motion: disable all hero animations ── */
+@media (prefers-reduced-motion: reduce) {
+  .hero-text,
+  .hero-logo-wrap,
+  .hero-logo-img,
+  .hero-logo-halo {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
