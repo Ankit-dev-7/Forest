@@ -10,13 +10,6 @@ import { EventBus } from './eventbus.js';
 import { getRiskColor, getRiskLevel, formatHa, formatNumber } from './utils.js';
 
 // ============================================================
-// Module-level state
-// ============================================================
-
-/** @type {Chart|null} Historical vs Predicted chart */
-let chartHistorical = null;
-
-// ============================================================
 // DOM helpers
 // ============================================================
 
@@ -140,6 +133,7 @@ function renderTop10List(riskDistricts) {
 
   top10.forEach((d, idx) => {
     const li = document.createElement('li');
+    li.style.cssText = 'margin-bottom: 12px !important;';
 
     const rank = document.createElement('span');
     rank.style.cssText = 'font-weight:700;min-width:1.5rem;color:var(--color-neutral-500);';
@@ -170,120 +164,8 @@ function renderTop10List(riskDistricts) {
 }
 
 // ============================================================
-// Chart builders
-// ============================================================
-
-/**
- * Build the Historical vs. Predicted chart.
- *
- * The predicted data comes from summing per-district projectedCover values
- * (63 districts out of 77), so the raw district sums are smaller than the
- * national totals used for historical data. To prevent a visual discontinuity
- * at the 2025→2026 boundary we scale the predicted values so the first
- * predicted point aligns with the last historical point, preserving the
- * trend shape while matching the national magnitude.
- *
- * @param {Array<{year:number, forestCoverHa:number}>} historicalData  2015–2025
- * @param {Array<{year:number, forestCoverHa:number}>} predictedData   2026–2030 (raw district sums)
- */
-function buildHistoricalChart(historicalData, predictedData) {
-  const canvas = document.getElementById('chart-historical-predicted');
-  if (!canvas) return null;
-
-  // Destroy any existing Chart.js instance attached to this canvas
-  // to prevent the "Canvas is already in use" console error.
-  const existing = typeof Chart !== 'undefined' && Chart.getChart(canvas);
-  if (existing) existing.destroy();
-
-  // Scale predicted sums to national magnitude so the lines connect smoothly.
-  // ratio = last historical national value / first district-sum predicted value.
-  let scaledPredicted = predictedData;
-  if (historicalData.length > 0 && predictedData.length > 0) {
-    const lastHistorical = historicalData[historicalData.length - 1].forestCoverHa;
-    const firstPredicted = predictedData[0].forestCoverHa;
-    if (firstPredicted > 0) {
-      const ratio = lastHistorical / firstPredicted;
-      scaledPredicted = predictedData.map(d => ({
-        ...d,
-        forestCoverHa: Math.round(d.forestCoverHa * ratio),
-      }));
-    }
-  }
-
-  const histLabels = historicalData.map(d => d.year);
-  const predLabels = scaledPredicted.map(d => d.year);
-  const allLabels  = [...new Set([...histLabels, ...predLabels])].sort((a, b) => a - b);
-
-  return new Chart(canvas, {
-    type: 'line',
-    data: {
-      labels: allLabels,
-      datasets: [
-        {
-          label: 'Actual',
-          data: allLabels.map(y => {
-            const entry = historicalData.find(d => d.year === y);
-            return entry ? entry.forestCoverHa : null;
-          }),
-          borderColor: '#16a34a',
-          backgroundColor: 'rgba(22,163,74,0.1)',
-          borderDash: [],
-          tension: 0.3,
-          spanGaps: false,
-          pointRadius: 4,
-        },
-        {
-          label: 'Predicted',
-          data: allLabels.map(y => {
-            const entry = scaledPredicted.find(d => d.year === y);
-            return entry ? entry.forestCoverHa : null;
-          }),
-          borderColor: '#f59e0b',
-          backgroundColor: 'rgba(245,158,11,0.1)',
-          borderDash: [6, 3],
-          tension: 0.3,
-          spanGaps: false,
-          pointRadius: 4,
-        },
-      ],
-    },
-    options: {
-      animation: { duration: 1000, easing: 'easeInOutQuart' },
-      responsive: true,
-      plugins: {
-        tooltip: {
-          callbacks: { label: ctx => `${ctx.dataset.label}: ${formatHa(ctx.raw)}` },
-        },
-      },
-      scales: {
-        y: {
-          title: { display: true, text: 'Forest Cover (ha)' },
-          ticks: { callback: val => formatNumber(val) },
-        },
-      },
-    },
-  });
-}
-
-// ============================================================
 // Public API
 // ============================================================
-
-/**
- * Highlight the corresponding year on the prediction charts.
- * @param {number} year
- */
-export function highlightYearOnChart(year) {
-  // Historical chart — highlight the matching point on the Actual dataset
-  if (chartHistorical && year >= 2015 && year <= 2025) {
-    const idx = chartHistorical.data.labels.indexOf(year);
-    if (idx !== -1) {
-      chartHistorical.data.datasets[0].pointBackgroundColor =
-        chartHistorical.data.labels.map((y, i) => i === idx ? '#7c3aed' : '#16a34a');
-      chartHistorical.update('none');
-    }
-  }
-}
 
 /**
  * Initialise the prediction module.
@@ -291,9 +173,8 @@ export function highlightYearOnChart(year) {
  *
  * @param {object} prediction  Parsed prediction.json
  * @param {object} risk        Parsed risk_score.json
- * @param {object} [stats]     Parsed statistics.json (for historical data)
  */
-export function init(prediction, risk, stats) {
+export function init(prediction, risk) {
   if (!prediction) {
     console.warn('[prediction.js] init() called with null prediction — prediction section skipped.');
     return;
@@ -318,45 +199,4 @@ export function init(prediction, risk, stats) {
     // Fallback: use prediction districts
     renderTop10List(sortedDistricts.map(d => ({ name: d.name, riskScore: d.riskScore })));
   }
-
-  // Build historical data from stats.yearlyData (2015–2025).
-  // If stats failed to load, historicalData will be empty and we show a notice.
-  const historicalData = (stats?.yearlyData ?? [])
-    .filter(d => d.year >= 2015 && d.year <= 2025);
-
-  if (!stats) {
-    console.warn('[prediction.js] stats not available — historical forest cover data missing from chart.');
-    // Show a notice inside the chart wrapper so the user knows why the
-    // Actual line is absent instead of seeing a mysteriously half-empty chart.
-    const canvas = document.getElementById('chart-historical-predicted');
-    if (canvas && canvas.parentElement) {
-      const notice = document.createElement('p');
-      notice.style.cssText = 'font-size:0.8rem;color:var(--color-neutral-500);text-align:center;margin-top:0.5rem;';
-      notice.textContent = 'Historical data unavailable — statistics.json failed to load.';
-      canvas.parentElement.appendChild(notice);
-    }
-  }
-
-  // Build predicted national totals per year (2026–2030) from all district projections.
-  // Raw values are district-level sums (63/77 districts); buildHistoricalChart will
-  // scale them to the national magnitude so the lines connect without a gap.
-  const futureYears = [2026, 2027, 2028, 2029, 2030];
-  const predictedData = futureYears.map(y => ({
-    year: y,
-    forestCoverHa: sortedDistricts.reduce((sum, d) => {
-      const entry = (d.projectedCover ?? []).find(p => p.year === y);
-      return sum + (entry ? entry.forestCoverHa : 0);
-    }, 0),
-  }));
-
-  // Build charts — destroy any previous instance first to prevent
-  // "Canvas is already in use" errors if init() is ever called more than once.
-  if (chartHistorical) {
-    chartHistorical.destroy();
-    chartHistorical = null;
-  }
-  chartHistorical = buildHistoricalChart(historicalData, predictedData);
-
-  // Subscribe to year:changed
-  EventBus.on('year:changed', ({ year }) => highlightYearOnChart(year));
 }

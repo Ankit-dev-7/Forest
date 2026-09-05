@@ -1229,6 +1229,7 @@ html, body {
   border: 1px solid var(--forest-border);
   border-radius: 14px;
   box-shadow: var(--shadow-forest-md);
+  margin-top: 2rem;
 }
 
 #prediction .chart-wrapper h3 {

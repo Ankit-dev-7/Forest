@@ -1424,7 +1424,7 @@ main section:nth-of-type(even) {
 #top-risk-list {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 1rem;
 }
 
 #top-risk-list li {
@@ -1432,6 +1432,7 @@ main section:nth-of-type(even) {
   align-items: center;
   gap: 0.875rem;
   padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
   background: var(--sage-100);
   border-radius: var(--radius-lg);
   border: 1px solid var(--sage-border-soft);
