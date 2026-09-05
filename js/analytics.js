@@ -1570,15 +1570,13 @@ function _renderTable() {
 
   const yearly = getFilteredYearlyData();
 
-  // Enrich with net change and change %
-  const rows = yearly.map((d, i) => ({
+  // Enrich with net change
+  const rows = yearly.map((d) => ({
     year:           d.year,
     forestCoverHa:  d.forestCoverHa,
     forestLossHa:   d.forestLossHa,
     forestGainHa:   d.forestGainHa,
     netChange:      d.forestGainHa - d.forestLossHa,
-    changePct:      i === 0 ? 0.6
-      : calculatePercentageChange(yearly[i-1].forestCoverHa, d.forestCoverHa),
   }));
 
   // Sort
@@ -1591,15 +1589,12 @@ function _renderTable() {
 
   tbody.innerHTML = rows.map(r => {
     const netCls = r.netChange >= 0 ? 'adash-val--positive' : 'adash-val--negative';
-    const pctCls = r.changePct == null ? '' :
-      r.changePct >= 0 ? 'adash-val--positive' : 'adash-val--negative';
     return `<tr>
       <td class="adash-td adash-td--year">${r.year}</td>
       <td class="adash-td">${_fmtHa(r.forestCoverHa)}</td>
       <td class="adash-td adash-td--loss">${_fmtHa(r.forestLossHa)}</td>
       <td class="adash-td adash-td--gain">${_fmtHa(r.forestGainHa)}</td>
       <td class="adash-td ${netCls}">${_fmtSigned(r.netChange)} ha</td>
-      <td class="adash-td ${pctCls}">${r.changePct != null ? _fmtPct(r.changePct) : '—'}</td>
     </tr>`;
   }).join('');
 }
