@@ -11,10 +11,17 @@
   --color-primary-light:  #22c55e;
   --color-primary-pale:   #dcfce7;
 
+  /* ── Sage palette — light natural green environment ──────── */
+  --sage-100: #F1F6F1;
+  --sage-200: #EAF2EA;
+  --sage-50:  #F7FAF7;
+  --sage-border: #D8E8D8;
+  --sage-border-soft: #E4EFE4;
+
   /* Backgrounds */
-  --color-background:   #f8fafc;
+  --color-background:   #F1F6F1;
   --color-surface:      #ffffff;
-  --color-surface-soft: #f0fdf4;
+  --color-surface-soft: #EAF2EA;
 
   /* Text */
   --color-text-primary:   #111827;
@@ -23,8 +30,8 @@
   --color-text-subtle:    #9ca3af;
 
   /* Borders */
-  --color-border:      #e5e7eb;
-  --color-border-soft: #f3f4f6;
+  --color-border:      #D8E8D8;
+  --color-border-soft: #E4EFE4;
 
   /* Dark surfaces */
   --color-dark:      #111827;
@@ -65,13 +72,13 @@
   --space-7:  1.75rem;  --space-8:  2rem;     --space-9:  2.25rem;
   --space-10: 2.5rem;   --space-12: 3rem;     --space-16: 4rem;
 
-  /* Shadows — refined, very subtle */
-  --shadow-sm:  0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md:  0 4px 12px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04);
-  --shadow-lg:  0 10px 24px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04);
-  --shadow-xl:  0 20px 40px rgba(15, 23, 42, 0.10), 0 8px 16px rgba(15, 23, 42, 0.06);
-  --shadow-card: 0 2px 8px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.04);
-  --shadow-card-hover: 0 8px 24px rgba(15, 23, 42, 0.09), 0 2px 6px rgba(15, 23, 42, 0.05);
+  /* Shadows — premium floating depth */
+  --shadow-sm:   0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md:   0 4px 12px rgba(15, 23, 42, 0.07), 0 2px 4px rgba(15, 23, 42, 0.05);
+  --shadow-lg:   0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --shadow-xl:   0 20px 40px -8px rgba(15, 23, 42, 0.12), 0 10px 16px -6px rgba(15, 23, 42, 0.06);
+  --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover: 0 20px 40px -8px rgba(15, 23, 42, 0.12), 0 10px 16px -6px rgba(15, 23, 42, 0.06);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -82,7 +89,7 @@
   --radius-sm:   0.375rem;
   --radius-md:   0.625rem;
   --radius-lg:   1rem;
-  --radius-xl:   1.25rem;
+  --radius-xl:   1rem;       /* cards: 16px */
   --radius-2xl:  1.5rem;
   --radius-full: 9999px;
 }
@@ -98,8 +105,12 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--color-background);
-  color: var(--color-text-primary);
+  background:
+    radial-gradient(circle at top left, rgba(80, 140, 170, 0.45), transparent 50%),
+    radial-gradient(circle at bottom right, rgba(100, 160, 145, 0.35), transparent 55%),
+    linear-gradient(135deg, #8FAFBD 0%, #B8CED5 50%, #9FBFB4 100%);
+  background-attachment: fixed;
+  color: #334155;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -115,11 +126,11 @@ body::before {
   position: fixed;
   inset: -20%;
   background-image:
-    radial-gradient(circle, rgba(34, 197, 94, 0.03) 1px, transparent 1px),
-    radial-gradient(circle, rgba(22, 163, 74, 0.02) 1px, transparent 1px);
-  background-position: 0 0, 24px 24px;
-  background-size: 54px 54px, 54px 54px;
-  opacity: 0.8;
+    radial-gradient(circle, rgba(22, 101, 52, 0.028) 1px, transparent 1px),
+    radial-gradient(circle, rgba(16, 85, 43, 0.018) 1px, transparent 1px);
+  background-position: 0 0, 28px 28px;
+  background-size: 56px 56px, 56px 56px;
+  opacity: 0.9;
   z-index: -1;
 }
 
@@ -128,21 +139,23 @@ body::before {
    ============================================================ */
 .container {
   max-width: 1400px;
+  width: 92%;
   margin: auto;
   padding: 0 1.5rem;
 }
 
 section {
-  padding: 5rem 1.5rem;
-  max-width: 1400px;
-  margin: auto;
+  padding: 5rem 2rem;
+  max-width: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 main > section {
   position: relative;
 }
 
-main > section:not(#hero)::before {
+main > section:not(#hero):not(#statistics)::before {
   content: '';
   display: block;
   width: 4rem;
@@ -203,8 +216,8 @@ main > section:not(#hero)::before {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
-  height: 64px;
+  padding: 0 1.25rem;
+  height: 44px;
   background: transparent;
   transition: background var(--transition-slow), box-shadow var(--transition-slow),
               backdrop-filter var(--transition-slow), border-color var(--transition-slow);
@@ -225,7 +238,7 @@ main > section:not(#hero)::before {
   gap: 0.625rem;
   font-weight: 700;
   font-size: var(--text-base);
-  color: white;
+  color: rgba(255, 255, 255, 0.95);
   transition: color var(--transition-fast);
   letter-spacing: -0.01em;
 }
@@ -252,9 +265,9 @@ main > section:not(#hero)::before {
 
 .nav-link {
   color: rgba(255, 255, 255, 0.85);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  padding: 0.375rem 0.625rem;
+  padding: 0.25rem 0.5rem;
   border-radius: var(--radius-sm);
   transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
   letter-spacing: 0.01em;
@@ -277,7 +290,7 @@ main > section:not(#hero)::before {
 
 #navbar.navbar--scrolled .nav-link:hover {
   color: var(--color-primary-dark);
-  background: var(--color-surface-soft);
+  background: var(--sage-100);
 }
 
 #navbar.navbar--scrolled .nav-link--active {
@@ -308,9 +321,9 @@ main > section:not(#hero)::before {
    ============================================================ */
 section h2 {
   font-size: clamp(2rem, 2.9vw, 2.75rem);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.025em;
   line-height: 1.1;
   margin-bottom: 0.75rem;
 }
@@ -351,11 +364,11 @@ section h2 + p {
 }
 
 main section:nth-of-type(odd) {
-  background: var(--color-background);
+  background: transparent;
 }
 
 main section:nth-of-type(even) {
-  background: var(--color-surface);
+  background: transparent;
 }
 
 /* ============================================================
@@ -363,15 +376,15 @@ main section:nth-of-type(even) {
    ============================================================ */
 .card {
   background: var(--color-surface);
-  border-radius: var(--radius-xl);
+  border-radius: 16px;
   padding: 1.5rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow: var(--shadow-card);
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-card-hover);
 }
 
@@ -385,18 +398,18 @@ main section:nth-of-type(even) {
    ============================================================ */
 .stat-card {
   background: var(--color-surface);
-  border-radius: var(--radius-xl);
+  border-radius: 16px;
   padding: 1.5rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
   box-shadow: var(--shadow-card-hover);
 }
 
@@ -477,7 +490,7 @@ main section:nth-of-type(even) {
 }
 
 .btn-outline {
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   color: var(--color-text-secondary);
   background: var(--color-surface);
 }
@@ -516,7 +529,7 @@ main section:nth-of-type(even) {
   box-shadow: var(--shadow-md);
   font-size: var(--text-xs);
   min-width: 150px;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sage-border);
 }
 
 .map-legend__item {
@@ -663,23 +676,28 @@ main section:nth-of-type(even) {
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 1rem;
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.32);
+  gap: 0.6rem;
+  padding: 0.55rem 1.5rem;
+  background: rgba(10, 30, 15, 0.65);
+  border: 1.5px solid rgba(74, 222, 128, 0.85);
   border-radius: var(--radius-full);
-  color: #86efac;
+  color: #ffffff;
   font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
   align-self: flex-start;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: none;
+  text-shadow: none;
 }
 
-.hero-badge i { font-size: 0.6rem; }
+.hero-badge i {
+  font-size: 0.75rem;
+  color: #4ade80;
+}
 
 /* ── Title ── */
 .hero-title {
@@ -698,12 +716,26 @@ main section:nth-of-type(even) {
 /* ── Subtitle ── */
 .hero-subtitle {
   font-size: var(--text-lg);
-  color: rgba(255, 255, 255, 0.78);
+  color: rgba(255, 255, 255, 0.92);
   max-width: 520px;
   margin: 0 0 2.25rem;
   font-weight: 400;
   line-height: 1.70;
   text-shadow: 0 1px 8px rgba(0, 0, 0, 0.45);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.hero-subtitle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.7);
 }
 
 /* ── Hero stat cards ── */
@@ -740,7 +772,7 @@ main section:nth-of-type(even) {
 
 .hero-stat-card i {
   font-size: var(--text-lg);
-  color: #86efac;
+  color: #4ade80;
 }
 
 .hero-stat-value {
@@ -748,11 +780,12 @@ main section:nth-of-type(even) {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 .hero-stat-label {
   font-size: var(--text-xs);
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.75);
   text-transform: uppercase;
   letter-spacing: 0.07em;
   font-weight: 500;
@@ -864,20 +897,51 @@ main section:nth-of-type(even) {
    15. STATISTICS SECTION
    ============================================================ */
 #statistics {
-  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-background) 100%);
+  background: transparent;
   max-width: unset;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: none;
+  position: relative;
+  overflow: visible;
+}
+
+/* Aurora-theme.css handles the ::before pseudo-element for #statistics.
+   The old hero→sage transition band is no longer needed. */
+#statistics::before {
+  /* Intentionally left for aurora-theme.css to define */
+}
+
+/* Keep the green accent rule (set by the shared rule in section 3)
+   above the transition band */
+#statistics > *,
+#statistics > h2,
+#statistics > p,
+#statistics > #stats-cards-grid {
+  position: relative;
+  z-index: 1;
 }
 
 #statistics > h2,
 #statistics > p {
   max-width: 1400px;
-  margin-left: auto;
+  margin-left: 0;
   margin-right: auto;
   padding: 0 1.5rem;
 }
 
-#statistics > h2 { padding-top: 0; margin-bottom: 0.5rem; }
+/* ── Statistics section header alignment ── */
+#statistics > h2 { padding-top: 0; margin-bottom: 0.4rem; }
+#statistics > p  { margin-bottom: 2rem; margin-left: 0; margin-right: auto; }
+
+/* ── Add the standard green accent bar to #statistics heading ── */
+#statistics > h2::before {
+  content: '';
+  display: block;
+  width: 4rem;
+  height: 3px;
+  margin-bottom: 1rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+}
 
 #stats-cards-grid {
   display: grid;
@@ -890,22 +954,26 @@ main section:nth-of-type(even) {
 
 #stats-cards-grid .stat-card {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 16px;
   padding: 1.4rem;
 }
 
 #stats-cards-grid .stat-card__icon {
   background: var(--color-surface-soft);
-  border: 1px solid rgba(22, 163, 74, 0.15);
+  border: 1px solid rgba(22, 163, 74, 0.18);
   color: var(--color-primary);
 }
 
 /* ============================================================
    16. GIS MAP SECTION
    ============================================================ */
+
+/* ── GIS Map Section ── */
 #map {
-  background: linear-gradient(180deg, var(--color-background) 0%, var(--color-surface) 100%);
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
 }
 
 #map h2 {
@@ -916,13 +984,13 @@ main section:nth-of-type(even) {
   margin-bottom: 1.75rem;
 }
 
-/* Map card container */
+/* map container card */
 #map-container {
   background: var(--color-surface);
-  border-radius: var(--radius-2xl);
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid var(--color-border);
-  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: var(--shadow-lg);
   min-height: 600px;
   transition: all 300ms ease;
 }
@@ -941,8 +1009,8 @@ main section:nth-of-type(even) {
    17. YEAR TIMELINE
    ============================================================ */
 #time-explorer {
-  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-background) 100%);
-  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  border-bottom: none;
   max-width: unset;
 }
 
@@ -972,7 +1040,7 @@ main section:nth-of-type(even) {
   font-weight: 500;
   background: var(--color-surface);
   color: var(--color-text-secondary);
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   transition: all var(--transition-fast);
   letter-spacing: 0.01em;
 }
@@ -1001,7 +1069,7 @@ main section:nth-of-type(even) {
    18. ANALYTICS DASHBOARD
    ============================================================ */
 #analytics {
-  background: var(--color-background);
+  background: transparent;
 }
 
 #analytics > h2 {
@@ -1016,7 +1084,7 @@ main section:nth-of-type(even) {
   flex-wrap: wrap;
   padding: 0.875rem 1.25rem;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sage-border);
   border-radius: var(--radius-xl);
   width: fit-content;
   box-shadow: var(--shadow-sm);
@@ -1030,7 +1098,7 @@ main section:nth-of-type(even) {
 
 #year-range-controls select {
   padding: 0.375rem 0.875rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   font-family: inherit;
@@ -1054,16 +1122,17 @@ main section:nth-of-type(even) {
 
 .chart-wrapper {
   background: var(--color-surface);
-  border-radius: var(--radius-xl);
+  border-radius: 16px;
   padding: 1.75rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(226, 232, 240, 0.8);
   box-shadow: var(--shadow-card);
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
 }
 
 .chart-wrapper:hover {
-  box-shadow: var(--shadow-md);
-  border-color: rgba(22, 163, 74, 0.25);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.25);
 }
 
 .chart-wrapper h3 {
@@ -1083,9 +1152,9 @@ main section:nth-of-type(even) {
    19. COMPARISON SLIDER
    ============================================================ */
 #comparison {
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
 }
 
 #comparison h2 {
@@ -1155,7 +1224,7 @@ main section:nth-of-type(even) {
    20. PREDICTION DASHBOARD
    ============================================================ */
 #prediction {
-  background: var(--color-background);
+  background: transparent;
 }
 
 #prediction h2 {
@@ -1362,9 +1431,9 @@ main section:nth-of-type(even) {
   align-items: center;
   gap: 0.875rem;
   padding: 0.75rem 1rem;
-  background: var(--color-background);
+  background: var(--sage-100);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border-soft);
+  border: 1px solid var(--sage-border-soft);
   transition: background var(--transition-fast);
 }
 
@@ -1375,7 +1444,7 @@ main section:nth-of-type(even) {
 .risk-bar-container {
   flex: 1;
   height: 5px;
-  background: var(--color-border);
+  background: var(--sage-border-soft);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -1396,7 +1465,7 @@ main section:nth-of-type(even) {
   padding: 0.5rem 1.125rem;
   background: var(--color-primary-pale);
   color: var(--color-primary-deep);
-  border: 1px solid rgba(22, 163, 74, 0.2);
+  border: 1px solid rgba(22, 163, 74, 0.28);
   border-radius: var(--radius-full);
   font-weight: 700;
   font-size: var(--text-sm);
@@ -1408,9 +1477,9 @@ main section:nth-of-type(even) {
    23. INSIGHTS GRID
    ============================================================ */
 #insights {
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
 }
 
 #insights h2 {
@@ -1497,7 +1566,7 @@ main section:nth-of-type(even) {
    24. DOWNLOAD CENTER
    ============================================================ */
 #download {
-  background: var(--color-background);
+  background: transparent;
 }
 
 #download h2 {
@@ -1544,7 +1613,7 @@ main section:nth-of-type(even) {
   height: 3.25rem;
   border-radius: var(--radius-xl);
   background: var(--color-surface-soft);
-  border: 1px solid rgba(22, 163, 74, 0.15);
+  border: 1px solid rgba(22, 163, 74, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1590,9 +1659,9 @@ main section:nth-of-type(even) {
    25. METHODOLOGY SECTION
    ============================================================ */
 #methodology {
-  background: var(--color-surface);
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
 }
 
 #methodology h2 {
@@ -1637,7 +1706,7 @@ main section:nth-of-type(even) {
   height: 2.25rem;
   border-radius: var(--radius-md);
   background: var(--color-surface-soft);
-  border: 1px solid rgba(22, 163, 74, 0.15);
+  border: 1px solid rgba(22, 163, 74, 0.18);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1657,7 +1726,7 @@ main section:nth-of-type(even) {
    26. TEAM SECTION
    ============================================================ */
 #team {
-  background: var(--color-background);
+  background: transparent;
 }
 
 #team h2 {
@@ -1696,7 +1765,7 @@ main section:nth-of-type(even) {
   object-fit: cover;
   margin: 0 auto 1.25rem;
   display: block;
-  border: 3px solid var(--color-border);
+  border: 3px solid var(--sage-border);
   transition: border-color var(--transition-fast);
 }
 
@@ -1752,7 +1821,7 @@ main section:nth-of-type(even) {
   font-weight: 600;
   color: var(--color-text-secondary);
   padding: 0.3rem 0.75rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-full);
   transition: all var(--transition-fast);
   letter-spacing: 0.01em;
@@ -1775,7 +1844,8 @@ main section:nth-of-type(even) {
    ============================================================ */
 
 #contact {
-  background: var(--color-surface);
+  background: transparent;
+  border-top: none;
 }
 
 .contact-layout {
@@ -1790,10 +1860,10 @@ main section:nth-of-type(even) {
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  background: var(--color-background);
+  background: var(--color-surface);
   padding: 1.75rem;
   border-radius: var(--radius-xl);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sage-border);
 }
 
 .contact-info p {
@@ -1819,7 +1889,7 @@ main section:nth-of-type(even) {
   background: var(--color-surface);
   padding: 2rem;
   border-radius: var(--radius-xl);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sage-border);
   box-shadow: var(--shadow-card);
 }
 
@@ -1843,12 +1913,12 @@ main section:nth-of-type(even) {
 .form-field textarea {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-md);
   font-family: inherit;
   font-size: var(--text-sm);
   color: var(--color-text-primary);
-  background: var(--color-background);
+  background: var(--color-surface);
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
@@ -1926,6 +1996,7 @@ main section:nth-of-type(even) {
   background: var(--color-dark);
   color: #9ca3af;
   padding: 3.5rem 1.5rem;
+  border-top: 3px solid #16a34a;
 }
 
 .footer-content {
@@ -2068,8 +2139,8 @@ main section:nth-of-type(even) {
 
 /* ── Section override ── */
 #analytics {
-  background: var(--color-background);
-  padding-bottom: 4rem;
+  background: transparent;
+  padding-bottom: 5rem;
 }
 
 /* ── Dashboard Header ── */
@@ -2102,7 +2173,7 @@ main section:nth-of-type(even) {
   flex-wrap: wrap;
   padding: 0.875rem 1.125rem;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sage-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
   margin-bottom: 1.75rem;
@@ -2121,7 +2192,7 @@ main section:nth-of-type(even) {
   display: block;
   width: 1px;
   height: 1.25rem;
-  background: var(--color-border);
+  background: var(--sage-border);
   margin-right: 0.25rem;
 }
 
@@ -2136,11 +2207,11 @@ main section:nth-of-type(even) {
 
 .adash-select {
   padding: 0.35rem 0.75rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
   font-family: inherit;
-  background: var(--color-background);
+  background: var(--color-surface);
   color: var(--color-text-primary);
   cursor: pointer;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
@@ -2162,9 +2233,9 @@ main section:nth-of-type(even) {
   align-items: center;
   gap: 0.375rem;
   padding: 0.375rem 0.875rem;
-  background: transparent;
+  background: var(--color-surface);
   color: var(--color-text-muted);
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-md);
   font-size: var(--text-xs);
   font-weight: 600;
@@ -2196,14 +2267,14 @@ main section:nth-of-type(even) {
 
 .adash-kpi-card {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 16px;
   padding: 1.25rem 1.375rem;
   display: flex;
   flex-direction: column;
   gap: 0.625rem;
   box-shadow: var(--shadow-card);
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
   position: relative;
   overflow: hidden;
 }
@@ -2221,9 +2292,9 @@ main section:nth-of-type(even) {
 }
 
 .adash-kpi-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-  border-color: rgba(22, 163, 74, 0.2);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.20);
 }
 
 .adash-kpi-card:hover::after {
@@ -2310,19 +2381,20 @@ main section:nth-of-type(even) {
 /* ── Chart Cards (shared) ── */
 .adash-chart-card {
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 16px;
   padding: 1.5rem 1.625rem 1.375rem;
   box-shadow: var(--shadow-card);
-  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
 .adash-chart-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: rgba(22, 163, 74, 0.18);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.20);
 }
 
 .adash-chart-card--full {
@@ -2579,12 +2651,12 @@ main section:nth-of-type(even) {
   align-items: center;
   gap: 0.4rem;
   padding: 0.3rem 0.65rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: 500;
   color: var(--color-text-secondary);
-  background: var(--color-background);
+  background: var(--color-surface);
   cursor: pointer;
   transition: all var(--transition-fast);
 }
@@ -2612,8 +2684,8 @@ main section:nth-of-type(even) {
   gap: 1.5rem;
   flex-wrap: wrap;
   padding: 0.625rem 0.875rem;
-  background: var(--color-background);
-  border: 1px solid var(--color-border-soft);
+  background: var(--sage-100);
+  border: 1px solid var(--sage-border-soft);
   border-radius: var(--radius-lg);
 }
 
@@ -2648,12 +2720,12 @@ main section:nth-of-type(even) {
 .adash-metric-btn,
 .adash-district-btn {
   padding: 0.3rem 0.65rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-full);
   font-size: var(--text-xs);
   font-weight: 600;
   color: var(--color-text-muted);
-  background: var(--color-background);
+  background: var(--color-surface);
   cursor: pointer;
   transition: all var(--transition-fast);
   letter-spacing: 0.02em;
@@ -2690,7 +2762,7 @@ main section:nth-of-type(even) {
 }
 
 .adash-rank-row:hover {
-  background: var(--color-background);
+  background: var(--sage-100);
 }
 
 .adash-rank-num {
@@ -2711,7 +2783,7 @@ main section:nth-of-type(even) {
 
 .adash-rank-bar-wrap {
   height: 6px;
-  background: var(--color-border);
+  background: var(--sage-border-soft);
   border-radius: var(--radius-full);
   overflow: hidden;
 }
@@ -2823,8 +2895,8 @@ main section:nth-of-type(even) {
   align-items: flex-start;
   gap: 0.75rem;
   padding: 0.875rem 1rem;
-  background: var(--color-background);
-  border: 1px solid var(--color-border-soft);
+  background: var(--sage-100);
+  border: 1px solid var(--sage-border-soft);
   border-radius: var(--radius-lg);
   transition: background var(--transition-fast), border-color var(--transition-fast);
 }
@@ -2898,7 +2970,7 @@ main section:nth-of-type(even) {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sage-border);
 }
 
 .adash-data-table {
@@ -2909,8 +2981,8 @@ main section:nth-of-type(even) {
 }
 
 .adash-data-table thead {
-  background: var(--color-background);
-  border-bottom: 1.5px solid var(--color-border);
+  background: var(--sage-100);
+  border-bottom: 1.5px solid var(--sage-border);
 }
 
 .adash-th {
@@ -2928,7 +3000,7 @@ main section:nth-of-type(even) {
 
 .adash-th--sortable:hover {
   color: var(--color-primary-dark);
-  background: rgba(22, 163, 74, 0.04);
+  background: rgba(22, 163, 74, 0.05);
 }
 
 .adash-sort-icon {
@@ -2937,7 +3009,7 @@ main section:nth-of-type(even) {
 }
 
 .adash-data-table tbody tr {
-  border-bottom: 1px solid var(--color-border-soft);
+  border-bottom: 1px solid var(--sage-border-soft);
   transition: background var(--transition-fast);
 }
 
@@ -2946,7 +3018,7 @@ main section:nth-of-type(even) {
 }
 
 .adash-data-table tbody tr:hover {
-  background: var(--color-surface-soft);
+  background: var(--sage-100);
 }
 
 .adash-td {
@@ -2970,9 +3042,9 @@ main section:nth-of-type(even) {
   justify-content: center;
   width: 2rem;
   height: 2rem;
-  border: 1.5px solid var(--color-border);
+  border: 1.5px solid var(--sage-border);
   border-radius: var(--radius-md);
-  background: var(--color-background);
+  background: var(--color-surface);
   color: var(--color-text-muted);
   cursor: pointer;
   transition: all var(--transition-fast);
@@ -3013,7 +3085,7 @@ main section:nth-of-type(even) {
   margin-top: 2.5rem;
   padding: 1.5rem;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--sage-border);
   border-radius: var(--radius-xl, 0.75rem);
 }
 
@@ -3124,7 +3196,7 @@ main section:nth-of-type(even) {
 
 /* ── Navbar logo image ── */
 .nav-logo-img {
-  height: 48px;
+  height: 32px;
   width: auto;
   max-width: 48px;
   object-fit: contain;

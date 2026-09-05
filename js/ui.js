@@ -40,7 +40,6 @@ const STAT_CARDS_META = [
   { key: 'forestCoverHa',        icon: 'fa-tree',        label: 'Total Forest Cover',         yearly: true,  format: 'ha' },
   { key: 'forestLossHa',         icon: 'fa-circle-minus',label: 'Annual Forest Loss',          yearly: true,  format: 'ha' },
   { key: 'forestGainHa',         icon: 'fa-circle-plus', label: 'Annual Forest Gain',          yearly: true,  format: 'ha' },
-  { key: 'protectedAreasCount',  icon: 'fa-shield',      label: 'Protected Areas',             yearly: false, format: 'number' },
   { key: 'districtsCount',       icon: 'fa-map-location-dot', label: 'Districts Monitored',    yearly: false, format: 'number' },
 ];
 

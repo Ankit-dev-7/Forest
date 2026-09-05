@@ -14,9 +14,23 @@
    1. LARGE DISPLAY (≥1536px)
    ============================================================ */
 @media (min-width: 1536px) {
-  .container,
+  .container {
+    max-width: 1500px;
+    width: 92%;
+  }
+
   section {
-    max-width: 1600px;
+    padding: 5rem 2rem;
+  }
+
+  #statistics,
+  #map,
+  #analytics,
+  #prediction,
+  #insights,
+  #team,
+  #contact {
+    padding: 5rem 2rem;
   }
 
   .hero-title {
@@ -94,6 +108,17 @@
    4. TABLET (768px–1023px)
    ============================================================ */
 @media (min-width: 768px) and (max-width: 1023px) {
+  section,
+  #statistics,
+  #map,
+  #analytics,
+  #prediction,
+  #insights,
+  #team,
+  #contact {
+    padding: 4rem 1.5rem;
+  }
+
   #map-container {
     min-height: 450px;
   }
@@ -179,9 +204,19 @@
     font-size: var(--text-base);
   }
 
-  /* Section padding */
+  /* Section padding — tighter on mobile */
   section {
-    padding: 3rem 1rem;
+    padding: 3.5rem 1.25rem;
+  }
+
+  #statistics,
+  #map,
+  #analytics,
+  #prediction,
+  #insights,
+  #team,
+  #contact {
+    padding: 3.5rem 1.25rem;
   }
 
   /* Map: min-height 300px on mobile; pointer-events on map
@@ -646,7 +681,7 @@
 
   /* Navbar logo */
   .nav-logo-img {
-    height: 44px;
+    height: 30px;
     max-width: 44px;
   }
 }
@@ -692,7 +727,7 @@
 
   /* Navbar logo */
   .nav-logo-img {
-    height: 36px;
+    height: 26px;
     max-width: 36px;
   }
 }

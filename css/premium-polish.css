@@ -1,0 +1,1258 @@
+/* css/premium-polish.css — Premium Visual Polish
+   ============================================================
+   Forest-inspired atmosphere, refined cards, improved typography,
+   section labels, chart enhancements, and subtle decorative details.
+   Loaded LAST — overrides aurora-theme.css where needed.
+   No structural changes — visual polish only.
+   ============================================================ */
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES — Premium forest palette extension
+   ============================================================ */
+:root {
+  /* Forest atmosphere gradients */
+  --forest-bg-a:       #8FAFBD;   /* steel blue-gray base */
+  --forest-bg-b:       #9FBFB4;   /* sage teal mid */
+  --forest-bg-c:       #B8CED5;   /* light blue-gray highlight */
+  --forest-surface:    #ffffff;
+  --forest-border:     rgba(22, 101, 52, 0.10);
+  --forest-border-mid: rgba(22, 101, 52, 0.14);
+  --forest-glow:       rgba(22, 163, 74, 0.06);
+  --forest-glow-mid:   rgba(22, 163, 74, 0.10);
+
+  /* Premium card shadows */
+  --shadow-forest-sm:  0 1px 3px rgba(15, 40, 20, 0.05),
+                       0 1px 2px rgba(15, 40, 20, 0.04);
+  --shadow-forest-md:  0 4px 14px rgba(15, 40, 20, 0.07),
+                       0 2px 4px rgba(15, 40, 20, 0.04);
+  --shadow-forest-lg:  0 10px 28px -4px rgba(15, 40, 20, 0.09),
+                       0 4px 10px -2px rgba(15, 40, 20, 0.05);
+  --shadow-forest-xl:  0 20px 44px -8px rgba(15, 40, 20, 0.12),
+                       0 8px 16px -4px rgba(15, 40, 20, 0.07);
+
+  /* Section label */
+  --section-label-color:   #16a34a;
+  --section-label-spacing: 0.10em;
+
+  /* Separator line */
+  --accent-line: linear-gradient(90deg, #16a34a 0%, #0d9488 55%, transparent 100%);
+}
+
+/* ============================================================
+   2. BODY — Warm forest white base
+   ============================================================ */
+html, body {
+  background:
+    radial-gradient(circle at top left, rgba(80, 140, 170, 0.45), transparent 50%),
+    radial-gradient(circle at bottom right, rgba(100, 160, 145, 0.35), transparent 55%),
+    linear-gradient(135deg, #8FAFBD 0%, #B8CED5 50%, #9FBFB4 100%);
+  background-attachment: fixed;
+}
+
+/* ============================================================
+   3. SECTION BACKGROUNDS — Forest atmosphere alternation
+   Keep the sections anchored to one consistent visual language.
+   Type A (off-white forest): Statistics, Analytics, Insights, Contact
+   Type B (deeper sage):      Map, Prediction, Team
+   No photographs, only soft color + ambient pattern.
+   ============================================================ */
+
+/* Remove flat grey backgrounds from aurora-theme — add forest tone */
+#statistics { background: transparent; }
+#map        { background: transparent; }
+#analytics  { background: transparent; }
+#prediction { background: transparent; }
+#insights   { background: transparent; }
+#team       { background: transparent; }
+#contact    { background: transparent; }
+
+/* Subtle ambient leaf-vein texture on sections via ::before pseudo-element */
+#statistics::before,
+#analytics::before,
+#insights::before,
+#contact::before {
+  display: block !important;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(22, 101, 52, 0.022) 1px, transparent 1px),
+    radial-gradient(circle, rgba(13, 148, 136, 0.014) 1px, transparent 1px);
+  background-position: 0 0, 32px 32px;
+  background-size: 64px 64px, 64px 64px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#map::before,
+#prediction::before,
+#team::before {
+  display: block !important;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(22, 101, 52, 0.026) 1px, transparent 1px),
+    radial-gradient(circle, rgba(13, 148, 136, 0.016) 1px, transparent 1px);
+  background-position: 0 0, 30px 30px;
+  background-size: 60px 60px, 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ambient forest glow — top-left corner, very faint */
+#statistics::after,
+#analytics::after,
+#map::after,
+#insights::after,
+#team::after {
+  display: block !important;
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: -60px;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(22, 163, 74, 0.055) 0%, transparent 72%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure section content stays above pseudo-elements */
+#statistics > *,
+#map > *,
+#analytics > *,
+#prediction > *,
+#insights > *,
+#team > *,
+#contact > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth transition band between hero and first section */
+#statistics {
+  position: relative;
+}
+#statistics::before {
+  /* Hero-side gradient fade from dark → forest white */
+  background-image:
+    linear-gradient(to bottom, rgba(4, 14, 6, 0.06) 0%, transparent 80px),
+    radial-gradient(circle, rgba(22, 101, 52, 0.022) 1px, transparent 1px),
+    radial-gradient(circle, rgba(13, 148, 136, 0.014) 1px, transparent 1px);
+  background-position: 0 0, 0 0, 32px 32px;
+  background-size: 100% 100%, 64px 64px, 64px 64px;
+}
+
+/* ============================================================
+   4. SECTION LABEL — Small uppercase eyebrow above h2
+   Added to HTML via <span class="section-label"> injected
+   through CSS content on .section-label spans.
+   ============================================================ */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: var(--section-label-spacing);
+  text-transform: uppercase;
+  color: var(--section-label-color);
+  margin-bottom: 0.625rem;
+  line-height: 1;
+}
+
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 2px;
+  background: var(--section-label-color);
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   5. SECTION ACCENT BAR — Upgraded gradient rule
+   ============================================================ */
+.section-accent-bar {
+  display: block;
+  width: 48px;
+  height: 4px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  background: var(--accent-line);
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.30);
+}
+
+/* ============================================================
+   6. SECTION HEADINGS — improved hierarchy
+   ============================================================ */
+#statistics h2,
+#map h2,
+#analytics h2,
+#analytics .adash-header h2,
+#prediction h2,
+#insights h2,
+#team h2,
+#contact h2 {
+  color: #0f172a;
+  font-size: clamp(1.85rem, 2.7vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+  margin-bottom: 0.6rem;
+}
+
+#statistics > p,
+#map > p,
+#analytics .adash-header__subtitle,
+#prediction > p,
+#insights > p,
+#team > p,
+#contact > p {
+  color: #334155;
+  font-size: 0.975rem;
+  font-weight: 500;
+  line-height: 1.75;
+  max-width: 680px;
+}
+
+/* ============================================================
+   7. SECTION SPACING — better breathing room
+   ============================================================ */
+#statistics,
+#map,
+#analytics,
+#prediction,
+#insights,
+#team,
+#contact {
+  padding-top: 5.5rem;
+  padding-bottom: 5.5rem;
+}
+
+/* ============================================================
+   8. STAT CARDS — Premium refinement
+   ============================================================ */
+.stat-card,
+#stats-cards-grid .stat-card {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  padding: 1.625rem 1.5rem;
+  box-shadow: var(--shadow-forest-md);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              border-color 0.28s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle green top-edge accent on stat cards */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 2px;
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(90deg, var(--forest-glow-mid), transparent);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+.stat-card__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 10px;
+  border: none;
+}
+
+.stat-card--green .stat-card__icon { background: #f0fdf4; color: #16a34a; }
+.stat-card--amber .stat-card__icon { background: #fffbeb; color: #d97706; }
+.stat-card--red   .stat-card__icon { background: #fef2f2; color: #dc2626; }
+.stat-card--blue  .stat-card__icon { background: #eff6ff; color: #2563eb; }
+
+.stat-card__value,
+.stat-value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #0c1f0f;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.stat-card__label,
+.stat-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #5a7a65;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   9. KPI CARDS — Analytics section
+   ============================================================ */
+.adash-kpi-card {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+  padding: 1.375rem 1.5rem;
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+.adash-kpi-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+.adash-kpi-card::after {
+  border-radius: 0 0 14px 14px;
+}
+
+.adash-kpi-card__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  color: #5a7a65;
+}
+
+.adash-kpi-card__value {
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #0c1f0f;
+  letter-spacing: -0.03em;
+}
+
+.adash-kpi-card__icon--cover { background: #f0fdf4; color: #16a34a; }
+.adash-kpi-card__icon--loss  { background: #fef2f2; color: #dc2626; }
+.adash-kpi-card__icon--gain  { background: #eff6ff; color: #0369a1; }
+.adash-kpi-card__icon--net   { background: #f0f6f1; color: #4b6355; }
+
+/* ============================================================
+   10. CHART CARDS — Refined containers
+   ============================================================ */
+.adash-chart-card,
+.chart-wrapper {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+.adash-chart-card:hover,
+.chart-wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+.adash-chart-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #3d5c46;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.adash-chart-subtitle {
+  font-size: 0.78rem;
+  color: #6b8a75;
+  font-weight: 400;
+}
+
+.chart-wrapper h3 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #3d5c46;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+
+/* ============================================================
+   11. INSIGHT CARDS — Environmental findings
+   ============================================================ */
+.insight-card {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+  padding: 1.5rem;
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+.insight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+.insight-card::before {
+  border-radius: 4px 4px 0 0;
+}
+
+.insight-card__title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #5a7a65;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+.insight-card__value {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0c1f0f;
+  letter-spacing: -0.02em;
+}
+
+.insight-card__desc {
+  font-size: 0.8rem;
+  color: #6b8a75;
+  line-height: 1.55;
+}
+
+.insight-card--danger  .insight-card__icon { background: #fef2f2; color: #dc2626; }
+.insight-card--success .insight-card__icon { background: #f0fdf4; color: #16a34a; }
+.insight-card--info    .insight-card__icon { background: #eff6ff; color: #2563eb; }
+
+/* ============================================================
+   12. PREDICTION CARDS
+   ============================================================ */
+.prediction-card {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+.prediction-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+.card-critical.prediction-card {
+  border-color: rgba(220, 38, 38, 0.22);
+  background: #fffafa;
+}
+
+/* ============================================================
+   13. TEAM CARDS
+   ============================================================ */
+.team-card {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  padding: 2.25rem 1.75rem;
+  box-shadow: var(--shadow-forest-md);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+.team-card img {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  border: 3px solid rgba(22, 101, 52, 0.12);
+  transition: border-color 0.28s ease;
+}
+
+.team-card:hover img {
+  border-color: rgba(22, 163, 74, 0.35);
+}
+
+.team-member-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0c1f0f;
+}
+
+.team-member-role {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #16a34a;
+  letter-spacing: 0.06em;
+}
+
+.team-member-bio {
+  font-size: 0.85rem;
+  color: #6b8a75;
+  line-height: 1.5;
+}
+
+.team-member-links a {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4b6355;
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  transition: all 0.22s ease;
+}
+
+.team-member-links a:hover,
+.team-member-links a:focus-visible {
+  color: #16a34a;
+  border-color: rgba(22, 163, 74, 0.4);
+  background: #f0fdf4;
+}
+
+/* ============================================================
+   14. MAP SECTION — Premium container styling
+   ============================================================ */
+#map-container {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-lg);
+  overflow: hidden;
+  min-height: 580px;
+}
+
+/* Map info panel / controls inside Leaflet */
+.leaflet-control-zoom a {
+  background: var(--forest-surface) !important;
+  color: #3d5c46 !important;
+  border-color: var(--forest-border) !important;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.leaflet-control-zoom a:hover {
+  background: #f0fdf4 !important;
+  color: #16a34a !important;
+}
+
+.leaflet-control-zoom {
+  border: 1px solid var(--forest-border) !important;
+  border-radius: 10px !important;
+  box-shadow: var(--shadow-forest-md) !important;
+  overflow: hidden;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  border: 1px solid var(--forest-border) !important;
+  box-shadow: var(--shadow-forest-lg) !important;
+  background: var(--forest-surface) !important;
+}
+
+.leaflet-popup-tip {
+  background: var(--forest-surface) !important;
+}
+
+.map-legend {
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--forest-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-forest-md);
+}
+
+.map-legend__item {
+  color: #3d5c46;
+}
+
+/* ============================================================
+   15. ANALYTICS FILTER BAR
+   ============================================================ */
+#adash-filters {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-forest-sm);
+  padding: 0.875rem 1.25rem;
+}
+
+.adash-filter-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #5a7a65;
+  letter-spacing: 0.08em;
+}
+
+.adash-select {
+  background: var(--forest-surface);
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 8px;
+  color: #0c1f0f;
+  font-size: 0.85rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.adash-select:hover { border-color: rgba(22, 163, 74, 0.4); }
+.adash-select:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.10);
+  outline: none;
+}
+
+.adash-reset-btn {
+  background: var(--forest-surface);
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 8px;
+  color: #5a7a65;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  transition: all 0.2s ease;
+}
+
+.adash-reset-btn:hover {
+  background: #f0fdf4;
+  border-color: rgba(22, 163, 74, 0.4);
+  color: #16a34a;
+}
+
+/* ============================================================
+   16. METRIC SWITCH BUTTONS
+   ============================================================ */
+.adash-metric-btn,
+.adash-district-btn {
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 999px;
+  color: #5a7a65;
+  background: var(--forest-surface);
+  font-size: 0.72rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.adash-metric-btn:hover,
+.adash-district-btn:hover {
+  border-color: rgba(22, 163, 74, 0.4);
+  color: #16a34a;
+  background: #f0fdf4;
+}
+
+.adash-metric-btn--active {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.28);
+}
+
+/* ============================================================
+   17. LEGEND TOGGLE BUTTONS
+   ============================================================ */
+.adash-legend-btn {
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 999px;
+  color: #5a7a65;
+  background: var(--forest-surface);
+  font-size: 0.72rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.adash-legend-btn:hover {
+  border-color: rgba(22, 163, 74, 0.4);
+  color: #16a34a;
+}
+
+/* ============================================================
+   18. DATA TABLE
+   ============================================================ */
+.adash-table-scroll {
+  border: 1px solid rgba(22, 101, 52, 0.10);
+  border-radius: 12px;
+}
+
+.adash-data-table thead {
+  background: #f4f8f4;
+  border-bottom: 1.5px solid rgba(22, 101, 52, 0.12);
+}
+
+.adash-th {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #5a7a65;
+  letter-spacing: 0.08em;
+}
+
+.adash-th--sortable:hover {
+  color: #16a34a;
+  background: rgba(22, 163, 74, 0.05);
+}
+
+.adash-data-table tbody tr:hover {
+  background: #f4f8f4;
+}
+
+.adash-td { color: #3d5c46; }
+.adash-td--year { color: #0c1f0f; font-weight: 700; }
+.adash-td--loss { color: #dc2626; }
+.adash-td--gain { color: #0369a1; }
+
+/* ============================================================
+   19. TOGGLE / COLLAPSE BUTTON
+   ============================================================ */
+.adash-toggle-btn {
+  background: var(--forest-surface);
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 8px;
+  color: #5a7a65;
+  transition: all 0.2s ease;
+}
+
+.adash-toggle-btn:hover {
+  background: #f0fdf4;
+  border-color: rgba(22, 163, 74, 0.4);
+  color: #16a34a;
+}
+
+/* ============================================================
+   20. INSIGHT STRIP
+   ============================================================ */
+.adash-insight-strip {
+  background: #f4f8f4;
+  border: 1px solid rgba(22, 101, 52, 0.10);
+  border-radius: 10px;
+}
+
+.adash-insight-strip__label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #5a7a65;
+  letter-spacing: 0.08em;
+}
+
+.adash-insight-strip__value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0c1f0f;
+}
+
+/* ============================================================
+   21. RANKING LIST ROWS
+   ============================================================ */
+.adash-rank-row:hover {
+  background: #f4f8f4;
+}
+
+.adash-rank-bar-wrap {
+  background: rgba(22, 101, 52, 0.10);
+  border-radius: 999px;
+}
+
+.adash-rank-num  { color: #5a7a65; }
+.adash-rank-name { color: #0c1f0f; }
+.adash-rank-val  { color: #3d5c46; }
+
+/* ============================================================
+   22. TOP RISK LIST
+   ============================================================ */
+#top-risk-list-wrapper {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+}
+
+#top-risk-list-wrapper h3 {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #5a7a65;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+#top-risk-list li {
+  background: #f4f8f4;
+  border: 1px solid rgba(22, 101, 52, 0.08);
+  border-radius: 10px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#top-risk-list li:hover {
+  background: #edf3ee;
+  border-color: rgba(22, 101, 52, 0.14);
+}
+
+.risk-bar-container {
+  background: rgba(22, 101, 52, 0.10);
+  border-radius: 999px;
+}
+
+/* ============================================================
+   23. CONFIDENCE BADGE
+   ============================================================ */
+#confidence-badge {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid rgba(22, 163, 74, 0.22);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   24. FINDING CARDS
+   ============================================================ */
+.adash-finding-card {
+  background: #f4f8f4;
+  border: 1px solid rgba(22, 101, 52, 0.09);
+  border-radius: 10px;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.adash-finding-card:hover {
+  background: #edf3ee;
+  border-color: rgba(22, 101, 52, 0.14);
+}
+
+.adash-finding-card__title {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #5a7a65;
+  letter-spacing: 0.08em;
+}
+
+.adash-finding-card__value {
+  font-size: 0.875rem;
+  color: #0c1f0f;
+  font-weight: 700;
+}
+
+.adash-finding-card__detail { color: #6b8a75; }
+
+/* ============================================================
+   25. CONTACT SECTION
+   ============================================================ */
+.contact-info {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+}
+
+.contact-info p  { color: #3d5c46; }
+.contact-info i  { color: #16a34a; }
+
+#contact-form {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+  padding: 2.25rem;
+}
+
+.form-field label { color: #0c1f0f; font-weight: 600; }
+
+.form-field input,
+.form-field textarea {
+  background: #fafcfa;
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 10px;
+  color: #0c1f0f;
+  font-size: 0.9rem;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: #9ab8a3; }
+
+.form-field input:focus,
+.form-field textarea:focus {
+  background: #ffffff;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.10);
+  outline: none;
+}
+
+#contact-submit {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.30);
+  padding: 0.875rem 2rem;
+  letter-spacing: 0.02em;
+  transition: all 0.28s ease;
+  border: none;
+}
+
+#contact-submit:hover {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(22, 163, 74, 0.38);
+}
+
+/* ============================================================
+   26. BUTTONS — Polished green buttons
+   ============================================================ */
+.btn-primary {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  box-shadow: 0 2px 10px rgba(22, 163, 74, 0.28);
+  border-radius: 9px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  transition: all 0.24s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.36);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  border: 1.5px solid rgba(22, 101, 52, 0.22);
+  color: #3d5c46;
+  background: var(--forest-surface);
+  border-radius: 9px;
+  font-weight: 600;
+  transition: all 0.24s ease;
+}
+
+.btn-outline:hover {
+  border-color: rgba(22, 163, 74, 0.5);
+  color: #16a34a;
+  background: #f0fdf4;
+}
+
+/* Year timeline buttons */
+.year-btn {
+  background: var(--forest-surface);
+  color: #4b6355;
+  border: 1.5px solid rgba(22, 101, 52, 0.15);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.22s ease;
+}
+
+.year-btn:hover {
+  border-color: rgba(22, 163, 74, 0.45);
+  color: #16a34a;
+  background: #f0fdf4;
+}
+
+.year-btn--active,
+.year-btn.is-active {
+  background: #16a34a;
+  color: #ffffff;
+  border-color: #16a34a;
+  box-shadow: 0 2px 10px rgba(22, 163, 74, 0.30);
+}
+
+/* ============================================================
+   27. METHODOLOGY CARDS
+   ============================================================ */
+#methodology article {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+#methodology article:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+#methodology article h3 i {
+  background: #f0fdf4;
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  color: #16a34a;
+  border-radius: 10px;
+}
+
+#methodology article p { color: #6b8a75; }
+
+/* ============================================================
+   28. DOWNLOAD CARDS
+   ============================================================ */
+.download-card {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+.download-card:hover:not([aria-disabled="true"]) {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-forest-xl);
+  border-color: var(--forest-border-mid);
+}
+
+.download-card__icon {
+  background: #f0fdf4;
+  border: 1px solid rgba(22, 163, 74, 0.15);
+  color: #16a34a;
+  border-radius: 12px;
+}
+
+.download-card a {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.24);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition: all 0.22s ease;
+}
+
+.download-card a:hover {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(22, 163, 74, 0.32);
+}
+
+/* ============================================================
+   29. NAVBAR — scrolled state with forest tone
+   ============================================================ */
+#navbar.navbar--scrolled {
+  background: rgba(247, 252, 247, 0.97);
+  border-bottom: 1px solid rgba(22, 101, 52, 0.10);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 14px rgba(15, 40, 20, 0.08);
+}
+
+#navbar.navbar--scrolled .nav-link     { color: #3d5c46; }
+#navbar.navbar--scrolled .nav-link:hover {
+  color: #16a34a;
+  background: #f0fdf4;
+}
+#navbar.navbar--scrolled .nav-link--active {
+  color: #16a34a;
+  background: #dcfce7;
+}
+#navbar.navbar--scrolled .nav-logo a   { color: #0c1f0f; }
+#navbar.navbar--scrolled .nav-logo a i { color: #16a34a; }
+
+/* ============================================================
+   30. FOOTER — Deep forest dark with green accents
+   ============================================================ */
+#footer {
+  background: #0a1a0c;
+  border-top: 3px solid #16a34a;
+}
+
+.footer-branding {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footer-branding-name {
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.footer-branding-tagline {
+  color: #5a7a65;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.footer-copyright { color: #5a7a65; }
+
+.footer-brand > span {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* ============================================================
+   31. RADIAL CHART TOOLTIP
+   ============================================================ */
+.radial-tooltip {
+  background: #0e2410;
+  border: 1px solid rgba(22, 163, 74, 0.30);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.20);
+}
+
+.radial-tip-name { color: #bbf7d0; }
+.radial-tip-row  { color: #9ab8a3; }
+.radial-tip-row span:last-child { color: #e8f5e9; }
+
+/* ============================================================
+   32. DONUT CENTER LABEL
+   ============================================================ */
+.adash-donut-center__label { color: #5a7a65; }
+.adash-donut-center__value { color: #0c1f0f; }
+
+/* ============================================================
+   33. COMPOSITION LEGEND
+   ============================================================ */
+.adash-comp-legend-label { color: #3d5c46; }
+.adash-comp-legend-pct   { color: #0c1f0f; font-weight: 700; }
+
+/* ============================================================
+   34. MODEL DISCLAIMER — warm amber, unchanged but polished
+   ============================================================ */
+.model-disclaimer {
+  border-radius: 12px;
+}
+
+/* ============================================================
+   35. SECTION DIVIDERS — subtle decorative element
+   between major sections
+   ============================================================ */
+#map {
+  border-top: 1px solid rgba(22, 101, 52, 0.08);
+}
+#analytics {
+  border-top: 1px solid rgba(22, 101, 52, 0.08);
+}
+#prediction {
+  border-top: 1px solid rgba(22, 101, 52, 0.08);
+}
+#insights {
+  border-top: 1px solid rgba(22, 101, 52, 0.08);
+}
+#team {
+  border-top: 1px solid rgba(22, 101, 52, 0.08);
+}
+#contact {
+  border-top: 1px solid rgba(22, 101, 52, 0.08);
+}
+
+/* ============================================================
+   36. BADGE POLISH
+   ============================================================ */
+.badge-green  { background: #f0fdf4; color: #16a34a; }
+.badge-amber  { background: #fffbeb; color: #d97706; }
+.badge-orange { background: #fff7ed; color: #c2410c; }
+.badge-red    { background: #fef2f2; color: #dc2626; }
+
+/* ============================================================
+   37. SCROLLBAR — subtle green-tinted
+   ============================================================ */
+::-webkit-scrollbar               { width: 7px; height: 7px; }
+::-webkit-scrollbar-track         { background: #f4f8f4; }
+::-webkit-scrollbar-thumb         { background: rgba(22, 101, 52, 0.20); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover   { background: rgba(22, 163, 74, 0.38); }
+
+/* ============================================================
+   38. SELECTION COLOR
+   ============================================================ */
+::selection { background: rgba(22, 163, 74, 0.18); color: #0c1f0f; }
+
+/* ============================================================
+   39. LOADING OVERLAY — forest dark
+   ============================================================ */
+#loading-overlay {
+  background: #061208;
+}
+
+/* ============================================================
+   40. SKELETON PULSE — sage tinted
+   ============================================================ */
+.skeleton-card { background: #e4ede5; }
+
+/* ============================================================
+   41. TOAST NOTIFICATION
+   ============================================================ */
+.toast {
+  background: #0e2410;
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  border-radius: 10px;
+  color: #e8f5e9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+/* ============================================================
+   42. SECTION INTRO — map section extra padding for heading
+   ============================================================ */
+#map h2, #map > p { padding-left: 0; }
+
+/* ============================================================
+   43. ADASH HEADER — better spacing
+   ============================================================ */
+.adash-header {
+  margin-bottom: 2rem;
+}
+
+.adash-header h2 {
+  color: #0c1f0f;
+  font-weight: 800;
+  letter-spacing: -0.028em;
+}
+
+.adash-header__subtitle {
+  color: #4b6355;
+  font-size: 0.975rem;
+  line-height: 1.7;
+}
+
+/* ============================================================
+   44. PREDICTION SECTION — chart wrapper
+   ============================================================ */
+#prediction .chart-wrapper {
+  background: var(--forest-surface);
+  border: 1px solid var(--forest-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-forest-md);
+}
+
+#prediction .chart-wrapper h3 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #3d5c46;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   45. PREFERS-REDUCED-MOTION — disable polished transitions
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card, .adash-kpi-card, .adash-chart-card, .chart-wrapper,
+  .insight-card, .prediction-card, .team-card, .download-card,
+  #methodology article {
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   46. RADIAL CENTER
+   ============================================================ */
+.radial-center-metric { color: #1e3a28; }
+.radial-center-sub    { color: #5a7a65; }
+.radial-legend-name   { color: #3d5c46; }

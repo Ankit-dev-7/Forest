@@ -6,8 +6,8 @@
   <title>Deforestation Watch Nepal</title>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Photos/Logo%202.png">
-  <link rel="apple-touch-icon" href="Photos/Logo%202.png">
+  <link rel="icon" type="image/png" href="Photos/Logo%203.png">
+  <link rel="apple-touch-icon" href="Photos/Logo%203.png">
 
   <!-- CDN: Leaflet CSS 1.9.4 -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/animations.css">
   <link rel="stylesheet" href="css/responsive.css">
+  <!-- Aurora Environmental Glow Theme — loaded last to override flat backgrounds -->
+  <link rel="stylesheet" href="css/aurora-theme.css">
 </head>
 <body>
 
@@ -48,8 +50,8 @@
       <ul id="nav-links" role="list" aria-label="Site sections">
         <li><a href="#hero"          class="nav-link">Home</a></li>
         <li><a href="#statistics"    class="nav-link">Statistics</a></li>
-        <li><a href="#map"           class="nav-link">Map</a></li>
         <li><a href="#analytics"     class="nav-link">Analytics</a></li>
+        <li><a href="#map"           class="nav-link">Map</a></li>
         <li><a href="#prediction"    class="nav-link">Prediction</a></li>
         <li><a href="#insights"      class="nav-link">Insights</a></li>
         <li><a href="#team"          class="nav-link">Team</a></li>
@@ -133,19 +135,20 @@
 
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         CONTINUOUS BACKGROUND WRAPPER — background 1.jpeg
+         One shared misty-mountain photograph across every section
+         below the hero. The dark forest-green overlay keeps all
+         charts, cards, and text fully readable.
+    ═══════════════════════════════════════════════════════════ -->
+    <div id="content-bg-wrap">
+
     <!-- Statistics Cards Section -->
     <section id="statistics" aria-labelledby="stats-heading">
+      <span class="section-accent-bar" aria-hidden="true"></span>
       <h2 id="stats-heading">Forest Statistics</h2>
       <p>Nationwide forest metrics for Nepal, updated annually from satellite imagery analysis.</p>
       <div id="stats-cards-grid" aria-label="Forest statistics cards"></div>
-    </section>
-
-    <!-- GIS Map Section -->
-    <section id="map" aria-labelledby="map-heading">
-      <h2 id="map-heading">Interactive Forest Map</h2>
-      <div id="map-container"
-           aria-label="Interactive Leaflet map of Nepal forest cover"
-           style="min-height: 600px;"></div>
     </section>
 
     <!-- Analytics Dashboard Section -->
@@ -473,6 +476,14 @@
       <!-- charts.js still initialises these but they are replaced by new analytics.js -->
       <canvas id="chart-district" aria-hidden="true" style="display:none" width="0" height="0"></canvas>
 
+    </section>
+
+    <!-- GIS Map Section -->
+    <section id="map" aria-labelledby="map-heading">
+      <h2 id="map-heading">Interactive Forest Map</h2>
+      <div id="map-container"
+           aria-label="Interactive Leaflet map of Nepal forest cover"
+           style="min-height: 600px;"></div>
     </section>
 
     <!-- Prediction Dashboard Section -->
@@ -842,6 +853,8 @@
       </div>
     </section>
 
+    </div><!-- /#content-bg-wrap -->
+
   </main>
 
   <!-- Footer -->
@@ -886,7 +899,7 @@
     <div class="footer-content">
       <div class="footer-brand">
         <span>
-          <img src="Photos/Logo%202.png"
+          <img src="Photos/Logo%203.png"
                alt="Deforestation Watch Nepal logo"
                class="footer-logo-img"
                width="36"
