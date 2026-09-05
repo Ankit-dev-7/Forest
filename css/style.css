@@ -630,10 +630,11 @@ main section:nth-of-type(even) {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 200px;
+  height: 280px;
   background: linear-gradient(to bottom,
     transparent 0%,
-    rgba(4, 14, 6, 0.88) 100%);
+    rgba(4, 12, 5, 0.70) 55%,
+    rgba(4, 12, 5, 0.97) 100%);
   pointer-events: none;
 }
 

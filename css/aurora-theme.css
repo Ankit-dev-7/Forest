@@ -797,7 +797,7 @@ main > section:not(#hero):not(#statistics)::before {
 }
 
 /* ============================================================
-   21. CONTINUOUS BACKGROUND WRAPPER — background 1.jpeg
+   21. CONTINUOUS BACKGROUND WRAPPER — background 2.jpeg
        One single misty Himalayan forest photograph shared across
        all sections below the hero. The dark forest-green overlay
        keeps charts, cards, and text fully readable while the
@@ -821,23 +821,43 @@ main > section:not(#hero):not(#statistics)::before {
 
 /* Dark forest-green overlay — sits between the photo and the
    section content so cards and charts stay readable.
-   opacity controls how strongly the photo shows through:
-   - too low  → photo drowns cards
-   - too high → photo disappears
-   rgba(8, 24, 12, 0.68) is tuned to be dark enough for
-   readability but still shows the mist and pines clearly. */
+   The top portion fades from fully transparent so the background
+   image blends smoothly into the hero section above it. */
 #content-bg-wrap::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(8, 24, 12, 0.68);
-  /* Subtle radial vignette adds depth at the edges */
+  /* Top ~200px: transparent → lets the hero bottom-fade blend in
+     Middle/bottom: dark forest overlay for card readability */
   background:
-    radial-gradient(
-      ellipse 110% 80% at 50% 40%,
-      rgba(8, 24, 12, 0.58) 0%,
-      rgba(4, 14, 7, 0.74) 100%
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(4, 14, 7, 0.30) 8%,
+      rgba(6, 18, 9, 0.55) 15%,
+      rgba(8, 24, 12, 0.68) 25%,
+      rgba(8, 24, 12, 0.68) 100%
     );
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Smooth crossfade at the very top edge of the wrapper —
+   masks the background image itself so it doesn't hard-cut
+   into the hero photograph. */
+#content-bg-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 220px;
+  background: linear-gradient(
+    to bottom,
+    rgba(4, 12, 5, 0.95) 0%,
+    rgba(4, 12, 5, 0.60) 35%,
+    transparent 100%
+  );
   z-index: 0;
   pointer-events: none;
 }
@@ -1010,9 +1030,15 @@ main > section:not(#hero):not(#statistics)::before {
 }
 
 /* Mobile: fixed-attachment can be janky on iOS/Android —
-   fall back to scroll attachment on small screens */
+   fall back to scroll attachment on small screens.
+   The top-fade ::after still applies for a smooth blend. */
 @media (max-width: 768px) {
   #content-bg-wrap {
     background-attachment: scroll;
+  }
+
+  /* Slightly taller fade on mobile since the hero is shorter */
+  #content-bg-wrap::after {
+    height: 160px;
   }
 }
