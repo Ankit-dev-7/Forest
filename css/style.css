@@ -96,6 +96,14 @@
 
 html { scroll-behavior: smooth; }
 
+/* Prevent any element from causing horizontal overflow/scrollbar.
+   `overflow-x: clip` (unlike hidden) does not create a new scroll
+   container, so position:fixed children (navbar) still work. */
+html,
+body {
+  overflow-x: clip;
+}
+
 /* ============================================================
    2. BASE RESETS
    ============================================================ */
@@ -144,8 +152,24 @@ body::before {
   padding: 0 1.5rem;
 }
 
+/* ── Shared inner-content container ──────────────────────────
+   Applied to every section so all content aligns to the same
+   horizontal column regardless of browser zoom level.
+   Sections keep their own vertical padding; this class only
+   constrains horizontal width and centres the content block.
+   ────────────────────────────────────────────────────────── */
+.section-inner {
+  max-width: 1400px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
 section {
-  padding: 5rem 2rem;
+  /* clamp() keeps padding proportional: shrinks at small viewports,
+     caps at 2rem on large ones — prevents content drift at zoom */
+  padding: 5rem clamp(1rem, 4vw, 2rem);
   max-width: 100%;
   margin: 0;
   box-sizing: border-box;
@@ -901,17 +925,9 @@ main section:nth-of-type(even) {
   z-index: 1;
 }
 
-#statistics > h2,
-#statistics > p {
-  max-width: 1400px;
-  margin-left: 0;
-  margin-right: auto;
-  padding: 0 1.5rem;
-}
-
 /* ── Statistics section header alignment ── */
 #statistics > h2 { padding-top: 0; margin-bottom: 0.4rem; }
-#statistics > p  { margin-bottom: 2rem; margin-left: 0; margin-right: auto; }
+#statistics > p  { margin-bottom: 2rem; }
 
 /* ── Add the standard green accent bar to #statistics heading ── */
 #statistics > h2::before {
@@ -928,9 +944,8 @@ main section:nth-of-type(even) {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #stats-cards-grid .stat-card {
@@ -1003,15 +1018,14 @@ main section:nth-of-type(even) {
   margin-right: auto;
 }
 
-#time-explorer > h2 { padding: 0 1.5rem; margin-bottom: 0.5rem; }
-#time-explorer > p  { padding: 0 1.5rem; }
+#time-explorer > h2 { margin-bottom: 0.5rem; }
 
 #year-timeline {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 1rem 1.5rem;
+  padding: 1rem 0;
 }
 
 .year-btn {
@@ -1067,7 +1081,9 @@ main section:nth-of-type(even) {
   background: var(--color-surface);
   border: 1px solid var(--sage-border);
   border-radius: var(--radius-xl);
-  width: fit-content;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   box-shadow: var(--shadow-sm);
 }
 
@@ -2131,8 +2147,9 @@ main section:nth-of-type(even) {
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
   margin-bottom: 1.75rem;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 .adash-filter-group {
@@ -2217,6 +2234,8 @@ main section:nth-of-type(even) {
   grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .adash-kpi-card {
@@ -2385,6 +2404,8 @@ main section:nth-of-type(even) {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ── Canvas wrapper ── */

@@ -67,7 +67,8 @@ p, li, label, span, td, th {
   overflow: visible;
   border-top: none;
   border-bottom: none;
-  padding: 5rem 2rem;
+  /* Use clamp so horizontal padding scales with viewport at all zoom levels */
+  padding: 5rem clamp(1rem, 4vw, 2rem);
   max-width: 100%;
   margin: 0;
   box-sizing: border-box;
@@ -94,9 +95,28 @@ p, li, label, span, td, th {
 #contact    { background: transparent; }   /* inherits page gradient */
 
 /* ============================================================
-   4. LAYOUT — full-bleed sections, capped inner content
+   4. LAYOUT — full-bleed sections, centered content column
    ============================================================ */
 
+/* Each section is a flex column. This means children stack
+   vertically and we can align them as a group. The section's
+   clamp() padding provides the horizontal gutter. */
+#statistics,
+#map,
+#analytics,
+#prediction,
+#insights,
+#team,
+#contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Every direct child fills the content column width, capped at
+   1400px. Because the section is centered (align-items: center),
+   all children automatically share the same left and right edges.
+   This is the single rule that fixes alignment at all zoom levels. */
 #statistics > *,
 #map > *,
 #analytics > *,
@@ -104,14 +124,28 @@ p, li, label, span, td, th {
 #insights > *,
 #team > *,
 #contact > * {
+  width: 100%;
   max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
+  box-sizing: border-box;
   position: static;
   z-index: auto;
 }
 
-/* Grids and wrappers — full-width within the cap */
+/* Accent bar: stays 48px wide, left-aligned within the column.
+   align-self: flex-start pins it to the left of the flex column. */
+#statistics > .section-accent-bar,
+#map > .section-accent-bar,
+#analytics > .section-accent-bar,
+#prediction > .section-accent-bar,
+#insights > .section-accent-bar,
+#team > .section-accent-bar,
+#contact > .section-accent-bar {
+  width: 48px;
+  max-width: 48px;
+  align-self: flex-start;
+}
+
+/* Grids and explicit wrappers — same column width */
 #stats-cards-grid,
 #adash-kpi-grid,
 .adash-row-2,
@@ -122,20 +156,10 @@ p, li, label, span, td, th {
 #insights-grid,
 #team-grid,
 .contact-layout,
-.adash-header {
-  max-width: 1400px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-}
-
-/* Filter bar — left-aligned within the content column */
+.adash-header,
 #adash-filters {
+  width: 100%;
   max-width: 1400px;
-  width: fit-content;
-  margin-left: 0;
-  margin-right: auto;
   box-sizing: border-box;
 }
 
@@ -154,13 +178,6 @@ p, li, label, span, td, th {
   margin-bottom: 16px;
   background: linear-gradient(90deg, #16a34a 0%, #0d9488 100%);
   box-shadow: 0 2px 8px rgba(13, 148, 136, 0.30);
-}
-
-/* Align accent bar flush-left with the padded section heading */
-section > .section-accent-bar {
-  margin-left: 1.5rem !important;
-  margin-right: 0 !important;
-  max-width: none;
 }
 
 /* Remove the old single-colour accent rules */
@@ -214,7 +231,6 @@ main > section:not(#hero):not(#statistics)::before {
   font-weight: 500;
   line-height: 1.75;
   max-width: 720px;
-  margin-left: 0;
 }
 
 /* ============================================================
@@ -401,8 +417,9 @@ main > section:not(#hero):not(#statistics)::before {
     0 2px 4px -1px rgba(15, 23, 42, 0.04);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  width: fit-content;
+  width: 100%;
   max-width: 100%;
+  box-sizing: border-box;
 }
 
 .adash-filter-label { color: #64748b; }
@@ -763,7 +780,7 @@ main > section:not(#hero):not(#statistics)::before {
 .stat-card--blue  .stat-card__icon { background: #dbeafe; color: #3b82f6; border: none; }
 
 /* ============================================================
-   20. WIDESCREEN — expand content to 92vw up to 1400px
+   20. WIDESCREEN — keep content capped at 1400px
    ============================================================ */
 @media (min-width: 1400px) {
   #statistics > *,
@@ -785,7 +802,20 @@ main > section:not(#hero):not(#statistics)::before {
   #team-grid,
   .contact-layout,
   .adash-header {
-    max-width: min(1400px, 92vw);
+    max-width: 1400px;
+    width: 100%;
+  }
+
+  /* Re-lock accent bar at 48px even at wide viewports */
+  #statistics > .section-accent-bar,
+  #map > .section-accent-bar,
+  #analytics > .section-accent-bar,
+  #prediction > .section-accent-bar,
+  #insights > .section-accent-bar,
+  #team > .section-accent-bar,
+  #contact > .section-accent-bar {
+    width: 48px;
+    max-width: 48px;
   }
 }
 
@@ -885,7 +915,7 @@ main > section:not(#hero):not(#statistics)::before {
   color: rgba(220, 252, 231, 0.82);
 }
 
-/* Accent bar stays vibrant emerald */
+/* Accent bar stays vibrant emerald on dark background */
 #content-bg-wrap .section-accent-bar {
   background: linear-gradient(90deg, #4ade80 0%, #34d399 100%);
   box-shadow: 0 2px 8px rgba(74, 222, 128, 0.35);
