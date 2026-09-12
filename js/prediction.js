@@ -16,20 +16,37 @@ import { getRiskColor, getRiskLevel } from './utils.js';
  * @returns {string}
  */
 function riskBadgeClass(score) {
-  if (score >= 80) return 'badge-red';
-  if (score >= 60) return 'badge-orange';
-  if (score >= 40) return 'badge-amber';
-  return 'badge-green';
+  if (score >= 80) return 'risk-badge--critical';
+  if (score >= 60) return 'risk-badge--high';
+  if (score >= 40) return 'risk-badge--medium';
+  return 'risk-badge--low';
+}
+
+function riskBadgeLabel(score) {
+  if (score >= 80) return 'Critical';
+  if (score >= 60) return 'High';
+  if (score >= 40) return 'Medium';
+  return 'Low';
 }
 
 /**
- * Render the Top-10 High Risk Districts ordered list.
- * Source: risk.districts sorted descending by riskScore.
+ * Render the Top-10 High Risk Districts list.
  * @param {Array<{name:string, riskScore:number}>} riskDistricts
  */
 function renderTop10List(riskDistricts) {
-  const list = document.getElementById('top-risk-list');
-  if (!list) return;
+  const wrapper = document.getElementById('top-risk-list-wrapper');
+  const list    = document.getElementById('top-risk-list');
+  if (!list || !wrapper) return;
+
+  // Inject the legend badge once
+  if (!wrapper.querySelector('.risk-legend-badge')) {
+    const legend = document.createElement('div');
+    legend.className = 'risk-legend-badge';
+    legend.innerHTML =
+      '<span class="risk-legend-dot"></span>' +
+      'Composite Risk Index (0–100) · DFRS 2015 + FAO';
+    wrapper.insertBefore(legend, list);
+  }
 
   list.innerHTML = '';
   const top10 = [...riskDistricts]
@@ -38,32 +55,18 @@ function renderTop10List(riskDistricts) {
 
   top10.forEach((d, idx) => {
     const li = document.createElement('li');
-    li.style.cssText = 'margin-bottom: 12px !important;';
+    li.className = 'risk-row';
 
-    const rank = document.createElement('span');
-    rank.style.cssText = 'font-weight:700;min-width:1.5rem;color:var(--color-neutral-500);';
-    rank.textContent = `${idx + 1}.`;
+    li.innerHTML = `
+      <span class="risk-row__rank">${idx + 1}.</span>
+      <span class="risk-row__name">${d.name}</span>
+      <div class="risk-row__bar-wrap">
+        <div class="risk-row__bar" style="width:${d.riskScore}%;background:${getRiskColor(d.riskScore)};"></div>
+      </div>
+      <span class="risk-row__score">${d.riskScore}</span>
+      <span class="risk-row__badge ${riskBadgeClass(d.riskScore)}">${riskBadgeLabel(d.riskScore)}</span>
+    `;
 
-    const distName = document.createElement('span');
-    distName.style.cssText = 'flex:1;font-weight:500;';
-    distName.textContent = d.name;
-
-    const barContainer = document.createElement('div');
-    barContainer.className = 'risk-bar-container';
-    const bar = document.createElement('div');
-    bar.className = 'risk-bar';
-    bar.style.width = `${d.riskScore}%`;
-    bar.style.background = getRiskColor(d.riskScore);
-    barContainer.appendChild(bar);
-
-    const badge = document.createElement('span');
-    badge.className = `badge ${riskBadgeClass(d.riskScore)}`;
-    badge.textContent = getRiskLevel(d.riskScore);
-
-    li.appendChild(rank);
-    li.appendChild(distName);
-    li.appendChild(barContainer);
-    li.appendChild(badge);
     list.appendChild(li);
   });
 }
@@ -74,8 +77,6 @@ function renderTop10List(riskDistricts) {
 
 /**
  * Initialise the prediction module.
- * Called once from main.js after data:loaded.
- *
  * @param {object} prediction  Parsed prediction.json
  * @param {object} risk        Parsed risk_score.json
  */
@@ -85,15 +86,12 @@ export function init(prediction, risk) {
     return;
   }
 
-  // Sort districts by riskScore descending
   const sortedDistricts = [...(prediction.districts ?? [])]
     .sort((a, b) => b.riskScore - a.riskScore);
 
-  // Render top-10 list from risk data
   if (risk && risk.districts) {
     renderTop10List(risk.districts);
   } else {
-    // Fallback: use prediction districts
     renderTop10List(sortedDistricts.map(d => ({ name: d.name, riskScore: d.riskScore })));
   }
 }

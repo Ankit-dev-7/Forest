@@ -337,6 +337,17 @@
     grid-template-columns: 1fr;
   }
 
+  /* Risk list: tighter columns on mobile */
+  .risk-row {
+    grid-template-columns: 1.5rem 6rem 1fr 2rem 4rem;
+    gap: 0 0.5rem;
+    padding: 0.5rem 0.25rem;
+  }
+
+  .risk-row__name {
+    font-size: var(--text-xs);
+  }
+
   /* Methodology articles */
   #methodology article {
     flex-direction: column;
