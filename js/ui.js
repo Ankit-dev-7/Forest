@@ -23,9 +23,6 @@ let _stats = null;
 /** Module-level districtGeo reference set on init */
 let _districtGeo = null;
 
-/** Current slider position (0–100) */
-let _sliderPct = 50;
-
 /** Toast container element (created once) */
 let _toastContainer = null;
 
@@ -151,7 +148,6 @@ export function init(stats, districtGeo) {
   // 4. Initialise sub-features
   _initNavbar();
   _initSectionReveal();
-  _initSlider();
   initParticles();
 
   // 5. Render initial insights (no year filter on initial load)
@@ -466,93 +462,6 @@ export function renderInsights(year) {
 
   grid.innerHTML = '';
   cards.forEach(c => grid.appendChild(c));
-}
-
-// ─────────────────────────────────────────────────────────────
-// TASK 11.3 — BEFORE/AFTER SLIDER
-// ─────────────────────────────────────────────────────────────
-
-/**
- * Update the slider position and ARIA attribute.
- * The HTML already contains the slider structure from index.html;
- * this function just drives the visual state.
- * @param {number} pct  0–100
- */
-function updateSlider(pct) {
-  _sliderPct = clamp(pct, 0, 100);
-
-  const container = document.getElementById('comparison-slider');
-  if (!container) return;
-
-  const afterEl  = container.querySelector('.slider-after');
-  const handleEl = container.querySelector('.slider-handle');
-
-  if (afterEl)  afterEl.style.clipPath  = `inset(0 ${100 - _sliderPct}% 0 0)`;
-  if (handleEl) {
-    handleEl.style.left = `${_sliderPct}%`;
-    handleEl.setAttribute('aria-valuenow', String(Math.round(_sliderPct)));
-  }
-}
-
-/**
- * Initialise the before/after comparison slider.
- * Uses the HTML structure already present in index.html.
- */
-function _initSlider() {
-  const container = document.getElementById('comparison-slider');
-  if (!container) return;
-
-  // Keep the slider structure intact, but do not synthesize a fallback graphic
-  // when the comparison image assets cannot be loaded.
-
-  // Set initial visual state
-  updateSlider(50);
-
-  const handleEl = container.querySelector('.slider-handle');
-  if (!handleEl) return;
-
-  // ── Pointer events (drag) ──────────────────────────────────
-  let isDragging = false;
-
-  container.addEventListener('pointerdown', e => {
-    isDragging = true;
-    container.setPointerCapture(e.pointerId);
-    _moveSlider(e, container);
-  });
-
-  container.addEventListener('pointermove', e => {
-    if (!isDragging) return;
-    _moveSlider(e, container);
-  });
-
-  container.addEventListener('pointerup', e => {
-    isDragging = false;
-    container.releasePointerCapture(e.pointerId);
-  });
-
-  container.addEventListener('pointercancel', e => {
-    isDragging = false;
-    if (container.hasPointerCapture(e.pointerId)) {
-      container.releasePointerCapture(e.pointerId);
-    }
-  });
-
-  // ── Keyboard (Arrow keys on handle) ───────────────────────
-  handleEl.addEventListener('keydown', e => {
-    if (e.key === 'ArrowLeft')  { e.preventDefault(); updateSlider(_sliderPct - 2); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); updateSlider(_sliderPct + 2); }
-  });
-}
-
-/**
- * Compute slider percentage from a pointer event and call updateSlider.
- * @param {PointerEvent} e
- * @param {HTMLElement}  container
- */
-function _moveSlider(e, container) {
-  const rect = container.getBoundingClientRect();
-  const pct  = ((e.clientX - rect.left) / rect.width) * 100;
-  updateSlider(pct);
 }
 
 // ─────────────────────────────────────────────────────────────

@@ -228,8 +228,6 @@ main > section:not(#hero):not(#statistics)::before {
 .adash-finding-card,
 .prediction-card,
 #top-risk-list-wrapper,
-#prediction .chart-wrapper,
-.chart-wrapper,
 .insight-card,
 .team-card,
 .contact-info,
@@ -592,11 +590,6 @@ main > section:not(#hero):not(#statistics)::before {
 #top-risk-list li:hover { background: #f1f5f9; }
 .risk-bar-container     { background: #e2e8f0; border-radius: 999px; }
 
-#prediction .chart-wrapper {
-  border-radius: 16px;
-}
-#prediction .chart-wrapper h3 { color: #1e293b; }
-
 /* ============================================================
    13. TEAM SECTION
    ============================================================ */
@@ -697,25 +690,25 @@ main > section:not(#hero):not(#statistics)::before {
    ============================================================ */
 
 #navbar.navbar--scrolled {
-  background: rgba(255, 255, 255, 0.97);
-  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 1px 12px rgba(15, 23, 42, 0.06);
+  background: rgba(15, 30, 20, 0.55);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
 }
-#navbar.navbar--scrolled .nav-logo a   { color: #0f172a; }
-#navbar.navbar--scrolled .nav-logo a span { color: #0f172a; }
-#navbar.navbar--scrolled .nav-logo a i { color: #16a34a; }
-#navbar.navbar--scrolled .nav-link     { color: #334155; }
+#navbar.navbar--scrolled .nav-logo a   { color: rgba(255, 255, 255, 0.95); }
+#navbar.navbar--scrolled .nav-logo a span { color: rgba(255, 255, 255, 0.95); }
+#navbar.navbar--scrolled .nav-logo a i { color: #4ade80; }
+#navbar.navbar--scrolled .nav-link     { color: rgba(255, 255, 255, 0.85); }
 #navbar.navbar--scrolled .nav-link:hover {
-  color: #059669;
-  background: #f0fdf4;
+  color: white;
+  background: rgba(255, 255, 255, 0.10);
 }
 #navbar.navbar--scrolled .nav-link--active {
-  color: #059669;
-  background: #dcfce7;
+  color: #4ade80;
+  background: rgba(22, 163, 74, 0.20);
 }
-#navbar.navbar--scrolled #hamburger-btn { color: #0f172a; }
+#navbar.navbar--scrolled #hamburger-btn { color: white; }
 
 /* ============================================================
    16. FOOTER — deep dark for contrast
@@ -908,8 +901,6 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap .adash-finding-card,
 #content-bg-wrap .prediction-card,
 #content-bg-wrap #top-risk-list-wrapper,
-#content-bg-wrap #prediction .chart-wrapper,
-#content-bg-wrap .chart-wrapper,
 #content-bg-wrap .insight-card,
 #content-bg-wrap .team-card,
 #content-bg-wrap .contact-info,
@@ -1017,8 +1008,7 @@ main > section:not(#hero):not(#statistics)::before {
 /* ── Top-level section headings h3 inside white cards stay dark ──
    (Chart titles, card titles — they're on the white card surface) */
 #content-bg-wrap .adash-chart-card h3,
-#content-bg-wrap #top-risk-list-wrapper h3,
-#content-bg-wrap .chart-wrapper h3 {
+#content-bg-wrap #top-risk-list-wrapper h3 {
   color: #1e293b;
 }
 

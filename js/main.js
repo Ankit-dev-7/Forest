@@ -8,7 +8,6 @@
 // ============================================================
 
 import { EventBus } from './eventbus.js';
-export { EventBus } from './eventbus.js';
 
 // ============================================================
 // Module imports
@@ -88,13 +87,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (stats) initCharts(stats);
 
     // 5. Prediction — needs prediction + risk data.
-    //    stats is passed regardless of whether it loaded; prediction.js
-    //    handles the null case by showing a user-visible notice in the chart.
     if (prediction && risk) {
-      if (!stats) {
-        console.warn('[main.js] statistics.json unavailable — prediction charts will lack historical context.');
-      }
-      initPrediction(prediction, risk, stats);
+      initPrediction(prediction, risk);
     }
 
     // 6. Dashboard (Time Explorer) — emits year:changed(defaultYear) last,

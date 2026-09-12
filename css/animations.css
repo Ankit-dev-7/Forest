@@ -40,27 +40,12 @@ html.js-loaded section.section-hidden.revealed {
   }
 }
 
-.scroll-indicator {
-  animation: bounce-down 1.6s ease-in-out infinite;
-}
-
 /* ============================================================
    3. YEAR-CHANGE SECTION TRANSITION
    ============================================================ */
 .section-transitioning {
   opacity: 0.6;
   transition: opacity 150ms ease;
-}
-
-/* ============================================================
-   4. CHART WRAPPER UPDATE TRANSITION
-   ============================================================ */
-.chart-wrapper {
-  transition: opacity 200ms ease;
-}
-
-.chart-wrapper.updating {
-  opacity: 0.4;
 }
 
 /* ============================================================
@@ -183,17 +168,6 @@ html.js-loaded section.section-hidden.revealed {
     transition: none;
   }
 
-  /* Remove scroll indicator bounce */
-  .scroll-indicator {
-    animation: none;
-  }
-
-  /* Remove chart wrapper fade */
-  .chart-wrapper,
-  .chart-wrapper.updating {
-    opacity: 1;
-    transition: none;
-  }
 
   /* Remove section transitioning fade */
   .section-transitioning {
