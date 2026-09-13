@@ -80,7 +80,6 @@ html.js-loaded section.section-hidden.revealed {
 .stat-card,
 .download-card,
 .team-card,
-.prediction-card,
 .insight-card {
   transition: transform 150ms ease, box-shadow 150ms ease;
 }

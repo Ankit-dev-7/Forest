@@ -151,8 +151,6 @@ p, li, label, span, td, th {
 .adash-row-2,
 .adash-chart-card--full,
 #adash-trend-card,
-#prediction-cards-container,
-#top-risk-list-wrapper,
 #insights-grid,
 #team-grid,
 .contact-layout,
@@ -242,8 +240,6 @@ main > section:not(#hero):not(#statistics)::before {
 .adash-kpi-card,
 .adash-chart-card,
 .adash-finding-card,
-.prediction-card,
-#top-risk-list-wrapper,
 .insight-card,
 .team-card,
 .contact-info,
@@ -266,7 +262,6 @@ main > section:not(#hero):not(#statistics)::before {
 .stat-card:hover,
 .adash-kpi-card:hover,
 .adash-chart-card:hover,
-.prediction-card:hover,
 .insight-card:hover,
 .team-card:hover,
 .download-card:hover,
@@ -283,7 +278,6 @@ main > section:not(#hero):not(#statistics)::before {
 .stat-card,
 .adash-kpi-card,
 .adash-chart-card,
-.prediction-card,
 .insight-card,
 .team-card,
 .download-card,
@@ -554,59 +548,6 @@ main > section:not(#hero):not(#statistics)::before {
   border-radius: 999px;
 }
 
-.model-disclaimer {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-  border: 1.5px solid #fbbf24;
-  border-left: 4px solid #f59e0b;
-  border-radius: 14px;
-  box-shadow:
-    0 4px 12px -2px rgba(15, 23, 42, 0.06),
-    0 2px 4px -1px rgba(15, 23, 42, 0.04);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-.model-disclaimer__title { color: #92400e; }
-.model-disclaimer__text  { color: #78350f; }
-.model-disclaimer__text strong { color: #92400e; }
-
-.chart-model-note {
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  border: 1.5px solid #93c5fd;
-  border-left: 4px solid #3b82f6;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-}
-.chart-model-note__text        { color: #1e3a5f; }
-.chart-model-note__text strong { color: #1d4ed8; }
-.chart-model-note__text em     { color: #3b82f6; }
-
-.card-critical.prediction-card {
-  background: #fff9f9;
-  border-color: rgba(239, 68, 68, 0.30);
-  border-width: 1.5px;
-}
-.prediction-card__district { color: #0f172a; }
-
-#top-risk-list-wrapper {
-  background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.8);
-  border-radius: 16px;
-  box-shadow:
-    0 10px 25px -5px rgba(15, 23, 42, 0.08),
-    0 8px 10px -6px rgba(15, 23, 42, 0.04);
-}
-#top-risk-list-wrapper h3 { color: #64748b; }
-
-#top-risk-list li {
-  background: #f8fafc;
-  border-color: #f1f5f9;
-  border-radius: 10px;
-}
-#top-risk-list li:hover { background: #f1f5f9; }
-.risk-bar-container     { background: #e2e8f0; border-radius: 999px; }
-
 /* ============================================================
    13. TEAM SECTION
    ============================================================ */
@@ -796,8 +737,6 @@ main > section:not(#hero):not(#statistics)::before {
   #adash-filters,
   .adash-chart-card--full,
   #adash-trend-card,
-  #prediction-cards-container,
-  #top-risk-list-wrapper,
   #insights-grid,
   #team-grid,
   .contact-layout,
@@ -929,8 +868,6 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap .adash-kpi-card,
 #content-bg-wrap .adash-chart-card,
 #content-bg-wrap .adash-finding-card,
-#content-bg-wrap .prediction-card,
-#content-bg-wrap #top-risk-list-wrapper,
 #content-bg-wrap .insight-card,
 #content-bg-wrap .team-card,
 #content-bg-wrap .contact-info,
@@ -951,7 +888,6 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap .stat-card:hover,
 #content-bg-wrap .adash-kpi-card:hover,
 #content-bg-wrap .adash-chart-card:hover,
-#content-bg-wrap .prediction-card:hover,
 #content-bg-wrap .insight-card:hover,
 #content-bg-wrap .team-card:hover {
   box-shadow:
@@ -969,18 +905,6 @@ main > section:not(#hero):not(#statistics)::before {
   box-shadow:
     0 4px 16px rgba(0, 0, 0, 0.28),
     0 2px 6px rgba(0, 0, 0, 0.14);
-}
-
-/* Model disclaimer — keep warm amber, just tighten shadow */
-#content-bg-wrap .model-disclaimer {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
-}
-
-/* Top risk list wrapper */
-#content-bg-wrap #top-risk-list-wrapper {
-  background: rgba(255, 255, 255, 0.93);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 /* Map legend stays crisp white */
@@ -1037,8 +961,7 @@ main > section:not(#hero):not(#statistics)::before {
 
 /* ── Top-level section headings h3 inside white cards stay dark ──
    (Chart titles, card titles — they're on the white card surface) */
-#content-bg-wrap .adash-chart-card h3,
-#content-bg-wrap #top-risk-list-wrapper h3 {
+#content-bg-wrap .adash-chart-card h3 {
   color: #1e293b;
 }
 
