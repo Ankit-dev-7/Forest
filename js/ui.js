@@ -34,10 +34,10 @@ let _toastContainer = null;
  * Stat card metadata: key, icon, label, whether it updates per-year.
  */
 const STAT_CARDS_META = [
-  { key: 'forestCoverHa',        icon: 'fa-tree',        label: 'Total Forest Cover',         yearly: true,  format: 'ha' },
-  { key: 'forestLossHa',         icon: 'fa-circle-minus',label: 'Annual Forest Loss',          yearly: true,  format: 'ha' },
-  { key: 'forestGainHa',         icon: 'fa-circle-plus', label: 'Annual Forest Gain',          yearly: true,  format: 'ha' },
-  { key: 'districtsCount',       icon: 'fa-map-location-dot', label: 'Districts Monitored',    yearly: false, format: 'number' },
+  { key: 'forestCoverHa',        icon: 'fa-tree',             label: 'Total Forest Cover',    yearly: true,  format: 'ha',     color: 'green' },
+  { key: 'forestLossHa',         icon: 'fa-fire',             label: 'Annual Forest Loss',    yearly: true,  format: 'ha',     color: 'red'   },
+  { key: 'forestGainHa',         icon: 'fa-seedling',         label: 'Annual Forest Gain',    yearly: true,  format: 'ha',     color: 'blue'  },
+  { key: 'districtsCount',       icon: 'fa-map-location-dot', label: 'Districts Monitored',   yearly: false, format: 'number', color: 'amber' },
 ];
 
 /**
@@ -58,12 +58,17 @@ function _formatStat(format, value) {
  */
 function _buildStatCard(meta, value) {
   const card = document.createElement('div');
-  card.className = 'stat-card';
+  card.className = `stat-card stat-card--${meta.color || 'green'}`;
   card.dataset.key = meta.key;
+
+  // Icon wrapper — gives the circular glowing badge
+  const iconWrap = document.createElement('div');
+  iconWrap.className = 'stat-card__icon';
 
   const iconEl = document.createElement('i');
   iconEl.className = `fa-solid ${meta.icon}`;
   iconEl.setAttribute('aria-hidden', 'true');
+  iconWrap.appendChild(iconEl);
 
   const valueEl = document.createElement('span');
   valueEl.className = 'stat-value';
@@ -73,7 +78,7 @@ function _buildStatCard(meta, value) {
   labelEl.className = 'stat-label';
   labelEl.textContent = meta.label;
 
-  card.appendChild(iconEl);
+  card.appendChild(iconWrap);
   card.appendChild(valueEl);
   card.appendChild(labelEl);
 

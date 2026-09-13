@@ -296,10 +296,9 @@ main > section:not(#hero):not(#statistics)::before {
 
 .stat-card__icon {
   background: #f0fdf4;
-  border: 1px solid #bbf7d0;
+  border: none;
   color: #16a34a;
 }
-
 /* KPI cards */
 .adash-kpi-card__label  { color: #64748b; }
 .adash-kpi-card__value  { color: #000000; }
@@ -715,10 +714,70 @@ main > section:not(#hero):not(#statistics)::before {
 /* ============================================================
    19. STAT CARD ICON COLORS (re-affirm on light bg)
    ============================================================ */
-.stat-card--green .stat-card__icon { background: #dcfce7; color: #10b981; border: none; }
-.stat-card--amber .stat-card__icon { background: #fef3c7; color: #f59e0b; border: none; }
-.stat-card--red   .stat-card__icon { background: #fee2e2; color: #ef4444; border: none; }
-.stat-card--blue  .stat-card__icon { background: #dbeafe; color: #3b82f6; border: none; }
+/* ── Stat card icon: large glowing circular badges ── */
+.stat-card--green .stat-card__icon {
+  color: #16a34a;
+  background: radial-gradient(circle at 38% 32%, rgba(74, 222, 128, 0.28), rgba(16, 163, 74, 0.12));
+  box-shadow:
+    0 0 0 2px rgba(74, 222, 128, 0.30),
+    0 0 18px rgba(74, 222, 128, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  border: none;
+}
+.stat-card--green:hover .stat-card__icon {
+  box-shadow:
+    0 0 0 2.5px rgba(74, 222, 128, 0.55),
+    0 0 28px rgba(74, 222, 128, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.stat-card--red .stat-card__icon {
+  color: #dc2626;
+  background: radial-gradient(circle at 38% 32%, rgba(248, 113, 113, 0.28), rgba(220, 38, 38, 0.12));
+  box-shadow:
+    0 0 0 2px rgba(248, 113, 113, 0.30),
+    0 0 18px rgba(248, 113, 113, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  border: none;
+}
+.stat-card--red:hover .stat-card__icon {
+  box-shadow:
+    0 0 0 2.5px rgba(248, 113, 113, 0.55),
+    0 0 28px rgba(248, 113, 113, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.stat-card--blue .stat-card__icon {
+  color: #2563eb;
+  background: radial-gradient(circle at 38% 32%, rgba(96, 165, 250, 0.28), rgba(37, 99, 235, 0.12));
+  box-shadow:
+    0 0 0 2px rgba(96, 165, 250, 0.30),
+    0 0 18px rgba(96, 165, 250, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  border: none;
+}
+.stat-card--blue:hover .stat-card__icon {
+  box-shadow:
+    0 0 0 2.5px rgba(96, 165, 250, 0.55),
+    0 0 28px rgba(96, 165, 250, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.stat-card--amber .stat-card__icon {
+  color: #d97706;
+  background: radial-gradient(circle at 38% 32%, rgba(251, 191, 36, 0.28), rgba(217, 119, 6, 0.12));
+  box-shadow:
+    0 0 0 2px rgba(251, 191, 36, 0.30),
+    0 0 18px rgba(251, 191, 36, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  border: none;
+}
+.stat-card--amber:hover .stat-card__icon {
+  box-shadow:
+    0 0 0 2.5px rgba(251, 191, 36, 0.55),
+    0 0 28px rgba(251, 191, 36, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
 
 /* ============================================================
    20. WIDESCREEN — keep content capped at 1400px

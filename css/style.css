@@ -438,13 +438,18 @@ main section:nth-of-type(even) {
 }
 
 .stat-card__icon {
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: var(--radius-lg);
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--text-lg);
+  font-size: 1.35rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover .stat-card__icon {
+  transform: scale(1.12);
 }
 
 .stat-card__value,
@@ -468,6 +473,7 @@ main section:nth-of-type(even) {
 .stat-card--green .stat-card__icon { background: #dcfce7; color: #16a34a; }
 .stat-card--amber .stat-card__icon  { background: #fef3c7; color: #d97706; }
 .stat-card--red   .stat-card__icon  { background: #fee2e2; color: #dc2626; }
+.stat-card--blue  .stat-card__icon  { background: #dbeafe; color: #2563eb; }
 .stat-card--blue  .stat-card__icon  { background: #dbeafe; color: #2563eb; }
 
 /* ============================================================
