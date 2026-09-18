@@ -21,6 +21,7 @@ import { init as initUI } from './ui.js';
 import { initContactForm } from './ui.js';
 import { init as initDashboard } from './dashboard.js';
 import { init as initAnalytics } from './analytics.js';
+import { init as initMapSwitcher } from './mapswitcher.js';
 
 // ============================================================
 // Bootstrap
@@ -58,6 +59,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Wire the contact form (Web3Forms)
   initContactForm();
+
+  // ── Map 1 / Map 2 tab switcher (no data dependency) ──
+  initMapSwitcher();
 
   // data:loaded — initialise all modules in dependency order
   EventBus.on('data:loaded', ({ stats, prediction, risk, districtGeo, forestGeo, provinceGeo }) => {

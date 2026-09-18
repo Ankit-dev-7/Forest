@@ -487,13 +487,61 @@
     <section id="map" aria-labelledby="map-heading">
       <span class="section-accent-bar" aria-hidden="true"></span>
       <h2 id="map-heading">Interactive Forest Map</h2>
-      <p class="map-subtitle">
-        Real Nepal district and province boundaries from GADM v4.1 · Forest loss visualisation
-        matching QGIS YlOrRd ramp · Data: Hansen/UMD/Google/USGS/NASA Global Forest Change
-      </p>
-      <div id="map-container"
-           aria-label="Interactive Leaflet map of Nepal — forest loss choropleth with GADM province and district boundaries"
-           style="min-height: 580px;"></div>
+
+      <!-- ── Map Tab Switcher ── -->
+      <div class="map-tab-bar" role="tablist" aria-label="Select map view">
+        <button id="map-tab-1"
+                class="map-tab map-tab--active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="map-panel-1"
+                data-map-tab="1">
+          <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+          Forest Monitoring Map
+        </button>
+        <button id="map-tab-2"
+                class="map-tab"
+                role="tab"
+                aria-selected="false"
+                aria-controls="map-panel-2"
+                data-map-tab="2">
+          <i class="fa-solid fa-map" aria-hidden="true"></i>
+          QGIS Forest Analysis Map
+        </button>
+      </div>
+
+      <!-- ── Panel 1: existing Leaflet map ── -->
+      <div id="map-panel-1"
+           class="map-panel map-panel--active"
+           role="tabpanel"
+           aria-labelledby="map-tab-1">
+        <div id="map-container"
+             aria-label="Interactive Leaflet map of Nepal — forest loss choropleth with GADM province and district boundaries"
+             style="min-height: 580px;"></div>
+      </div>
+
+      <!-- ── Panel 2: QGIS2Web iframe ── -->
+      <div id="map-panel-2"
+           class="map-panel"
+           role="tabpanel"
+           aria-labelledby="map-tab-2"
+           hidden>
+        <div class="map-iframe-wrap">
+          <!-- src is set lazily on first tab click to avoid loading until needed -->
+          <iframe id="qgis-map-frame"
+                  class="map-iframe"
+                  title="QGIS Forest Analysis Map — Nepal district-level forest loss"
+                  allowfullscreen
+                  loading="lazy"
+                  style="border:0; width:100%; min-height:580px; display:block;"></iframe>
+          <!-- Loading indicator shown while iframe loads -->
+          <div class="map-iframe-loading" id="qgis-map-loading" aria-live="polite">
+            <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
+            <span>Loading QGIS Forest Analysis Map…</span>
+          </div>
+        </div>
+      </div>
+
     </section>
     <!-- Team Section -->
     <section id="team" aria-labelledby="team-heading">
