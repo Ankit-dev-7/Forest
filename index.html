@@ -9,9 +9,7 @@
   <link rel="icon" type="image/png" href="Photos/Logo%203.png">
   <link rel="apple-touch-icon" href="Photos/Logo%203.png">
 
-  <!-- CDN: Leaflet CSS 1.9.4 -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
 
   <!-- CDN: Font Awesome 6.5.0 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -51,8 +49,9 @@
         <li><a href="#hero"          class="nav-link">Home</a></li>
         <li><a href="#statistics"    class="nav-link">Statistics</a></li>
         <li><a href="#analytics"     class="nav-link">Analytics</a></li>
-        <li><a href="#insights"      class="nav-link">Insights</a></li>
         <li><a href="#map"           class="nav-link">Map</a></li>
+        <li><a href="#insights"      class="nav-link">Insights</a></li>
+        <li><a href="#policy-report" class="nav-link">Policy Report</a></li>
         <li><a href="#team"          class="nav-link">Team</a></li>
         <li><a href="#contact"       class="nav-link">Contact</a></li>
       </ul>
@@ -476,25 +475,81 @@
 
 
 
+    <!-- GIS Map Section -->
+    <section id="map" aria-labelledby="map-heading">
+      <span class="section-accent-bar" aria-hidden="true"></span>
+      <h2 id="map-heading">Interactive Forest Map</h2>
+
+      <!-- ── QGIS Forest Analysis Map ── -->
+      <div id="map-panel-2"
+           class="map-panel map-panel--active">
+        <div class="map-iframe-wrap">
+          <iframe id="qgis-map-frame"
+                  class="map-iframe"
+                  title="QGIS Forest Analysis Map — Nepal district-level forest loss"
+                  allowfullscreen
+                  loading="lazy"
+                  style="border:0; width:100%; min-height:580px; display:block;"></iframe>
+          <!-- Loading indicator shown while iframe loads -->
+          <div class="map-iframe-loading" id="qgis-map-loading" aria-live="polite">
+            <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
+            <span>Loading QGIS Forest Analysis Map…</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
     <!-- Environmental Insights Section -->
     <section id="insights" aria-labelledby="insights-heading">
       <span class="section-accent-bar" aria-hidden="true"></span>
       <h2 id="insights-heading">Environmental Insights</h2>
       <div id="insights-grid" aria-label="Auto-generated environmental insight cards"></div>
     </section>
-
-    <!-- GIS Map Section -->
-    <section id="map" aria-labelledby="map-heading">
+    <!-- Policy Report Section -->
+    <section id="policy-report" aria-labelledby="policy-report-heading">
       <span class="section-accent-bar" aria-hidden="true"></span>
-      <h2 id="map-heading">Interactive Forest Map</h2>
-      <p class="map-subtitle">
-        Real Nepal district and province boundaries from GADM v4.1 · Forest loss visualisation
-        matching QGIS YlOrRd ramp · Data: Hansen/UMD/Google/USGS/NASA Global Forest Change
-      </p>
-      <div id="map-container"
-           aria-label="Interactive Leaflet map of Nepal — forest loss choropleth with GADM province and district boundaries"
-           style="min-height: 580px;"></div>
+      <h2 id="policy-report-heading">Policy Report</h2>
+      <p class="policy-report-subtitle">Deforestation in Nepal — What the Data Shows and What Can Be Done</p>
+
+      <div class="policy-report-body">
+      <div class="policy-report-card">
+        <!-- Icon + title block -->
+        <div class="policy-report-card__header">
+          <div class="policy-report-card__icon" aria-hidden="true">
+            <i class="fa-solid fa-file-lines"></i>
+          </div>
+          <div class="policy-report-card__meta">
+            <h3 class="policy-report-card__title">Deforestation Watch Nepal</h3>
+            <span class="policy-report-card__label">Official Policy Report &nbsp;·&nbsp; PDF Document</span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="policy-report-card__divider" aria-hidden="true"></div>
+
+        <!-- Action buttons -->
+        <div class="policy-report-card__actions">
+          <a href="docs/Deforestation_Watch_Nepal_Policy_Report.pdf"
+             target="_blank"
+             rel="noopener noreferrer"
+             class="policy-btn policy-btn--view"
+             aria-label="View full policy report PDF in a new tab">
+            <i class="fa-solid fa-eye" aria-hidden="true"></i>
+            View Full Report
+          </a>
+          <a href="docs/Deforestation_Watch_Nepal_Policy_Report.pdf"
+             download="Deforestation_Watch_Nepal_Policy_Report.pdf"
+             class="policy-btn policy-btn--download"
+             aria-label="Download policy report PDF to your device">
+            <i class="fa-solid fa-download" aria-hidden="true"></i>
+            Download Report
+          </a>
+        </div>
+      </div>
+      </div><!-- /.policy-report-body -->
     </section>
+
     <!-- Team Section -->
     <section id="team" aria-labelledby="team-heading">
       <span class="section-accent-bar" aria-hidden="true"></span>
@@ -730,7 +785,7 @@
         <address class="contact-info">
           <p>
             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-            <a href="mailto:info@deforestationwatch.np">info@deforestationwatch.np</a>
+            <a href="mailto:info@deforestationwatch.np">deforestationwatch@gmail.com</a>
           </p>
           <p>
             <i class="fa-brands fa-github" aria-hidden="true"></i>
@@ -851,10 +906,6 @@
       </button>
     </div>
   </footer>
-
-  <!-- CDN: Leaflet JS 1.9.4 -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!-- CDN: Chart.js 4.4.0 -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>

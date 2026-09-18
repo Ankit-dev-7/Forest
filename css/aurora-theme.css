@@ -60,6 +60,7 @@ p, li, label, span, td, th {
 #analytics,
 #prediction,
 #insights,
+#policy-report,
 #team,
 #contact {
   background: transparent;
@@ -80,6 +81,7 @@ p, li, label, span, td, th {
 #analytics::before,  #analytics::after,
 #prediction::before, #prediction::after,
 #insights::before,   #insights::after,
+#policy-report::before, #policy-report::after,
 #team::before,       #team::after,
 #contact::before,    #contact::after {
   display: none !important;
@@ -91,6 +93,7 @@ p, li, label, span, td, th {
 #analytics  { background: transparent; }   /* inherits page gradient */
 #prediction { background: transparent; }   /* inherits page gradient */
 #insights   { background: transparent; }   /* inherits page gradient */
+#policy-report { background: transparent; } /* inherits page gradient */
 #team       { background: transparent; }   /* inherits page gradient */
 #contact    { background: transparent; }   /* inherits page gradient */
 
@@ -106,6 +109,7 @@ p, li, label, span, td, th {
 #analytics,
 #prediction,
 #insights,
+#policy-report,
 #team,
 #contact {
   display: flex;
@@ -122,6 +126,7 @@ p, li, label, span, td, th {
 #analytics > *,
 #prediction > *,
 #insights > *,
+#policy-report > *,
 #team > *,
 #contact > * {
   width: 100%;
@@ -131,18 +136,22 @@ p, li, label, span, td, th {
   z-index: auto;
 }
 
-/* Accent bar: stays 48px wide, left-aligned within the column.
-   align-self: flex-start pins it to the left of the flex column. */
+/* Accent bar: left-aligned within the shared 1400px content column.
+   It inherits width:100%/max-width:1400px from the > * rule above,
+   then overrides to its actual visual size while keeping the same
+   left edge as the heading. margin-right:auto pushes it left. */
 #statistics > .section-accent-bar,
 #map > .section-accent-bar,
 #analytics > .section-accent-bar,
 #prediction > .section-accent-bar,
 #insights > .section-accent-bar,
+#policy-report > .section-accent-bar,
 #team > .section-accent-bar,
 #contact > .section-accent-bar {
   width: 48px;
   max-width: 48px;
-  align-self: flex-start;
+  margin-right: auto;
+  align-self: unset;
 }
 
 /* Grids and explicit wrappers — same column width */
@@ -1192,6 +1201,7 @@ main > section:not(#hero):not(#statistics)::before {
   #analytics > *,
   #prediction > *,
   #insights > *,
+  #policy-report > *,
   #team > *,
   #contact > *,
   #stats-cards-grid,
@@ -1214,10 +1224,13 @@ main > section:not(#hero):not(#statistics)::before {
   #analytics > .section-accent-bar,
   #prediction > .section-accent-bar,
   #insights > .section-accent-bar,
+  #policy-report > .section-accent-bar,
   #team > .section-accent-bar,
   #contact > .section-accent-bar {
     width: 48px;
     max-width: 48px;
+    margin-right: auto;
+    align-self: unset;
   }
 }
 
@@ -1300,6 +1313,7 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap #analytics .adash-header h2,
 #content-bg-wrap #prediction h2,
 #content-bg-wrap #insights h2,
+#content-bg-wrap #policy-report h2,
 #content-bg-wrap #team h2,
 #content-bg-wrap #contact h2 {
   color: #f0fdf4;
@@ -1312,6 +1326,7 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap #analytics .adash-header__subtitle,
 #content-bg-wrap #prediction > p,
 #content-bg-wrap #insights > p,
+#content-bg-wrap #policy-report .policy-report-subtitle,
 #content-bg-wrap #team > p,
 #content-bg-wrap #contact > p {
   color: rgba(220, 252, 231, 0.82);
@@ -1446,5 +1461,384 @@ main > section:not(#hero):not(#statistics)::before {
   /* Slightly taller fade on mobile since the hero is shorter */
   #content-bg-wrap::after {
     height: 160px;
+  }
+}
+
+
+/* ============================================================
+   MAP TAB SWITCHER — Map 1 / Map 2
+   ============================================================ */
+
+/* ── Tab bar ── */
+.map-tab-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(22, 101, 52, 0.18);
+  border-radius: 12px;
+  padding: 5px;
+  width: fit-content;
+  flex-wrap: wrap;
+}
+
+/* ── Individual tab button ── */
+.map-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(220, 252, 231, 0.65);
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease,
+              box-shadow 200ms ease;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+
+.map-tab:hover {
+  background: rgba(22, 101, 52, 0.25);
+  color: #dcfce7;
+  border-color: rgba(22, 163, 74, 0.30);
+}
+
+.map-tab:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+}
+
+/* Active / selected state */
+.map-tab--active {
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+  color: #f0fdf4;
+  border-color: rgba(22, 163, 74, 0.60);
+  box-shadow: 0 2px 10px rgba(22, 163, 74, 0.35);
+  font-weight: 600;
+}
+
+.map-tab--active:hover {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+  color: #f0fdf4;
+}
+
+/* Icon inside tab */
+.map-tab i {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* ── Map panels ── */
+.map-panel {
+  width: 100%;
+}
+
+/* Hidden state — 'hidden' attribute is toggled by JS,
+   but we also guard with display:none for specificity */
+.map-panel[hidden] {
+  display: none !important;
+}
+
+.map-panel--active {
+  display: block;
+}
+
+/* ── Map 2 iframe wrapper ── */
+.map-iframe-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 580px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #e8eff5;
+  border: 1px solid rgba(22, 101, 52, 0.12);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+.map-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 580px;
+  border: 0;
+  display: block;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.map-iframe.map-iframe--loaded {
+  opacity: 1;
+}
+
+/* ── Loading overlay ── */
+.map-iframe-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  color: #dcfce7;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 16px;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+  z-index: 2;
+}
+
+.map-iframe-loading i {
+  font-size: 1.6rem;
+  color: #22c55e;
+}
+
+.map-iframe-loading.map-iframe-loading--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Responsive heights ── */
+@media (max-width: 1024px) {
+  .map-iframe-wrap,
+  .map-iframe {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .map-tab-bar {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .map-tab {
+    flex: 1;
+    justify-content: center;
+    padding: 9px 12px;
+    font-size: 0.82rem;
+  }
+
+  .map-iframe-wrap,
+  .map-iframe {
+    min-height: 420px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-tab-bar {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .map-tab {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .map-iframe-wrap,
+  .map-iframe {
+    min-height: 340px;
+  }
+}
+
+
+/* ============================================================
+   22. POLICY REPORT SECTION
+   ============================================================ */
+
+/* Card — constrained width, left-aligned within the 1400px column */
+.policy-report-card {
+  background: #ffffff;
+  border: 1px solid rgba(22, 101, 52, 0.10);
+  border-radius: 14px;
+  box-shadow:
+    0 4px 14px rgba(15, 40, 20, 0.07),
+    0 2px 4px rgba(15, 40, 20, 0.04);
+  padding: 2.25rem 2.5rem;
+  max-width: 680px;
+  width: 100%;
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+              box-shadow 0.28s ease,
+              border-color 0.28s ease;
+}
+
+.policy-report-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 44px -8px rgba(15, 40, 20, 0.12),
+    0 8px 16px -4px rgba(15, 40, 20, 0.07);
+  border-color: rgba(22, 101, 52, 0.16);
+}
+
+/* Card header */
+.policy-report-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.policy-report-card__icon {
+  flex-shrink: 0;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid rgba(22, 163, 74, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16a34a;
+  font-size: 1.4rem;
+  box-shadow:
+    0 0 0 2px rgba(74, 222, 128, 0.22),
+    0 0 14px rgba(74, 222, 128, 0.18);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.policy-report-card:hover .policy-report-card__icon {
+  box-shadow:
+    0 0 0 2.5px rgba(74, 222, 128, 0.45),
+    0 0 22px rgba(74, 222, 128, 0.35);
+  transform: scale(1.06);
+}
+
+.policy-report-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.policy-report-card__title {
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.policy-report-card__label {
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Divider */
+.policy-report-card__divider {
+  height: 1px;
+  background: rgba(226, 232, 240, 0.85);
+  margin: 1.75rem 0;
+  border-radius: 1px;
+}
+
+/* Subtitle */
+.policy-report-subtitle {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.75;
+  max-width: 720px;
+  margin-bottom: 2.5rem;
+}
+
+/* Buttons row */
+.policy-report-card__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.policy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  white-space: nowrap;
+}
+
+.policy-btn:focus-visible {
+  outline: 3px solid rgba(22, 163, 74, 0.55);
+  outline-offset: 3px;
+}
+
+/* View — solid green gradient */
+.policy-btn--view {
+  background: linear-gradient(135deg, #16a34a 0%, #0d9488 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 14px rgba(16, 163, 74, 0.30);
+}
+
+.policy-btn--view:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(16, 163, 74, 0.40);
+  color: #ffffff;
+}
+
+.policy-btn--view:active {
+  transform: translateY(0);
+}
+
+/* Download — ghost outline */
+.policy-btn--download {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1.5px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+.policy-btn--download:hover {
+  background: #f0fdf4;
+  border-color: #16a34a;
+  color: #15803d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(16, 163, 74, 0.16);
+}
+
+.policy-btn--download:active {
+  transform: translateY(0);
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .policy-report-card {
+    padding: 1.75rem 1.5rem;
+    max-width: 100%;
+  }
+  .policy-btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .policy-report-card {
+    padding: 1.5rem 1.25rem;
+  }
+  .policy-report-card__actions {
+    flex-direction: column;
+  }
+  .policy-btn {
+    width: 100%;
+    justify-content: center;
   }
 }

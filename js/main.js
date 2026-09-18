@@ -14,13 +14,13 @@ import { EventBus } from './eventbus.js';
 // ============================================================
 
 import { loadAll } from './loader.js';
-import { init as initMap } from './map.js';
 import { init as initCharts } from './charts.js';
 import { init as initPrediction } from './prediction.js';
 import { init as initUI } from './ui.js';
 import { initContactForm } from './ui.js';
 import { init as initDashboard } from './dashboard.js';
 import { init as initAnalytics } from './analytics.js';
+import { init as initMapSwitcher } from './mapswitcher.js';
 
 // ============================================================
 // Bootstrap
@@ -59,6 +59,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Wire the contact form (Web3Forms)
   initContactForm();
 
+  // ── QGIS map iframe loader (no data dependency) ──
+  initMapSwitcher();
+
   // data:loaded — initialise all modules in dependency order
   EventBus.on('data:loaded', ({ stats, prediction, risk, districtGeo, forestGeo, provinceGeo }) => {
     clearTimeout(revealFallback); // data loaded — cancel safety fallback
@@ -66,12 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. UI first — renders skeleton → real stat cards, wires navbar/slider/reveals
     if (stats) initUI(stats, districtGeo);
 
-    // 2. Map — needs geo data; skip if both layers unavailable
-    if (districtGeo || forestGeo || risk) {
-      initMap(districtGeo, forestGeo, risk, provinceGeo);
-    }
-
-    // 3. Analytics Dashboard — initialised before legacy charts so it owns
+    // 2. Analytics Dashboard — initialised before legacy charts so it owns
     //    the shared canvas IDs (chart-trend, chart-loss, chart-gain,
     //    chart-composition). The province chart is now a pure SVG radial
     //    chart rendered into #province-radial-wrap (no canvas).
@@ -80,18 +78,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     //    which is safe (returns null → no-op).
     if (stats) initAnalytics(stats);
 
-    // 4. Legacy charts module — kept for EventBus year-highlight on shared
+    // 3. Legacy charts module — kept for EventBus year-highlight on shared
     //    canvases; canvas IDs already claimed by analytics.js so Chart.js
     //    will attach to the existing instances via the DOM elements.
     //    Guard: only call if yearlyData present.
     if (stats) initCharts(stats);
 
-    // 5. Prediction — needs prediction + risk data.
+    // 4. Prediction — needs prediction + risk data.
     if (prediction && risk) {
       initPrediction(prediction, risk);
     }
 
-    // 6. Dashboard (Time Explorer) — emits year:changed(defaultYear) last,
+    // 5. Dashboard (Time Explorer) — emits year:changed(defaultYear) last,
     //    which both analytics.js and prediction.js subscribe to.
     if (stats && stats.yearlyData) {
       initDashboard(stats.yearlyData);

@@ -730,6 +730,14 @@ export function init(districtGeo, forestGeo, risk, provinceGeo) {
 
   // ── EventBus: year filter synced from dashboard.js ──────────
   EventBus.on('year:changed', ({ year }) => filterLayersByYear(year));
+
+  // ── EventBus: invalidate map size when Map 1 tab becomes visible ──
+  EventBus.on('map:invalidate', () => {
+    if (map) {
+      // Short delay ensures the container has finished transitioning to visible
+      setTimeout(() => map.invalidateSize(), 60);
+    }
+  });
 }
 
 /**
