@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initContactForm();
 
   // data:loaded — initialise all modules in dependency order
-  EventBus.on('data:loaded', ({ stats, prediction, risk, districtGeo, forestGeo }) => {
+  EventBus.on('data:loaded', ({ stats, prediction, risk, districtGeo, forestGeo, provinceGeo }) => {
     clearTimeout(revealFallback); // data loaded — cancel safety fallback
 
     // 1. UI first — renders skeleton → real stat cards, wires navbar/slider/reveals
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 2. Map — needs geo data; skip if both layers unavailable
     if (districtGeo || forestGeo || risk) {
-      initMap(districtGeo, forestGeo, risk);
+      initMap(districtGeo, forestGeo, risk, provinceGeo);
     }
 
     // 3. Analytics Dashboard — initialised before legacy charts so it owns

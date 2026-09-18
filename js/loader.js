@@ -14,6 +14,7 @@ const FILES = [
   { path: 'data/risk_score.json',  label: 'risk_score.json'  },
   { path: 'data/district.geojson', label: 'district.geojson' },
   { path: 'data/forest.geojson',   label: 'forest.geojson'   },
+  { path: 'data/province.geojson', label: 'province.geojson' },
 ];
 
 /**
@@ -26,6 +27,7 @@ const FILES = [
  *   risk:        object|null,
  *   districtGeo: object|null,
  *   forestGeo:   object|null,
+ *   provinceGeo: object|null,
  *   errors:      Array<{file: string, error: Error}>
  * }>}
  */
@@ -57,7 +59,7 @@ export async function loadAll() {
   );
 
   // Collect results and errors
-  const [stats, prediction, risk, districtGeo, forestGeo] = parsed.map(
+  const [stats, prediction, risk, districtGeo, forestGeo, provinceGeo] = parsed.map(
     (result, i) => {
       if (result.status === 'fulfilled') {
         return result.value;
@@ -67,7 +69,7 @@ export async function loadAll() {
     }
   );
 
-  const payload = { stats, prediction, risk, districtGeo, forestGeo, errors };
+  const payload = { stats, prediction, risk, districtGeo, forestGeo, provinceGeo, errors };
 
   // Emit loaded event (consumers bootstrap from here)
   EventBus.emit('data:loaded', payload);
