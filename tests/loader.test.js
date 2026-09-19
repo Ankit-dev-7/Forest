@@ -2,9 +2,9 @@
 import { describe, it, beforeEach, expect, vi } from 'vitest';
 import * as fc from 'fast-check';
 
-// Mock main.js EventBus
+// Mock eventbus.js (loader.js imports EventBus from here)
 const mockEmit = vi.fn();
-vi.mock('../js/main.js', () => ({
+vi.mock('../js/eventbus.js', () => ({
   EventBus: { on: vi.fn(), off: vi.fn(), emit: mockEmit }
 }));
 
@@ -65,8 +65,8 @@ describe('loader', () => {
     // Feature: deforestation-watch-nepal, Property 5
     await fc.assert(
       fc.asyncProperty(
-        // Pick 1–4 file indices that will fail (indices 0–4 correspond to the 5 files)
-        fc.subarray([0, 1, 2, 3, 4], { minLength: 1, maxLength: 4 }),
+        // Pick 1–3 file indices that will fail (indices 0–3 correspond to the 4 files)
+        fc.subarray([0, 1, 2, 3], { minLength: 1, maxLength: 3 }),
         async (failedIndices) => {
           const failedSet = new Set(failedIndices);
           let callCount = 0;

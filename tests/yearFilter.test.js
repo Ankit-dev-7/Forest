@@ -2,8 +2,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import * as fc from 'fast-check';
 
-// Mock the EventBus import before importing dashboard
-vi.mock('../js/main.js', () => ({
+// Mock eventbus.js (dashboard.js imports EventBus from here)
+vi.mock('../js/eventbus.js', () => ({
   EventBus: { on: vi.fn(), off: vi.fn(), emit: vi.fn() }
 }));
 

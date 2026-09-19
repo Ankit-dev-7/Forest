@@ -14,8 +14,6 @@ import { EventBus } from './eventbus.js';
 // ============================================================
 
 import { loadAll } from './loader.js';
-import { init as initCharts } from './charts.js';
-import { init as initPrediction } from './prediction.js';
 import { init as initUI } from './ui.js';
 import { initContactForm } from './ui.js';
 import { init as initDashboard } from './dashboard.js';
@@ -63,34 +61,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   initMapSwitcher();
 
   // data:loaded — initialise all modules in dependency order
-  EventBus.on('data:loaded', ({ stats, prediction, risk, districtGeo, forestGeo, provinceGeo }) => {
+  EventBus.on('data:loaded', ({ stats, districtGeo }) => {
     clearTimeout(revealFallback); // data loaded — cancel safety fallback
 
     // 1. UI first — renders skeleton → real stat cards, wires navbar/slider/reveals
     if (stats) initUI(stats, districtGeo);
 
-    // 2. Analytics Dashboard — initialised before legacy charts so it owns
-    //    the shared canvas IDs (chart-trend, chart-loss, chart-gain,
-    //    chart-composition). The province chart is now a pure SVG radial
-    //    chart rendered into #province-radial-wrap (no canvas).
-    //    initCharts() will still wire year-range highlight via EventBus but
-    //    its canvas lookups for chart-district return the hidden stub element,
-    //    which is safe (returns null → no-op).
+    // 2. Analytics Dashboard — owns all chart canvas IDs (chart-trend,
+    //    chart-loss, chart-gain, chart-composition). The province chart is
+    //    a pure SVG radial chart rendered into #province-radial-wrap.
     if (stats) initAnalytics(stats);
 
-    // 3. Legacy charts module — kept for EventBus year-highlight on shared
-    //    canvases; canvas IDs already claimed by analytics.js so Chart.js
-    //    will attach to the existing instances via the DOM elements.
-    //    Guard: only call if yearlyData present.
-    if (stats) initCharts(stats);
-
-    // 4. Prediction — needs prediction + risk data.
-    if (prediction && risk) {
-      initPrediction(prediction, risk);
-    }
-
-    // 5. Dashboard (Time Explorer) — emits year:changed(defaultYear) last,
-    //    which both analytics.js and prediction.js subscribe to.
+    // 3. Dashboard (Time Explorer) — emits year:changed(defaultYear) last,
+    //    which analytics.js subscribes to.
     if (stats && stats.yearlyData) {
       initDashboard(stats.yearlyData);
     }

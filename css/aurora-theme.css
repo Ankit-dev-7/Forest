@@ -58,7 +58,6 @@ p, li, label, span, td, th {
 #statistics,
 #map,
 #analytics,
-#prediction,
 #insights,
 #policy-report,
 #team,
@@ -79,7 +78,6 @@ p, li, label, span, td, th {
 #statistics::before, #statistics::after,
 #map::before,        #map::after,
 #analytics::before,  #analytics::after,
-#prediction::before, #prediction::after,
 #insights::before,   #insights::after,
 #policy-report::before, #policy-report::after,
 #team::before,       #team::after,
@@ -88,26 +86,22 @@ p, li, label, span, td, th {
 }
 
 /* ── Named section backgrounds (forest-inspired tones) ── */
-#statistics { background: transparent; }   /* inherits page gradient */
-#map        { background: transparent; }   /* inherits page gradient */
-#analytics  { background: transparent; }   /* inherits page gradient */
-#prediction { background: transparent; }   /* inherits page gradient */
-#insights   { background: transparent; }   /* inherits page gradient */
-#policy-report { background: transparent; } /* inherits page gradient */
-#team       { background: transparent; }   /* inherits page gradient */
-#contact    { background: transparent; }   /* inherits page gradient */
+#statistics { background: transparent; }
+#map        { background: transparent; }
+#analytics  { background: transparent; }
+#insights   { background: transparent; }
+#policy-report { background: transparent; }
+#team       { background: transparent; }
+#contact    { background: transparent; }
 
 /* ============================================================
    4. LAYOUT — full-bleed sections, centered content column
    ============================================================ */
 
-/* Each section is a flex column. This means children stack
-   vertically and we can align them as a group. The section's
-   clamp() padding provides the horizontal gutter. */
+/* Each section is a flex column. */
 #statistics,
 #map,
 #analytics,
-#prediction,
 #insights,
 #policy-report,
 #team,
@@ -117,14 +111,10 @@ p, li, label, span, td, th {
   align-items: center;
 }
 
-/* Every direct child fills the content column width, capped at
-   1400px. Because the section is centered (align-items: center),
-   all children automatically share the same left and right edges.
-   This is the single rule that fixes alignment at all zoom levels. */
+/* Every direct child fills the content column width, capped at 1400px. */
 #statistics > *,
 #map > *,
 #analytics > *,
-#prediction > *,
 #insights > *,
 #policy-report > *,
 #team > *,
@@ -143,7 +133,6 @@ p, li, label, span, td, th {
 #statistics > .section-accent-bar,
 #map > .section-accent-bar,
 #analytics > .section-accent-bar,
-#prediction > .section-accent-bar,
 #insights > .section-accent-bar,
 #policy-report > .section-accent-bar,
 #team > .section-accent-bar,
@@ -214,7 +203,6 @@ main > section:not(#hero):not(#statistics)::before {
 #map h2,
 #analytics h2,
 #analytics .adash-header h2,
-#prediction h2,
 #insights h2,
 #team h2,
 #contact h2 {
@@ -229,7 +217,6 @@ main > section:not(#hero):not(#statistics)::before {
 #statistics > p,
 #map > p,
 #analytics .adash-header__subtitle,
-#prediction > p,
 #insights > p,
 #team > p,
 #contact > p {
@@ -254,7 +241,6 @@ main > section:not(#hero):not(#statistics)::before {
 .contact-info,
 #contact-form,
 .card,
-.comparison-slider-wrap,
 .download-card,
 #methodology article {
   background: #ffffff;
@@ -377,438 +363,6 @@ main > section:not(#hero):not(#statistics)::before {
 .adash-td--risk,
 [data-risk="high"],
 .badge-amber { background: #fef3c7; color: #f59e0b; }
-
-/* ============================================================
-   10. MAP SECTION — Premium GIS platform styling
-   ============================================================ */
-
-/* Map container */
-#map-container {
-  background: #e8eff5;
-  border: 1px solid rgba(22, 101, 52, 0.12);
-  border-radius: 14px;
-  box-shadow:
-    0 4px 14px rgba(15, 40, 20, 0.07),
-    0 2px 4px rgba(15, 40, 20, 0.04);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  overflow: hidden;   /* clip Leaflet tiles to rounded corners */
-  min-height: 580px;
-}
-
-/* Fullscreen state */
-#map-container.map-fullscreen {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 9000 !important;
-  border-radius: 0 !important;
-  width: 100vw  !important;
-  height: 100vh !important;
-  min-height: 100vh !important;
-}
-
-/* ── Leaflet layer control ── */
-.leaflet-control-layers {
-  background: rgba(255, 255, 255, 0.97) !important;
-  border: 1px solid rgba(22, 101, 52, 0.12) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14) !important;
-  font-family: 'Inter', sans-serif !important;
-  font-size: 0.78rem !important;
-  min-width: 44px;           /* collapsed: just the toggle icon */
-  max-width: 210px;
-}
-
-/* Expanded state: constrain height and add scroll on tiny screens */
-.leaflet-control-layers-expanded {
-  padding: 10px 14px !important;
-  max-height: calc(100vh - 200px);
-  overflow-y: auto;
-  min-width: 200px;
-}
-
-/* The collapsed toggle button (layers icon) */
-.leaflet-control-layers-toggle {
-  width: 36px !important;
-  height: 36px !important;
-  background-color: rgba(255, 255, 255, 0.97) !important;
-  background-image: none !important;   /* remove Leaflet's default icon */
-  border-radius: 10px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
-}
-/* Inject a FontAwesome layers icon via ::after pseudo */
-.leaflet-control-layers-toggle::after {
-  content: '\f5fd';             /* fa-layer-group unicode */
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  font-size: 0.85rem;
-  color: #334155;
-}
-.leaflet-control-layers-toggle:hover::after { color: #16a34a; }
-
-.leaflet-control-layers-base label,
-.leaflet-control-layers-overlays label {
-  color: #334155 !important;
-  font-weight: 500 !important;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 0;
-  cursor: pointer;
-}
-
-.leaflet-control-layers-base label:hover,
-.leaflet-control-layers-overlays label:hover { color: #16a34a !important; }
-
-.leaflet-control-layers-separator {
-  border-top-color: rgba(226, 232, 240, 0.9) !important;
-  margin: 6px 0 !important;
-}
-
-/* Layer labels in the control */
-.layer-label {
-  font-size: 0.77rem;
-  font-weight: 500;
-  color: #334155;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.layer-label::before {
-  content: '';
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-.layer-label--loss::before        { background: linear-gradient(90deg, #ffffb2, #fd8d3c, #bd0026); }
-.layer-label--district::before    { background: transparent; border: 1.5px solid #5a7a6a; }
-.layer-label--province::before    { background: transparent; border: 2px solid #c43c39; }
-.layer-label--province-fill::before { background: rgba(251, 128, 114, 0.35); border: 2px solid #c43c39; }
-.layer-label--risk::before        { background: linear-gradient(90deg, #22c55e, #f59e0b, #ef4444); }
-
-/* ── Custom zoom / fullscreen / reset buttons ── */
-.custom-zoom-control,
-.custom-fullscreen-control,
-.custom-reset-control {
-  border-radius: 8px !important;
-  overflow: hidden;
-}
-
-.custom-zoom-control a,
-.custom-fullscreen-btn,
-.custom-reset-btn {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 32px !important;
-  height: 32px !important;
-  background: rgba(255, 255, 255, 0.97) !important;
-  color: #334155 !important;
-  font-size: 0.8rem !important;
-  border-bottom: 1px solid rgba(226, 232, 240, 0.9) !important;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.custom-zoom-control a:hover,
-.custom-fullscreen-btn:hover,
-.custom-reset-btn:hover {
-  background: #f0fdf4 !important;
-  color: #16a34a !important;
-}
-
-/* ── District search control ── */
-.district-search-control {
-  background: rgba(255, 255, 255, 0.97);
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
-  overflow: visible;
-}
-
-.district-search-input {
-  display: block;
-  width: 200px;
-  padding: 7px 10px;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  color: #0f172a;
-  border-radius: 10px;
-}
-.district-search-input::placeholder { color: #94a3b8; }
-
-.district-search-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
-  list-style: none;
-  padding: 4px 0;
-  margin: 0;
-  z-index: 9999;
-  max-height: 220px;
-  overflow-y: auto;
-}
-.district-search-list li {
-  padding: 6px 12px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  color: #0f172a;
-  transition: background 0.1s;
-}
-.district-search-list li:hover { background: #f0fdf4; color: #16a34a; }
-
-/* ── Map legend (bottom-left) ── */
-.map-legend {
-  background: rgba(255, 255, 255, 0.97);
-  border: 1px solid rgba(22, 101, 52, 0.12);
-  border-radius: 12px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
-  padding: 14px 16px;
-  min-width: 180px;
-  max-width: 200px;
-  /* Give it a little breathing room from the bottom edge */
-  margin-bottom: 6px;
-  /* Collapsible: the legend is always visible, no overflow needed */
-  font-family: 'Inter', sans-serif;
-}
-
-.map-legend__title {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #0f172a;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.map-legend__title i { color: #16a34a; font-size: 0.72rem; }
-
-.map-legend__section { margin-bottom: 12px; }
-.map-legend__section:last-of-type { margin-bottom: 4px; }
-
-.map-legend__section-title {
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 6px;
-}
-
-/* Gradient ramp swatch */
-.map-legend__ramp-wrap { margin-bottom: 6px; }
-.map-legend__ramp {
-  height: 10px;
-  border-radius: 4px;
-  margin-bottom: 2px;
-  border: 1px solid rgba(0,0,0,0.08);
-}
-.map-legend__ramp-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.65rem;
-  color: #94a3b8;
-}
-
-.map-legend__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.map-legend__item {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.72rem;
-  color: #334155;
-}
-
-.map-legend__swatch {
-  display: inline-block;
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  flex-shrink: 0;
-}
-.map-legend__swatch--border { background: transparent; }
-
-.map-legend__source {
-  font-size: 0.62rem;
-  color: #94a3b8;
-  margin-top: 8px;
-  border-top: 1px solid rgba(226, 232, 240, 0.8);
-  padding-top: 6px;
-  line-height: 1.4;
-}
-
-/* ── Map popups ── */
-.map-popup-wrapper .leaflet-popup-content-wrapper {
-  background: #ffffff;
-  border: 1px solid rgba(22, 101, 52, 0.12);
-  border-radius: 12px;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
-  padding: 0;
-  overflow: hidden;
-}
-.map-popup-wrapper .leaflet-popup-tip-container { display: none; }
-.map-popup-wrapper .leaflet-popup-content { margin: 0; }
-
-.map-popup {
-  min-width: 230px;
-  max-width: 280px;
-  font-family: 'Inter', sans-serif;
-}
-
-.map-popup__header {
-  background: #0f172a;
-  padding: 10px 14px 8px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-}
-.map-popup__title {
-  color: #f0fdf4;
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin: 0;
-}
-.map-popup__province {
-  color: #4ade80;
-  font-size: 0.68rem;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.map-popup__risk-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  background: #f8fafc;
-  border-bottom: 1px solid #f1f5f9;
-  font-size: 0.75rem;
-}
-.map-popup__risk-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.map-popup__risk-label { color: #334155; font-weight: 600; flex: 1; }
-.map-popup__risk-score { color: #64748b; font-size: 0.7rem; }
-
-.map-popup__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 10px 14px;
-  gap: 4px 8px;
-}
-
-.map-popup__stat {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.map-popup__stat-label {
-  font-size: 0.62rem;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.map-popup__stat-value {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #0f172a;
-}
-.map-popup__stat--loss .map-popup__stat-value { color: #ef4444; }
-.map-popup__stat--gain .map-popup__stat-value { color: #16a34a; }
-
-.map-popup__trend {
-  padding: 6px 14px;
-  background: #f8fafc;
-  border-top: 1px solid #f1f5f9;
-  font-size: 0.72rem;
-  font-weight: 500;
-}
-.map-popup__trend--up   { color: #059669; }
-.map-popup__trend--down { color: #ef4444; }
-
-/* ── Map tooltips ── */
-.map-tooltip {
-  background: rgba(15, 23, 42, 0.92) !important;
-  color: #f0fdf4 !important;
-  border: none !important;
-  border-radius: 6px !important;
-  font-family: 'Inter', sans-serif !important;
-  font-size: 0.74rem !important;
-  padding: 5px 9px !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.22) !important;
-  line-height: 1.5 !important;
-}
-.map-tooltip::before { display: none !important; }
-.map-tooltip--province {
-  background: rgba(196, 60, 57, 0.92) !important;
-  font-weight: 600 !important;
-}
-
-/* ── Scale control (bottom-right) ── */
-.leaflet-control-scale-line {
-  font-family: 'Inter', sans-serif !important;
-  font-size: 0.7rem !important;
-  color: #334155 !important;
-  background: rgba(255,255,255,0.88) !important;
-  border-color: #94a3b8 !important;
-  border-radius: 0 0 4px 4px !important;
-  padding: 1px 5px !important;
-}
-/* Push the Leaflet attribution up slightly so scale doesn't sit on it */
-.leaflet-bottom.leaflet-right .leaflet-control-scale {
-  margin-bottom: 24px;
-}
-
-/* ── Map section subtitle ── */
-#map > p.map-subtitle {
-  color: rgba(220, 252, 231, 0.80);
-  font-size: 0.95rem;
-  margin-bottom: 1.25rem;
-  max-width: 700px;
-}
-
-/* ── Responsive map height ── */
-@media (max-width: 768px) {
-  #map-container { min-height: 420px; }
-  .map-legend { max-width: 160px; padding: 10px 12px; }
-  /* Layer control: collapse toggle only, expand on tap */
-  .leaflet-control-layers { min-width: 44px; }
-  .leaflet-control-layers-expanded { min-width: 175px; max-height: calc(100vh - 180px); }
-  .district-search-input { width: 150px; }
-}
-@media (max-width: 480px) {
-  #map-container { min-height: 340px; }
-  /* On very small screens hide the legend to free up map space */
-  .map-legend { display: none; }
-  /* Layer control stays visible but compact */
-  .leaflet-control-layers-expanded { max-height: 220px; overflow-y: auto; min-width: 160px; }
-}
 
 /* ============================================================
    11. ANALYTICS — filter bar, selects, buttons, table
@@ -948,17 +502,6 @@ main > section:not(#hero):not(#statistics)::before {
 .radial-legend-name    { color: #334155; }
 .radial-center-metric  { color: #1e293b; }
 .radial-center-sub     { color: #64748b; }
-
-/* ============================================================
-   12. PREDICTION SECTION
-   ============================================================ */
-
-#confidence-badge {
-  background: #f0fdf4;
-  color: #059669;
-  border-color: rgba(16, 185, 129, 0.28);
-  border-radius: 999px;
-}
 
 /* ============================================================
    13. TEAM SECTION
@@ -1199,7 +742,6 @@ main > section:not(#hero):not(#statistics)::before {
   #statistics > *,
   #map > *,
   #analytics > *,
-  #prediction > *,
   #insights > *,
   #policy-report > *,
   #team > *,
@@ -1222,7 +764,6 @@ main > section:not(#hero):not(#statistics)::before {
   #statistics > .section-accent-bar,
   #map > .section-accent-bar,
   #analytics > .section-accent-bar,
-  #prediction > .section-accent-bar,
   #insights > .section-accent-bar,
   #policy-report > .section-accent-bar,
   #team > .section-accent-bar,
@@ -1311,7 +852,6 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap #map h2,
 #content-bg-wrap #analytics h2,
 #content-bg-wrap #analytics .adash-header h2,
-#content-bg-wrap #prediction h2,
 #content-bg-wrap #insights h2,
 #content-bg-wrap #policy-report h2,
 #content-bg-wrap #team h2,
@@ -1324,7 +864,6 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap #statistics > p,
 #content-bg-wrap #map > p,
 #content-bg-wrap #analytics .adash-header__subtitle,
-#content-bg-wrap #prediction > p,
 #content-bg-wrap #insights > p,
 #content-bg-wrap #policy-report .policy-report-subtitle,
 #content-bg-wrap #team > p,
@@ -1350,9 +889,7 @@ main > section:not(#hero):not(#statistics)::before {
 #content-bg-wrap .team-card,
 #content-bg-wrap .contact-info,
 #content-bg-wrap #contact-form,
-#content-bg-wrap .card,
-#content-bg-wrap #map-container,
-#content-bg-wrap .map-legend {
+#content-bg-wrap .card {
   background: rgba(255, 255, 255, 0.93);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -1385,7 +922,7 @@ main > section:not(#hero):not(#statistics)::before {
     0 2px 6px rgba(0, 0, 0, 0.14);
 }
 
-/* Map legend stays crisp white */
+/* Map legend stays crisp white — kept for the iframe map section */
 #content-bg-wrap .map-legend {
   background: rgba(255, 255, 255, 0.97);
 }
@@ -1443,13 +980,6 @@ main > section:not(#hero):not(#statistics)::before {
   color: #1e293b;
 }
 
-/* ── #prediction confidence badge ── */
-#content-bg-wrap #confidence-badge {
-  background: rgba(240, 253, 244, 0.92);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
 /* Mobile: fixed-attachment can be janky on iOS/Android —
    fall back to scroll attachment on small screens.
    The top-fade ::after still applies for a smooth blend. */
@@ -1461,193 +991,6 @@ main > section:not(#hero):not(#statistics)::before {
   /* Slightly taller fade on mobile since the hero is shorter */
   #content-bg-wrap::after {
     height: 160px;
-  }
-}
-
-
-/* ============================================================
-   MAP TAB SWITCHER — Map 1 / Map 2
-   ============================================================ */
-
-/* ── Tab bar ── */
-.map-tab-bar {
-  display: flex;
-  gap: 6px;
-  margin-bottom: 14px;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(22, 101, 52, 0.18);
-  border-radius: 12px;
-  padding: 5px;
-  width: fit-content;
-  flex-wrap: wrap;
-}
-
-/* ── Individual tab button ── */
-.map-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 20px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: transparent;
-  color: rgba(220, 252, 231, 0.65);
-  font-family: var(--font-sans, 'Inter', sans-serif);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 200ms ease, color 200ms ease, border-color 200ms ease,
-              box-shadow 200ms ease;
-  white-space: nowrap;
-  letter-spacing: 0.01em;
-}
-
-.map-tab:hover {
-  background: rgba(22, 101, 52, 0.25);
-  color: #dcfce7;
-  border-color: rgba(22, 163, 74, 0.30);
-}
-
-.map-tab:focus-visible {
-  outline: 2px solid #22c55e;
-  outline-offset: 2px;
-}
-
-/* Active / selected state */
-.map-tab--active {
-  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-  color: #f0fdf4;
-  border-color: rgba(22, 163, 74, 0.60);
-  box-shadow: 0 2px 10px rgba(22, 163, 74, 0.35);
-  font-weight: 600;
-}
-
-.map-tab--active:hover {
-  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
-  color: #f0fdf4;
-}
-
-/* Icon inside tab */
-.map-tab i {
-  font-size: 0.8rem;
-  opacity: 0.9;
-}
-
-/* ── Map panels ── */
-.map-panel {
-  width: 100%;
-}
-
-/* Hidden state — 'hidden' attribute is toggled by JS,
-   but we also guard with display:none for specificity */
-.map-panel[hidden] {
-  display: none !important;
-}
-
-.map-panel--active {
-  display: block;
-}
-
-/* ── Map 2 iframe wrapper ── */
-.map-iframe-wrap {
-  position: relative;
-  width: 100%;
-  min-height: 580px;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #e8eff5;
-  border: 1px solid rgba(22, 101, 52, 0.12);
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
-}
-
-.map-iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  min-height: 580px;
-  border: 0;
-  display: block;
-  border-radius: 16px;
-  opacity: 0;
-  transition: opacity 300ms ease;
-}
-
-.map-iframe.map-iframe--loaded {
-  opacity: 1;
-}
-
-/* ── Loading overlay ── */
-.map-iframe-loading {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  background: rgba(15, 23, 42, 0.55);
-  backdrop-filter: blur(4px);
-  color: #dcfce7;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border-radius: 16px;
-  pointer-events: none;
-  transition: opacity 300ms ease;
-  z-index: 2;
-}
-
-.map-iframe-loading i {
-  font-size: 1.6rem;
-  color: #22c55e;
-}
-
-.map-iframe-loading.map-iframe-loading--hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* ── Responsive heights ── */
-@media (max-width: 1024px) {
-  .map-iframe-wrap,
-  .map-iframe {
-    min-height: 500px;
-  }
-}
-
-@media (max-width: 768px) {
-  .map-tab-bar {
-    width: 100%;
-    justify-content: stretch;
-  }
-
-  .map-tab {
-    flex: 1;
-    justify-content: center;
-    padding: 9px 12px;
-    font-size: 0.82rem;
-  }
-
-  .map-iframe-wrap,
-  .map-iframe {
-    min-height: 420px;
-  }
-}
-
-@media (max-width: 480px) {
-  .map-tab-bar {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .map-tab {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .map-iframe-wrap,
-  .map-iframe {
-    min-height: 340px;
   }
 }
 

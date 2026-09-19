@@ -22,7 +22,6 @@
   #statistics,
   #map,
   #analytics,
-  #prediction,
   #insights,
   #team,
   #contact {
@@ -54,10 +53,6 @@
    2. DESKTOP (1280px–1535px) — default, already in style.css
    ============================================================ */
 @media (min-width: 1280px) and (max-width: 1535px) {
-  #map-container {
-    min-height: 600px;
-  }
-
   #stats-cards-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -75,10 +70,6 @@
    3. LAPTOP (1024px–1279px)
    ============================================================ */
 @media (min-width: 1024px) and (max-width: 1279px) {
-  #map-container {
-    min-height: 600px;
-  }
-
   #stats-cards-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -108,15 +99,10 @@
   #statistics,
   #map,
   #analytics,
-  #prediction,
   #insights,
   #team,
   #contact {
     padding: 4rem clamp(1rem, 3vw, 1.5rem);
-  }
-
-  #map-container {
-    min-height: 450px;
   }
 
   /* Stats: 2-column on tablet (4 is too tight at this width) */
@@ -149,11 +135,6 @@
   /* Contact: single column */
   .contact-layout {
     grid-template-columns: 1fr;
-  }
-
-  /* Comparison slider */
-  .slider-container {
-    min-height: 320px;
   }
 
   /* Hero */
@@ -209,18 +190,10 @@
   #statistics,
   #map,
   #analytics,
-  #prediction,
   #insights,
   #team,
   #contact {
     padding: 3.5rem clamp(0.75rem, 4vw, 1.25rem);
-  }
-
-  /* Map: min-height 300px on mobile; pointer-events on map
-     to allow scroll without accidental panning */
-  #map-container {
-    min-height: 300px;
-    touch-action: none;
   }
 
   /* Stats: 2-column on mobile */
@@ -255,11 +228,6 @@
   .contact-layout {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-
-  /* Comparison slider */
-  .slider-container {
-    min-height: 250px;
   }
 
   /* Hamburger nav */

@@ -92,7 +92,7 @@ export function selectYear(year) {
   }
 
   // 2. Add transitioning class to dependent sections
-  const transitionSections = ['analytics', 'statistics', 'insights', 'prediction'];
+  const transitionSections = ['analytics', 'statistics', 'insights'];
   transitionSections.forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('section-transitioning');

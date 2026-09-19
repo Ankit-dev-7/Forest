@@ -49,22 +49,6 @@ html.js-loaded section.section-hidden.revealed {
 }
 
 /* ============================================================
-   5. MAP FULLSCREEN TRANSITION
-   ============================================================ */
-#map-container {
-  transition: all 300ms ease;
-}
-
-#map-container.map-fullscreen {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 2000 !important;
-  height: 100vh !important;
-  width: 100vw !important;
-  border-radius: 0 !important;
-}
-
-/* ============================================================
    6. LOADING OVERLAY FADE OUT
    ============================================================ */
 #loading-overlay.fade-out {
@@ -111,13 +95,6 @@ html.js-loaded section.section-hidden.revealed {
    ============================================================ */
 .year-btn {
   transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
-}
-
-/* ============================================================
-   11. SLIDER HANDLE TRANSITION
-   ============================================================ */
-.slider-handle {
-  transition: left 0ms linear; /* no lag on pointer drag */
 }
 
 /* ============================================================
